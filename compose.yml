@@ -1,0 +1,19 @@
+name: cothrom-site
+
+networks:
+  frontend:
+  backend:
+
+# volumes:
+
+services:
+  # cloudflare-tunnel: final serving via cloudflare tunnel
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8039:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./site:/site
+    networks:
+      - frontend

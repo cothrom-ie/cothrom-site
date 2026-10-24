@@ -1,0 +1,12 @@
+version: "0.2"
+ignorePaths:
+  - .git/
+  - .gitignore
+  - .editorconfig
+dictionaryDefinitions: []
+dictionaries: []
+words: []
+ignoreWords: []
+import:
+  - en-GB
+language: en-GB
