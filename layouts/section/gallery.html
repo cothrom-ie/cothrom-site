@@ -1,0 +1,101 @@
+{{- /*
+  Site override of the Gallery section (C4): themes/no-fate/layouts/list.html renders a
+  chronological article index, which doesn't fit a curated photo marquee, so this section
+  template (layouts/section/gallery.html) replaces it entirely for /gallery/ only — every
+  other section still falls back to the theme's default list.html. Does not edit theme files.
+
+  M1 continuous marquee, L1 single full-bleed row, I1 click-to-lightbox, A3 reduced-motion
+  static grid + always-visible Pause control, P1 minimal chrome (title + one line).
+*/ -}}
+{{- define "main" }}
+{{- $page := . -}}
+{{- $photos := $page.Params.photos | default slice -}}
+<div class="nf-gallery" data-page-mode="gallery">
+    <header class="page-header nf-gallery__header">
+        <h1>{{ $page.Title }}</h1>
+        {{- with $page.Description }}
+        <p class="post-description">{{ . | markdownify }}</p>
+        {{- end }}
+    </header>
+
+    {{- if $photos }}
+    <div class="nf-gallery__controls">
+        <button type="button" id="nf-gallery-pause" class="nf-gallery__pause" aria-pressed="false">
+            <span class="nf-gallery__pause-label">Pause motion</span>
+        </button>
+    </div>
+
+    <div class="nf-gallery__viewport">
+        <div class="nf-gallery__track" id="nf-gallery-track" aria-label="Photo gallery, continuously scrolling">
+            {{- range $i, $p := $photos }}
+                {{- partial "gallery/item.html" (dict "page" $page "photo" $p "index" $i "clone" false) -}}
+            {{- end }}
+            {{- range $i, $p := $photos }}
+                {{- partial "gallery/item.html" (dict "page" $page "photo" $p "index" $i "clone" true) -}}
+            {{- end }}
+        </div>
+    </div>
+
+    <dialog class="nf-gallery__lightbox" id="nf-gallery-lightbox" aria-label="Expanded photo">
+        <button type="button" class="nf-gallery__lightbox-close" id="nf-gallery-lightbox-close" aria-label="Close">&times;</button>
+        <picture>
+            <source id="nf-gallery-lightbox-source" srcset="" type="image/webp">
+            <img id="nf-gallery-lightbox-img" src="" alt="">
+        </picture>
+    </dialog>
+
+    <script>
+    (function () {
+        var track = document.getElementById('nf-gallery-track');
+        var pauseBtn = document.getElementById('nf-gallery-pause');
+        var lightbox = document.getElementById('nf-gallery-lightbox');
+        var lightboxImg = document.getElementById('nf-gallery-lightbox-img');
+        var lightboxSource = document.getElementById('nf-gallery-lightbox-source');
+        var lightboxClose = document.getElementById('nf-gallery-lightbox-close');
+        if (!track) { return; }
+
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', function () {
+                var paused = track.classList.toggle('is-paused');
+                pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+                var label = pauseBtn.querySelector('.nf-gallery__pause-label');
+                if (label) { label.textContent = paused ? 'Play motion' : 'Pause motion'; }
+            });
+        }
+
+        Array.prototype.forEach.call(track.querySelectorAll('.nf-gallery__item'), function (item) {
+            item.addEventListener('click', function () {
+                var full = item.getAttribute('data-full');
+                var fullWebp = item.getAttribute('data-full-webp');
+                var alt = item.getAttribute('data-alt') || '';
+                if (!full || !lightbox || !lightboxImg) { return; }
+                lightboxImg.src = full;
+                lightboxImg.alt = alt;
+                if (lightboxSource) { lightboxSource.srcset = fullWebp || ''; }
+                if (typeof lightbox.showModal === 'function') {
+                    lightbox.showModal();
+                } else {
+                    lightbox.setAttribute('open', '');
+                }
+            });
+        });
+
+        if (lightboxClose && lightbox) {
+            lightboxClose.addEventListener('click', function () { lightbox.close(); });
+        }
+        if (lightbox) {
+            lightbox.addEventListener('click', function (event) {
+                if (event.target === lightbox) { lightbox.close(); }
+            });
+            lightbox.addEventListener('close', function () {
+                if (lightboxImg) { lightboxImg.src = ''; }
+                if (lightboxSource) { lightboxSource.srcset = ''; }
+            });
+        }
+    })();
+    </script>
+    {{- else }}
+    <p class="post-description">Gallery images will be published here soon.</p>
+    {{- end }}
+</div>
+{{- end }}

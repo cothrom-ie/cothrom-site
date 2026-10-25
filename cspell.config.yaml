@@ -5,8 +5,22 @@ ignorePaths:
   - .editorconfig
 dictionaryDefinitions: []
 dictionaries: []
-words: []
+words:
+  - Autoscrolling
+  - CACHEDIR
+  - Capparelli
+  - Cappy
+  - cothrom
+  - elif
+  - Finucane
+  - fgrep
+  - freestanding
+  - kickoff
+  - multiview
+  - Oulu
+  - Papercut
+  - pipefail
+  - Soleil
+  - timecode
 ignoreWords: []
-import:
-  - en-GB
 language: en-GB

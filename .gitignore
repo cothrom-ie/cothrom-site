@@ -672,4 +672,16 @@ venv/
 
 assets-general/
 static/
+# Ignore local Cursor junk, but keep project skills/rules discoverable.
+# Cursor skill/rule discovery respects .gitignore; ignoring all of .cursor/
+# hides /build and other project skills from the slash menu.
 .cursor/
+images/
+
+# Hugo publish output (compose serves ./site) and local tooling
+site/
+public/
+temp/
+resources/_gen/
+.hugo_build.lock
+themes/no-fate/*

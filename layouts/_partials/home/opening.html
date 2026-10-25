@@ -1,0 +1,51 @@
+{{- /*
+  Site override of themes/no-fate/layouts/_partials/home/opening.html (C2 H2 hero).
+  Adds: brand eyebrow mark, CTA group (Services primary; Contact/Gallery secondary).
+  Does not edit theme files. Page .Content is intentionally NOT rendered here —
+  the biography lives in its own below-fold section (see layouts/home.html).
+*/ -}}
+{{- $opening := partial "home/value.html" (dict "page" . "key" "opening" "default" dict) -}}
+{{- $headline := $opening.headline | default .Title -}}
+{{- $deck := $opening.deck | default .Description -}}
+{{- $image := $opening.image | default "" -}}
+{{- $imageAlt := $opening.image_alt | default "" -}}
+{{- if and $image (not $imageAlt) -}}
+    {{- errorf "Cothrom home: opening.image_alt is required when opening.image is set" -}}
+{{- end -}}
+<header class="nf-home__opening">
+    {{- $wildTitleLines := .Params.visual.wild_title_lines | default (slice $headline) -}}
+    <div class="nf-home__opening-copy">
+        <p class="nf-home__hero-mark">Cothrom</p>
+        {{- with $headline }}
+        <h1>
+            <span class="nf-home__title-standard">{{ . }}</span>
+            <span class="nf-home__title-wild nf-wild-only" aria-hidden="true">
+                {{- range $wildTitleLines }}
+                <span class="nf-home__title-line">{{ . }}</span>
+                {{- end }}
+            </span>
+        </h1>
+        {{- end }}
+        {{- with $.Params.visual.wild_reference }}
+        <p class="nf-wild-reference nf-wild-only">{{ . }}</p>
+        {{- end }}
+        {{- with $deck }}
+        <p class="post-description nf-deck">{{ . | markdownify }}</p>
+        {{- end }}
+        <div class="nf-home__opening-cta" role="group" aria-label="Primary actions">
+            <a class="nf-cta nf-cta--primary" href="#services">Services</a>
+            <a class="nf-cta nf-cta--secondary" href="/contact/">Contact</a>
+            <a class="nf-cta nf-cta--secondary" href="/gallery/">Gallery</a>
+        </div>
+    </div>
+    {{- with $image }}
+    <figure class="nf-home__opening-image">
+        {{- partial "responsive-image.html" (dict
+            "page" $ "src" . "alt" $imageAlt "loading" "eager"
+            "fetchpriority" "high"
+            "class" "nf-content-image raw"
+            "sizes" "100vw"
+        ) -}}
+    </figure>
+    {{- end }}
+</header>

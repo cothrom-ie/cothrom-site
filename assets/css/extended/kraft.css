@@ -1,0 +1,319 @@
+/*
+ * Cothrom kraft hello-world overrides (C1 / V1).
+ * Loaded after No Fate via assets/css/extended/*.css — do not edit the theme.
+ * Brand: kraft #BE9E6C, ink #1D120D.
+ */
+
+:root {
+  --brand-kraft: #be9e6c;
+  --brand-ink: #1d120d;
+
+  /* Map No Fate signal/accent toward kraft; keep photography-led pages calm */
+  --nf-signal: var(--brand-kraft);
+  --nf-alert: #8a6f3f;
+  --nf-paper: #f2eee6;
+  --nf-paper-deep: #e4d9c6;
+  --nf-surface: #faf7f1;
+  --nf-ink: var(--brand-ink);
+  --nf-inverse-paper: var(--brand-ink);
+  --nf-inverse-ink: var(--brand-kraft);
+
+  --theme: var(--nf-paper);
+  --entry: var(--nf-surface);
+  --primary: var(--nf-ink);
+  --content: var(--nf-ink);
+}
+
+:root[data-theme="dark"] {
+  --nf-ink: #f0e6d4;
+  --nf-paper: #1d120d;
+  --nf-paper-deep: #2a1c14;
+  --nf-surface: #261910;
+  --nf-muted: #c9b89a;
+  --nf-signal: var(--brand-kraft);
+  --nf-inverse-ink: #1d120d;
+  --nf-inverse-paper: #f0e6d4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --nf-ink: #f0e6d4;
+    --nf-paper: #1d120d;
+    --nf-paper-deep: #2a1c14;
+    --nf-surface: #261910;
+    --nf-muted: #c9b89a;
+    --nf-signal: var(--brand-kraft);
+    --nf-inverse-ink: #1d120d;
+    --nf-inverse-paper: #f0e6d4;
+  }
+}
+
+/* Phase 1 — Home (C2): H2 full-bleed hero + grounded kraft plate */
+
+/* Theme default is a 2-column split (copy | image). C2 locks a true
+   full-bleed/edge-to-edge photo with a grounded kraft plate overlapping
+   the image, so the image is repositioned to cover the whole header and
+   the copy becomes an opaque kraft plate sitting at the foot of it. */
+.nf-home__opening {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: min(82vh, 50rem);
+  padding: var(--nf-gutter, 1.5rem);
+  overflow: hidden;
+}
+
+.nf-home__opening-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  min-height: 0;
+}
+
+.nf-home__opening-image :is(.nf-picture, img) {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.nf-home__opening-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 34rem;
+  padding: var(--nf-space-5, 2rem);
+  background: var(--brand-kraft);
+  border: 1px solid var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+.nf-home__opening-copy h1,
+.nf-home__opening-copy .nf-deck,
+.nf-home__opening-copy .nf-home__hero-mark {
+  color: var(--brand-ink);
+}
+
+.nf-home__hero-mark {
+  margin: 0;
+  opacity: 0.75;
+  font-family: var(--nf-font-meta, ui-monospace, monospace);
+  font-size: var(--nf-meta-size, 0.78rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nf-home__opening-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nf-space-3, 1rem);
+  margin-top: var(--nf-space-2, 0.75rem);
+}
+
+/* Inside the kraft plate, invert CTA treatment so both states stay
+   readable against the fixed kraft/ink pairing in light and dark mode. */
+.nf-home__opening-copy .nf-cta--primary {
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
+  color: var(--brand-kraft);
+}
+
+.nf-home__opening-copy .nf-cta--primary:hover,
+.nf-home__opening-copy .nf-cta--primary:focus-visible {
+  background: transparent;
+  color: var(--brand-ink);
+}
+
+.nf-home__opening-copy .nf-cta--secondary {
+  border-color: rgba(29, 18, 13, 0.45);
+  color: var(--brand-ink);
+}
+
+.nf-home__opening-copy .nf-cta--secondary:hover,
+.nf-home__opening-copy .nf-cta--secondary:focus-visible {
+  background: rgba(29, 18, 13, 0.08);
+  border-color: var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+@media (max-width: 40rem) {
+  .nf-home__opening-copy {
+    max-width: none;
+  }
+}
+
+.nf-cta {
+  display: inline-block;
+  padding: 0.65rem 1.35rem;
+  border: 1px solid var(--brand-ink);
+  font-family: var(--nf-font-meta, ui-monospace, monospace);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background var(--nf-fast, 140ms) var(--nf-ease, ease),
+    color var(--nf-fast, 140ms) var(--nf-ease, ease),
+    border-color var(--nf-fast, 140ms) var(--nf-ease, ease);
+}
+
+.nf-cta--primary {
+  background: var(--brand-kraft);
+  border-color: var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+.nf-cta--primary:hover,
+.nf-cta--primary:focus-visible {
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
+  color: var(--brand-kraft);
+}
+
+.nf-cta--secondary {
+  background: transparent;
+  border-color: var(--nf-rule-colour);
+  color: var(--nf-ink);
+}
+
+.nf-cta--secondary:hover,
+.nf-cta--secondary:focus-visible {
+  border-color: var(--brand-kraft);
+  color: var(--brand-kraft);
+}
+
+/* Services below-fold: plain accessible list, no card chrome */
+.nf-home-services-list {
+  display: grid;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nf-home-services-list li {
+  border-top: var(--nf-border);
+  padding-block: var(--nf-space-3, 1rem);
+}
+
+.nf-home-services-list a {
+  font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nf-home-services-list a:hover,
+.nf-home-services-list a:focus-visible {
+  color: var(--brand-kraft);
+}
+
+.nf-home-services-list p {
+  margin: 0.35rem 0 0;
+  color: var(--nf-muted);
+  max-width: 60ch;
+}
+
+.nf-home-bio p {
+  max-width: var(--nf-reading, 68ch);
+}
+
+.nf-home-writing-stub {
+  color: var(--nf-muted);
+  font-style: italic;
+}
+
+/* Phase 2 — Service pages (C3 H1): full-bleed hero + kraft plate
+   carrying the service title. Same material language as the Home H2
+   hero (see .nf-home__opening above), reused across all four services
+   via the shared layouts/_partials/modes/editorial/opening.html override. */
+.nf-service-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: min(62vh, 38rem);
+  padding: var(--nf-gutter, 1.5rem);
+  overflow: hidden;
+}
+
+.nf-service-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  min-height: 0;
+}
+
+.nf-service-hero__media :is(.nf-picture, img) {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.nf-service-hero__plate {
+  position: relative;
+  z-index: 1;
+  max-width: 34rem;
+  padding: var(--nf-space-5, 2rem);
+  background: var(--brand-kraft);
+  border: 1px solid var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+.nf-service-hero__plate .nf-article__kicker,
+.nf-service-hero__plate .nf-service-hero__title,
+.nf-service-hero__plate .nf-deck {
+  color: var(--brand-ink);
+}
+
+.nf-service-hero__plate .nf-article__kicker {
+  margin: 0;
+  opacity: 0.75;
+}
+
+.nf-service-hero__cta {
+  margin-top: var(--nf-space-3, 1rem);
+}
+
+.nf-service-hero__plate .nf-cta--secondary {
+  border-color: rgba(29, 18, 13, 0.45);
+  color: var(--brand-ink);
+}
+
+.nf-service-hero__plate .nf-cta--secondary:hover,
+.nf-service-hero__plate .nf-cta--secondary:focus-visible {
+  background: rgba(29, 18, 13, 0.08);
+  border-color: var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+@media (max-width: 40rem) {
+  .nf-service-hero__plate {
+    max-width: none;
+  }
+}
+
+/* "Next step" CTA: a plain markdown link styled as a button, so service page
+   bodies stay goldmark-safe prose (no raw HTML / unsafe renderer needed). */
+.nf-prose h2#next-step + p a {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.65rem 1.35rem;
+  border: 1px solid var(--brand-ink);
+  background: var(--brand-kraft);
+  color: var(--brand-ink);
+  font-family: var(--nf-font-meta, ui-monospace, monospace);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nf-prose h2#next-step + p a:hover,
+.nf-prose h2#next-step + p a:focus-visible {
+  background: var(--brand-ink);
+  color: var(--brand-kraft);
+}

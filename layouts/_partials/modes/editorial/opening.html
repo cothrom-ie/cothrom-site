@@ -1,0 +1,52 @@
+{{- /*
+  Site override of themes/no-fate/layouts/_partials/modes/editorial/opening.html (C3 H1 hero).
+
+  Renders a full-bleed hero photo with an overlapping kraft brand plate carrying the
+  service title and a one-line purpose — the same material language as Home's H2 hero
+  (see layouts/_partials/home/opening.html). Uses the page's native visual.hero /
+  visual.hero_alt front matter so Open Graph, Twitter Card, and schema.org images keep
+  resolving automatically (see themes/no-fate/layouts/_partials/templates/_funcs/get-page-images.html).
+
+  Pairs with layouts/_partials/modes/editorial/body.html, which skips the theme's own
+  article-shell.html hero figure so the image is not rendered twice.
+
+  Breadcrumbs are intentionally omitted here (as on Home's hero) to keep the full-bleed
+  composition free of overlapping chrome; primary navigation covers wayfinding.
+
+  Does not edit theme files.
+*/ -}}
+{{- $page := . -}}
+{{- $model := partial "content-model.html" $page -}}
+{{- $hero := $model.Visual.Hero -}}
+{{- $heroAlt := $model.Visual.HeroAlt -}}
+{{- if and $hero (not $heroAlt) -}}
+    {{- errorf "Cothrom service hero: visual.hero_alt is required when visual.hero is set on %s" $page.RelPermalink -}}
+{{- end -}}
+{{- $purpose := $page.Params.subtitle | default $page.Description -}}
+<header class="post-header nf-service-hero" data-opening-alignment="{{ $model.Visual.OpeningAlignment }}">
+    {{- with $hero }}
+    <figure class="nf-service-hero__media">
+        {{- partial "responsive-image.html" (dict
+            "page" $page
+            "src" .
+            "alt" $heroAlt
+            "loading" "eager"
+            "fetchpriority" "high"
+            "class" (printf "nf-content-image nf-service-hero__image %s" $model.Visual.HeroTreatment)
+            "sizes" "100vw"
+        ) -}}
+    </figure>
+    {{- end }}
+    <div class="nf-service-hero__plate">
+        <p class="nf-article__kicker">
+            {{- with $model.Content.Format -}}{{- . | humanize -}}{{- else -}}Service{{- end -}}
+        </p>
+        <h1 class="post-title nf-service-hero__title">{{ $page.Title }}</h1>
+        {{- with $purpose }}
+        <p class="post-description nf-deck">{{ . | markdownify }}</p>
+        {{- end }}
+        <div class="nf-service-hero__cta">
+            <a class="nf-cta nf-cta--secondary" href="/contact/">Contact</a>
+        </div>
+    </div>
+</header>

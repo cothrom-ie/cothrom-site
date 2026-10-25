@@ -1,0 +1,23 @@
+{{- /*
+  Site override of themes/no-fate/layouts/_partials/modes/editorial/body.html (C3 H1 hero).
+
+  The theme's default editorial body delegates to article-shell.html, which renders
+  its own hero figure when visual.hero is set. Service pages already show that hero
+  full-bleed inside modes/editorial/opening.html, so this trimmed copy of
+  article-shell.html's body markup omits the duplicate hero/cover figure and keeps
+  the table of contents and prose rendering untouched.
+
+  Does not edit theme files.
+*/ -}}
+{{- $page := . -}}
+<div class="nf-article__body nf-article__body--editorial" data-mode-body="editorial">
+    {{- if $page.Param "ShowToc" }}
+        {{- partial "toc.html" $page }}
+    {{- end }}
+    {{- with $page.Content }}
+    <div class="post-content md-content nf-prose">
+        {{- . -}}
+    </div>
+    {{- end }}
+    {{- partial "extend_post_content.html" $page }}
+</div>

@@ -1,3 +1,97 @@
-baseURL = 'https://cothrom.ie/'
-languageCode = 'en-GB'
-title = 'Cothrom Productions'
+# Cothrom Productions — Hugo site config
+# Theme: No Fate v0.1.0 (themes/no-fate). Deploy output matches compose.yml → ./site
+
+baseURL = "https://cothrom.ie/"
+languageCode = "en-GB"
+defaultContentLanguage = "en"
+title = "Cothrom Productions"
+theme = "no-fate"
+publishDir = "site"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 12
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[menu]
+  [[menu.main]]
+    identifier = "production-management"
+    name = "Production Management"
+    url = "/production-management/"
+    weight = 10
+  [[menu.main]]
+    identifier = "technical-direction"
+    name = "Technical Direction"
+    url = "/technical-direction/"
+    weight = 20
+  [[menu.main]]
+    identifier = "creative-technology"
+    name = "Creative Technology"
+    url = "/creative-technology/"
+    weight = 30
+  [[menu.main]]
+    identifier = "system-design"
+    name = "System Design"
+    url = "/system-design/"
+    weight = 40
+  [[menu.main]]
+    identifier = "gallery"
+    name = "Gallery"
+    url = "/gallery/"
+    weight = 50
+  [[menu.main]]
+    identifier = "contact"
+    name = "Contact"
+    url = "/contact/"
+    weight = 60
+
+[params]
+  author = "Dominic Capparelli"
+  description = "Production management, technical direction, creative technology, and system design for live events."
+  defaultTheme = "auto"
+  disableThemeToggle = false
+  hideAuthor = true
+  ShowReadingTime = false
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = false
+  ShowShareButtons = false
+  [params.label]
+    text = "Cothrom"
+  [params.footer]
+    hideCopyright = false
+    hidePoweredBy = true
+    text = "Cothrom Productions"
+
+  # No Fate theme contract (C1: clean + kraft overrides in assets/css/extended/)
+  [params.noFate]
+    style = "clean"
+    defaultMode = "editorial"
+    defaultAccent = "signal"
+    showThemeToggle = true
+    showSearch = false
+    showReadingTime = false
+    showPropositions = false
+    enableImageProcessing = true
+    validateContentModel = true
+    strictHomeSelections = false
+
+    [params.noFate.home]
+      modules = ["opening"]
+      featuredProposition = ""
+
+    [params.noFate.images]
+      widths = [480, 800, 1200, 1600]
+      webpQuality = 82
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+  [markup.highlight]
+    codeFences = true
+    noClasses = false

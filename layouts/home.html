@@ -1,0 +1,56 @@
+{{- /*
+  Site override of themes/no-fate/layouts/home.html.
+  Implements Creative C2: H2 hero (home/opening.html override) + below-fold
+  B2 order — Services links -> Biography -> Writing stub. Does not edit the
+  theme; theme partials (header/footer/body-end/validate) still apply via
+  baseof.html.
+*/ -}}
+{{- define "main" }}
+{{- $servicePaths := slice
+    "/production-management/"
+    "/technical-direction/"
+    "/creative-technology/"
+    "/system-design/"
+-}}
+<div class="nf-home" data-page-mode="editorial">
+    {{- partial "home/opening.html" . }}
+
+    <section id="services" class="nf-home-module nf-home-module--services" aria-labelledby="nf-services-heading">
+        <div class="nf-home-module__heading">
+            <h2 id="nf-services-heading">Services</h2>
+        </div>
+        <div class="nf-home-module__items">
+            <ul class="nf-home-services-list">
+                {{- range $servicePaths }}
+                {{- with site.GetPage . }}
+                <li>
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    {{- with .Description }}<p>{{ . }}</p>{{ end }}
+                </li>
+                {{- end }}
+                {{- end }}
+            </ul>
+        </div>
+    </section>
+
+    <section class="nf-home-module nf-home-module--about" aria-labelledby="nf-about-heading">
+        <div class="nf-home-module__heading">
+            <h2 id="nf-about-heading">About Dominic</h2>
+        </div>
+        <div class="nf-home-module__items">
+            <div class="post-content md-content nf-prose nf-home-bio">
+                {{ .Content }}
+            </div>
+        </div>
+    </section>
+
+    <section class="nf-home-module nf-home-module--writing-stub" aria-labelledby="nf-writing-heading">
+        <div class="nf-home-module__heading">
+            <h2 id="nf-writing-heading">Writing</h2>
+        </div>
+        <div class="nf-home-module__items">
+            <p class="nf-home-writing-stub">White papers and longer technical notes will be published here. Nothing to read yet — check back soon.</p>
+        </div>
+    </section>
+</div>
+{{- end }}

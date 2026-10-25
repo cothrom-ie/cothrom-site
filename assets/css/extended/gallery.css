@@ -1,0 +1,161 @@
+/*
+ * Phase 3 — Gallery (C4): continuous marquee + reduced-motion fallback.
+ * Loaded after No Fate via assets/css/extended/*.css — do not edit the theme.
+ */
+
+.nf-gallery__header {
+  max-width: var(--nf-reading, 68ch);
+}
+
+.nf-gallery__controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 var(--nf-gutter, 1.5rem);
+  margin-bottom: var(--nf-space-3, 1rem);
+}
+
+.nf-gallery__pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--nf-rule-colour);
+  background: transparent;
+  color: var(--nf-ink);
+  font-family: var(--nf-font-meta, ui-monospace, monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.nf-gallery__pause:hover,
+.nf-gallery__pause:focus-visible {
+  border-color: var(--brand-kraft);
+  color: var(--brand-kraft);
+}
+
+.nf-gallery__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.nf-gallery__track {
+  display: flex;
+  width: max-content;
+  gap: var(--nf-space-3, 1rem);
+  padding: 0 var(--nf-gutter, 1.5rem);
+}
+
+.nf-gallery__item {
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  line-height: 0;
+}
+
+.nf-gallery__item img {
+  display: block;
+  height: 46vh;
+  max-height: 26rem;
+  width: auto;
+  object-fit: cover;
+}
+
+/* M1: continuous marquee, only when the OS has no motion preference set */
+@media (prefers-reduced-motion: no-preference) {
+  .nf-gallery__track {
+    animation: nf-gallery-scroll 90s linear infinite;
+  }
+
+  /* I1: hover/focus pauses; the clone set duplicates content so -50% loops seamlessly */
+  .nf-gallery__track:hover,
+  .nf-gallery__track:focus-within,
+  .nf-gallery__track.is-paused {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes nf-gallery-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* A3: OS reduced-motion -> static responsive grid; Pause control has nothing to do, so hide it */
+@media (prefers-reduced-motion: reduce) {
+  .nf-gallery__controls {
+    display: none;
+  }
+
+  .nf-gallery__viewport {
+    overflow: visible;
+  }
+
+  .nf-gallery__track {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    width: 100%;
+    padding: 0 var(--nf-gutter, 1.5rem);
+  }
+
+  .nf-gallery__track [aria-hidden="true"] {
+    display: none;
+  }
+
+  .nf-gallery__item img {
+    height: auto;
+    width: 100%;
+    max-height: none;
+  }
+}
+
+/* I1: lightbox */
+.nf-gallery__lightbox {
+  position: relative;
+  max-width: min(92vw, 70rem);
+  max-height: 88vh;
+  padding: 0;
+  border: 0;
+  background: var(--nf-paper);
+}
+
+.nf-gallery__lightbox::backdrop {
+  background: rgba(29, 18, 13, 0.82);
+}
+
+.nf-gallery__lightbox picture,
+.nf-gallery__lightbox img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+}
+
+.nf-gallery__lightbox-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--brand-ink);
+  background: var(--brand-kraft);
+  color: var(--brand-ink);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.nf-gallery__lightbox-close:hover,
+.nf-gallery__lightbox-close:focus-visible {
+  background: var(--brand-ink);
+  color: var(--brand-kraft);
+}

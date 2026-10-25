@@ -1,0 +1,31 @@
+{{- /*
+  One gallery strip item (C4 L1/I1). Called twice from layouts/section/gallery.html —
+  once for the visible set, once more (clone=true) so the CSS marquee has a second,
+  accessibility-hidden copy to scroll into for a seamless loop.
+*/ -}}
+{{- $page := .page -}}
+{{- $p := .photo -}}
+{{- $i := .index -}}
+{{- $clone := .clone -}}
+{{- $src := $p.image -}}
+{{- $alt := $p.alt | default "" -}}
+{{- with $page.Resources.GetMatch $src }}
+    {{- $strip := .Resize "x640 q82" -}}
+    {{- $stripWebp := .Resize "x640 webp q82" -}}
+    {{- $full := .Resize "x1400 q85" -}}
+    {{- $fullWebp := .Resize "x1400 webp q82" -}}
+    <button type="button" class="nf-gallery__item" data-full="{{ $full.RelPermalink }}" data-full-webp="{{ $fullWebp.RelPermalink }}" data-alt="{{ $alt }}"{{ if $clone }} aria-hidden="true" tabindex="-1"{{ end }}>
+        <picture>
+            <source srcset="{{ $stripWebp.RelPermalink }}" type="image/webp">
+            <img
+                src="{{ $strip.RelPermalink }}"
+                width="{{ $strip.Width }}"
+                height="{{ $strip.Height }}"
+                alt="{{ if $clone }}{{ else }}{{ $alt }}{{ end }}"
+                loading="{{ if and (not $clone) (lt $i 4) }}eager{{ else }}lazy{{ end }}"
+                class="nf-content-image raw">
+        </picture>
+    </button>
+{{- else }}
+    {{- errorf "Gallery: photo %q not found as a page resource on %s" $src $page.RelPermalink -}}
+{{- end -}}
