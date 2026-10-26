@@ -36,6 +36,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/logos/cothrom-mark-kraft-180.png` | chrome (favicons) | **locked** — see `static/images/icons/apple-touch-icon.png` |
 | `images/logos/cothrom-mark-kraft-192.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-192x192.png` |
 | `images/logos/cothrom-mark-kraft-512.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-512x512.png` |
+| `images/logos/cothrom-mark-kraft.svg` | chrome (nav header logo) | **locked** — see `static/images/logos/cothrom-mark-kraft.svg` |
 
 ## Snapshot
 
@@ -174,7 +175,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | img-098 | `images/logos/cothrom-logo-kraft.svg` | `cothrom-logo-kraft` | chrome | candidate | Brand chrome / favicons only |
 | img-099 | `images/logos/cothrom-logo-kraft-1200x800.png` | `cothrom-logo-kraft-1200x800` | chrome | locked | Phase 5: sitewide fallback OG/Twitter image for hero-less pages, converted to JPG at `static/images/social/og-default.jpg`, referenced via `params.images` in `hugo.toml` |
 | img-100 | `images/logos/cothrom-logo-kraft-600x400.png` | `cothrom-logo-kraft-600x400` | chrome | candidate | Brand chrome / favicons only |
-| img-101 | `images/logos/cothrom-mark-kraft.svg` | `cothrom-mark-kraft` | chrome | candidate | Brand chrome / favicons only |
+| img-101 | `images/logos/cothrom-mark-kraft.svg` | `cothrom-mark-kraft` | chrome | locked | nav-chrome-light-logo: copied to `static/images/logos/cothrom-mark-kraft.svg`, rendered 28×28px to the left of the site label in the header (`layouts/_partials/header.html`, `params.label.logo`) |
 | img-102 | `images/logos/cothrom-mark-kraft-1024.png` | `cothrom-mark-kraft-1024` | chrome | locked | Phase 5 favicons: source for `static/favicon.ico` (16/32/48 ICO frames) and `static/images/icons/favicon-{16x16,32x32,48x48}.png`, all re-rendered fresh from this 1024px master |
 | img-103 | `images/logos/cothrom-mark-kraft-180.png` | `cothrom-mark-kraft-180` | chrome | locked | Phase 5 favicons: copied as-is to `static/images/icons/apple-touch-icon.png` |
 | img-104 | `images/logos/cothrom-mark-kraft-192.png` | `cothrom-mark-kraft-192` | chrome | locked | Phase 5 favicons: copied as-is to `static/images/icons/android-chrome-192x192.png`, referenced from `static/site.webmanifest` |

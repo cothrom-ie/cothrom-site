@@ -95,6 +95,18 @@
 
 _(none)_
 
+## Completed (nav-chrome-light-logo)
+
+- [x] **nav-chrome-light-logo** (Level 1) — ARCHIVE complete 2026-10-26 — `memory-bank/archive/archive-nav-chrome-light-logo.md`
+
+### Build observations (nav-chrome-light-logo)
+
+- `hugo.toml`: `defaultTheme="light"` + `disableThemeToggle=true` + `noFate.showThemeToggle=false` removes the toggle button/JS without touching the theme submodule; confirmed via Playwright that `colorScheme: 'dark'` OS preference still yields `data-theme="light"`
+- Site override `layouts/_partials/header.html` drops the `#theme-toggle` markup outright (not just hidden) and adds `<img class="nf-site-logo">` (28×28, decorative `alt=""`) before the site label inside the existing `.nf-site-title` link — flex `column-gap` from theme CSS handles spacing automatically, no extra CSS needed
+- Pre-existing `footer.html` site override (from the Contact/LinkedIn Phase 4 work) already conditionally bundles `theme-toggle.js` on the same flag, so no second edit was needed there
+- Logo source: `img-101` (`cothrom-mark-kraft.svg`, previously a "candidate" chrome asset) copied to `static/images/logos/` and locked in `docs/image-register.md`
+- `make build`: 15 pages, 0 WARN/ERROR; cspell clean after adding `triskelion`
+
 ## Completed (deploy-cf-pages)
 
 - [x] **deploy-cf-pages** (Level 2) — ARCHIVE complete 2026-10-26 — `memory-bank/archive/archive-deploy-cf-pages.md`
@@ -105,24 +117,25 @@ _(none)_
 - `static/_headers` mirrors nginx AppSec CSP/nosniff/frame/referrer; Hugo copies into `site/` (verified `make build`, 15 pages)
 - Workflow: `peaceiris/actions-hugo@v3` @ 0.158.0 extended + `cloudflare/wrangler-action@v4` → `pages deploy site --project-name=cothrom-site --commit-dirty=true`; checkout `submodules: true`; CF secret preflight before Wrangler
 - README treats Pages as production; Compose nginx = local preview; tunnel = optional/legacy
-- Live deploy / apex+www Bulk Redirect not verified in-agent (no CF/GH credentials) — operator follow-up in archive
+- **2026-10-26 update:** operator reported live deployment testing done and good — go-live checklist (CF/GH secrets, domains, Bulk Redirect, Tunnel cutover, smoke) treated as complete. Detailed per-item evidence not captured in-agent; see archive Notes.
 
 ## Not started / follow-up
 
-- Operator go-live (CF/GH secrets, domains, Bulk Redirect, smoke) — see archive + README
+_(none — deploy-cf-pages fully closed)_
 
-## Blockers (operator — not blocking Memory Bank)
+## Blockers (operator) — RESOLVED 2026-10-26
 
 | Item | Status |
 |------|--------|
-| Cloudflare account / Pages project / API token | **Open** — operator |
-| GH secrets (`CLOUDFLARE_*`, contact build vars) | **Open** — operator |
-| Custom domains + Bulk Redirect www→apex | **Open** — operator (README) |
-| DNS cutover Tunnel → Pages | **Open** — after green Pages deploy |
+| Cloudflare account / Pages project / API token | **Resolved** |
+| GH secrets (`CLOUDFLARE_*`, contact build vars) | **Resolved** |
+| Custom domains + Bulk Redirect www→apex | **Resolved** |
+| DNS cutover Tunnel → Pages | **Resolved** |
 
 ## Archive references
 
 | Task | Archive | Completed |
 |------|---------|-----------|
+| nav-chrome-light-logo | `memory-bank/archive/archive-nav-chrome-light-logo.md` | 2026-10-26 |
 | deploy-cf-pages | `memory-bank/archive/archive-deploy-cf-pages.md` | 2026-10-26 |
 | cothrom-site | `memory-bank/archive/archive-cothrom-site.md` | 2026-10-26 |

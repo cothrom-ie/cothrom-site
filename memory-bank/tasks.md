@@ -10,20 +10,17 @@ _(none — ready for next `/van`)_
 
 | Field | Value |
 |-------|-------|
-| **Task ID** | `deploy-cf-pages` |
-| **Complexity** | Level 2 |
+| **Task ID** | `nav-chrome-light-logo` |
+| **Complexity** | Level 1 |
 | **Archive date** | 2026-10-26 |
-| **Archive** | `memory-bank/archive/archive-deploy-cf-pages.md` |
-| **Reflection** | `memory-bank/reflection/reflection-deploy-cf-pages.md` |
-| **Status** | **COMPLETED** (in-repo); operator go-live still open — see archive follow-up |
+| **Archive** | `memory-bank/archive/archive-nav-chrome-light-logo.md` |
+| **Reflection** | `memory-bank/reflection/reflection-nav-chrome-light-logo.md` |
+| **Status** | **COMPLETED** |
 
 ### Status checklist
 
 - [x] Initialization (VAN) complete
-- [x] Planning complete
-- [x] Technology stack documented
-- [x] In-repo implementation complete
-- [ ] Technology validation (first live/CI deploy) — operator (documented in archive)
+- [x] Implementation (BUILD) complete
 - [x] Reflection complete
 - [x] Archiving complete
 
@@ -31,5 +28,6 @@ _(none — ready for next `/van`)_
 
 ## Completed Enhancements
 
-- [x] deploy-cf-pages Level 2 Cloudflare Pages GHA (2026-10-26) — `memory-bank/archive/archive-deploy-cf-pages.md`
+- [x] nav-chrome-light-logo Level 1 light-only + header logo (2026-10-26) — `memory-bank/archive/archive-nav-chrome-light-logo.md`
+- [x] deploy-cf-pages Level 2 Cloudflare Pages GHA (2026-10-26) — `memory-bank/archive/archive-deploy-cf-pages.md` — **operator go-live confirmed 2026-10-26** (deployment testing done and good; no more open blockers)
 - [x] cothrom-site Level 4 full site (2026-10-26) — `memory-bank/archive/archive-cothrom-site.md`

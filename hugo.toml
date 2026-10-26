@@ -60,8 +60,9 @@ enableRobotsTXT = true
   # of their own (Contact, thanks, Gallery) — the theme's get-page-images.html
   # falls back to this only when a page has no hero/seo.image/images/cover.
   images = ["/images/social/og-default.jpg"]
-  defaultTheme = "auto"
-  disableThemeToggle = false
+  # nav-chrome-light-logo: site is light-only — no dark/auto flip, no toggle.
+  defaultTheme = "light"
+  disableThemeToggle = true
   hideAuthor = true
   ShowReadingTime = false
   ShowBreadCrumbs = true
@@ -69,6 +70,9 @@ enableRobotsTXT = true
   ShowShareButtons = false
   [params.label]
     text = "Cothrom"
+    # nav-chrome-light-logo: kraft triskelion mark rendered left of the label
+    # in the site header override (layouts/_partials/header.html).
+    logo = "/images/logos/cothrom-mark-kraft.svg"
   [params.footer]
     hideCopyright = false
     hidePoweredBy = true
@@ -102,7 +106,7 @@ enableRobotsTXT = true
     style = "clean"
     defaultMode = "editorial"
     defaultAccent = "signal"
-    showThemeToggle = true
+    showThemeToggle = false
     showSearch = false
     showReadingTime = false
     showPropositions = false

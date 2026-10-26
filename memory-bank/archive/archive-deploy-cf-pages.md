@@ -11,7 +11,8 @@
 | **Workflow** | VAN → PLAN → BUILD → REFLECT → ARCHIVE (no creative phase) |
 | **Date opened** | 2026-10-26 |
 | **Date completed** | 2026-10-26 |
-| **Status** | **COMPLETED** (in-repo); operator go-live still open |
+| **Status** | **COMPLETED** — in-repo pipeline + operator go-live both verified |
+| **Go-live confirmed** | 2026-10-26 (operator-reported: deployment testing done and good) |
 | **Repo / branch** | `cothrom-ie/cothrom-site` · `main` |
 | **Reflection** | `memory-bank/reflection/reflection-deploy-cf-pages.md` |
 
@@ -21,7 +22,7 @@
 
 Moved the production hosting path from Docker nginx + Cloudflare Tunnel toward **Cloudflare Pages Direct Upload**, built and published by **GitHub Actions** + Wrangler (Hugo Extended 0.158.0, theme submodule, contact env overlay). In-repo deliverables: `static/_headers` (AppSec parity with `nginx.conf`), `.github/workflows/deploy-pages.yml` (secret preflight, `--commit-dirty`), and README / `.env.example` treating Pages as production and Compose as local preview.
 
-**Out of archive scope (operator):** CF project/token, GH secrets, custom domains, www→apex Bulk Redirect, first live smoke, Tunnel cutover. Documented in README and preserved below as follow-up.
+**Operator go-live** (CF project/token, GH secrets, custom domains, www→apex Bulk Redirect, first live smoke, Tunnel cutover) was completed and reported back as **passing deployment testing** on 2026-10-26. Specific operator-side evidence (apex/www response codes, contact form env in production HTML, etc.) was not captured in-agent — see Notes.
 
 ---
 
@@ -77,7 +78,7 @@ pages deploy site --project-name=cothrom-site --branch=main --commit-dirty=true
 | CSP / frame / nosniff in `site/_headers` | **PASS** |
 | Workflow file present | **PASS** |
 | cspell on new/changed files | **PASS** |
-| Live Pages deploy / apex 200 / www 301 | **PENDING** (operator credentials) |
+| Live Pages deploy / apex+www smoke | **PASS** — operator-confirmed 2026-10-26 ("deployment testing is done and good") |
 
 ---
 
@@ -92,19 +93,21 @@ pages deploy site --project-name=cothrom-site --branch=main --commit-dirty=true
 
 ## FUTURE CONSIDERATIONS / FOLLOW-UP
 
-Operator go-live checklist (also in README):
+Operator go-live checklist (also in README) — **completed 2026-10-26**:
 
-1. CF API token (Pages: Edit) + Account ID  
-2. Pages project `cothrom-site` (or first Wrangler deploy)  
-3. GH secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `N8N_CONTACT_WEBHOOK_URL`, `TURNSTILE_SITE_KEY`  
-4. Push/`workflow_dispatch` → green deploy  
-5. Custom domains `cothrom.ie` + `www.cothrom.ie`  
-6. Bulk Redirect www → `https://cothrom.ie` (301, preserve path/query)  
-7. Turnstile allow both hostnames  
-8. Disable Tunnel production routes  
-9. Smoke: apex 200, www 301, deep URL + query; contact env in production HTML  
+1. [x] CF API token (Pages: Edit) + Account ID
+2. [x] Pages project `cothrom-site` (or first Wrangler deploy)
+3. [x] GH secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `N8N_CONTACT_WEBHOOK_URL`, `TURNSTILE_SITE_KEY`
+4. [x] Push/`workflow_dispatch` → green deploy
+5. [x] Custom domains `cothrom.ie` + `www.cothrom.ie`
+6. [x] Bulk Redirect www → `https://cothrom.ie` (301, preserve path/query)
+7. [x] Turnstile allow both hostnames
+8. [x] Disable Tunnel production routes
+9. [x] Smoke: apex 200, www 301, deep URL + query; contact env in production HTML
 
-Optional: PR build-only workflow (no deploy) to catch Hugo/`_headers` regressions before `main`.
+Reported by operator as "deployment testing is done and good" (2026-10-26); itemised checklist above assumed complete as a set rather than individually re-verified in-agent.
+
+Optional remaining idea (not a blocker): PR build-only workflow (no deploy) to catch Hugo/`_headers` regressions before `main`.
 
 ---
 
@@ -118,4 +121,4 @@ Optional: PR build-only workflow (no deploy) to catch Hugo/`_headers` regression
 
 ## NOTES
 
-Archived on **2026-10-26** at user request after REFLECT, with **technology validation (first live CI deploy) still open**. Treat this archive as the record of in-repo pipeline readiness; append live smoke evidence here or in a small follow-up task when go-live completes.
+Archived on **2026-10-26** at user request after REFLECT, with technology validation (first live CI deploy) initially still open. Updated same day: user confirmed **"deployment testing is done and good"** — go-live treated as complete. This confirmation was a high-level sign-off rather than a detailed report; if specific evidence (apex HTTP status, www redirect behaviour, contact form env values in production HTML) is captured later, append it here.
