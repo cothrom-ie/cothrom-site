@@ -9,6 +9,12 @@ SHELL := /bin/bash
 .SHELLFLAGS := -euo pipefail -c
 .DEFAULT_GOAL := help
 
+# Optional local env (gitignored; see .env.example). Mainly used to supply the
+# contact-form secrets (Phase 4 / Creative C5) at build time without
+# committing them: N8N_CONTACT_WEBHOOK_URL, TURNSTILE_SITE_KEY.
+-include .env
+export
+
 HUGO_VERSION ?= 0.158.0
 HUGO_BIN := ./bin/hugo
 HUGO ?= $(shell if [ -x "$(HUGO_BIN)" ]; then echo "$(HUGO_BIN)"; elif command -v hugo >/dev/null 2>&1; then command -v hugo; else echo "$(HUGO_BIN)"; fi)
@@ -37,12 +43,19 @@ check-hugo: ## Fail if Hugo Extended < 0.158
 	@$(HUGO) version | grep -qi extended || { echo "Hugo Extended required"; exit 1; }
 
 build: check-hugo ## Production build → ./site
-	@$(HUGO) --gc --minify
+	@HUGO_PARAMS_CONTACT_WEBHOOKURL="$${N8N_CONTACT_WEBHOOK_URL:-}" \
+	 HUGO_PARAMS_CONTACT_TURNSTILESITEKEY="$${TURNSTILE_SITE_KEY:-}" \
+	 $(HUGO) --gc --minify
 	@test -f "$(PUBLISH_DIR)/index.html"
 	@echo "Built → $(PUBLISH_DIR)/"
+	@if [ -z "$${N8N_CONTACT_WEBHOOK_URL:-}" ]; then \
+		echo "NOTE: N8N_CONTACT_WEBHOOK_URL not set — contact form will build with no action URL (see .env.example)."; \
+	fi
 
 serve: check-hugo ## Dev server (bind 127.0.0.1)
-	@$(HUGO) server --bind 127.0.0.1 --baseURL http://127.0.0.1:1313/
+	@HUGO_PARAMS_CONTACT_WEBHOOKURL="$${N8N_CONTACT_WEBHOOK_URL:-}" \
+	 HUGO_PARAMS_CONTACT_TURNSTILESITEKEY="$${TURNSTILE_SITE_KEY:-}" \
+	 $(HUGO) server --bind 127.0.0.1 --baseURL http://127.0.0.1:1313/
 
 clean: ## Remove publish output and Hugo caches
 	@rm -rf "$(PUBLISH_DIR)" public resources/_gen .hugo_build.lock temp/hugo_cache

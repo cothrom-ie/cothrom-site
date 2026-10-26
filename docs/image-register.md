@@ -13,7 +13,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/prodMan/A01_0550-1.png` | production-management (hero) | **locked** — see `content/production-management/hero.jpg` |
 | `images/techDir/IMG_0266.png` | technical-direction (hero) | **locked** — see `content/technical-direction/hero.jpg` |
 | `images/creativeTech/IMG_0980.png` | creative-technology (hero) | **locked** — see `content/creative-technology/hero.jpg` |
-| `images/sysDesign/152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1.png` | system-design (hero) | **locked** — see `content/system-design/hero.jpg` |
+| `images/sysDesign/IMG_0004-1.png` | system-design (hero) | **locked** — see `content/system-design/hero.jpg` |
 | `images/gallery/100_0154-1.png` | gallery (g01) | **locked** — see `content/gallery/photos/g01.jpg` |
 | `images/gallery/PA260002-1.png` | gallery (g02) | **locked** — see `content/gallery/photos/g02.jpg` |
 | `images/gallery/IMG_1105.png` | gallery (g03) | **locked** — see `content/gallery/photos/g03.jpg` |
@@ -32,6 +32,10 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/gallery/IMG_1413.png` | gallery (g16) | **locked** — see `content/gallery/photos/g16.jpg` |
 | `images/gallery/IMG_0398.png` | gallery (g17) | **locked** — see `content/gallery/photos/g17.jpg` |
 | `images/gallery/PHOTO-2026-10-03-15-58-29-1.png` | gallery (g18) | **locked** — see `content/gallery/photos/g18.jpg` |
+| `images/logos/cothrom-mark-kraft-1024.png` | chrome (favicons) | **locked** — source for `static/favicon.ico` + `static/images/icons/favicon-{16x16,32x32,48x48}.png` |
+| `images/logos/cothrom-mark-kraft-180.png` | chrome (favicons) | **locked** — see `static/images/icons/apple-touch-icon.png` |
+| `images/logos/cothrom-mark-kraft-192.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-192x192.png` |
+| `images/logos/cothrom-mark-kraft-512.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-512x512.png` |
 
 ## Snapshot
 
@@ -73,7 +77,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | img-001 | `images/gallery/0201170730-1.png` | `0201170730-1` | gallery | locked | Gallery Phase 3 marquee (g08). Resized to 1280px tall, PNG→JPG q85, saved as `content/gallery/photos/g08.jpg`. |
 | img-002 | `images/gallery/100_0154-1.png` | `100_0154-1` | gallery | locked | Gallery Phase 3 marquee (g01). Resized to 1280px tall, PNG→JPG q85, saved as `content/gallery/photos/g01.jpg`. |
 | img-003 | `images/gallery/152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1.png` | `152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1` | omit | omit | Duplicate of images/sysDesign/; service owns basename |
-| img-004 | `images/sysDesign/152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1.png` | `152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1` | system-design | locked | System Design H1 hero (Phase 2). Resized 3840×2160→2400×1350, PNG→JPG q86, saved as `content/system-design/hero.jpg`. |
+| img-004 | `images/sysDesign/152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1.png` | `152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1` | system-design | candidate | Former System Design H1 hero (Phase 2); replaced by IMG_0004-1. |
 | img-005 | `images/gallery/2013-03-17 08.16.30-1.png` | `2013-03-17 08.16.30-1` | gallery | locked | Gallery Phase 3 marquee (g06). Resized to 1280px tall, PNG→JPG q85, saved as `content/gallery/photos/g06.jpg`. |
 | img-006 | `images/gallery/2013-04-14 07.36.29-1.png` | `2013-04-14 07.36.29-1` | gallery | candidate |  |
 | img-007 | `images/gallery/2014-04-01 08.16.51-1.png` | `2014-04-01 08.16.51-1` | gallery | candidate |  |
@@ -99,7 +103,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | img-027 | `images/gallery/IMG_0003-1.png` | `IMG_0003-1` | omit | omit | Duplicate of images/sysDesign/; service owns basename |
 | img-028 | `images/sysDesign/IMG_0003-1.png` | `IMG_0003-1` | system-design | candidate | Owns basename vs gallery twin |
 | img-029 | `images/gallery/IMG_0004-1.png` | `IMG_0004-1` | omit | omit | Duplicate of images/sysDesign/; service owns basename |
-| img-030 | `images/sysDesign/IMG_0004-1.png` | `IMG_0004-1` | system-design | candidate | Owns basename vs gallery twin |
+| img-030 | `images/sysDesign/IMG_0004-1.png` | `IMG_0004-1` | system-design | locked | System Design H1 hero. Rotated CW, mirrored (ISO drawing clear of kraft plate), cropped 16:9, resized 4032×2268→2400×1350, PNG→JPG q86, saved as `content/system-design/hero.jpg`. |
 | img-031 | `images/gallery/IMG_0023-1.png` | `IMG_0023-1` | omit | omit | Duplicate of images/prodMan/; service owns basename |
 | img-032 | `images/prodMan/IMG_0023-1.png` | `IMG_0023-1` | production-management | candidate | Owns basename vs gallery twin |
 | img-033 | `images/gallery/IMG_0026-1.png` | `IMG_0026-1` | gallery | candidate |  |
@@ -168,12 +172,12 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | img-096 | `images/techDir/PC300072-1.png` | `PC300072-1` | technical-direction | candidate | Owns basename vs gallery twin |
 | img-097 | `images/gallery/PHOTO-2026-10-03-15-58-29-1.png` | `PHOTO-2026-10-03-15-58-29-1` | gallery | locked | Gallery Phase 3 marquee (g18). Resized to 1280px tall, PNG→JPG q85, saved as `content/gallery/photos/g18.jpg`. |
 | img-098 | `images/logos/cothrom-logo-kraft.svg` | `cothrom-logo-kraft` | chrome | candidate | Brand chrome / favicons only |
-| img-099 | `images/logos/cothrom-logo-kraft-1200x800.png` | `cothrom-logo-kraft-1200x800` | chrome | candidate | Brand chrome / favicons only |
+| img-099 | `images/logos/cothrom-logo-kraft-1200x800.png` | `cothrom-logo-kraft-1200x800` | chrome | locked | Phase 5: sitewide fallback OG/Twitter image for hero-less pages, converted to JPG at `static/images/social/og-default.jpg`, referenced via `params.images` in `hugo.toml` |
 | img-100 | `images/logos/cothrom-logo-kraft-600x400.png` | `cothrom-logo-kraft-600x400` | chrome | candidate | Brand chrome / favicons only |
 | img-101 | `images/logos/cothrom-mark-kraft.svg` | `cothrom-mark-kraft` | chrome | candidate | Brand chrome / favicons only |
-| img-102 | `images/logos/cothrom-mark-kraft-1024.png` | `cothrom-mark-kraft-1024` | chrome | candidate | Brand chrome / favicons only |
-| img-103 | `images/logos/cothrom-mark-kraft-180.png` | `cothrom-mark-kraft-180` | chrome | candidate | Brand chrome / favicons only |
-| img-104 | `images/logos/cothrom-mark-kraft-192.png` | `cothrom-mark-kraft-192` | chrome | candidate | Brand chrome / favicons only |
-| img-105 | `images/logos/cothrom-mark-kraft-32.png` | `cothrom-mark-kraft-32` | chrome | candidate | Brand chrome / favicons only |
-| img-106 | `images/logos/cothrom-mark-kraft-512.png` | `cothrom-mark-kraft-512` | chrome | candidate | Brand chrome / favicons only |
+| img-102 | `images/logos/cothrom-mark-kraft-1024.png` | `cothrom-mark-kraft-1024` | chrome | locked | Phase 5 favicons: source for `static/favicon.ico` (16/32/48 ICO frames) and `static/images/icons/favicon-{16x16,32x32,48x48}.png`, all re-rendered fresh from this 1024px master |
+| img-103 | `images/logos/cothrom-mark-kraft-180.png` | `cothrom-mark-kraft-180` | chrome | locked | Phase 5 favicons: copied as-is to `static/images/icons/apple-touch-icon.png` |
+| img-104 | `images/logos/cothrom-mark-kraft-192.png` | `cothrom-mark-kraft-192` | chrome | locked | Phase 5 favicons: copied as-is to `static/images/icons/android-chrome-192x192.png`, referenced from `static/site.webmanifest` |
+| img-105 | `images/logos/cothrom-mark-kraft-32.png` | `cothrom-mark-kraft-32` | chrome | superseded | Phase 0 smoke-test file at `static/images/logos/` (never templated in). Removed in Phase 5 — replaced by `favicon-32x32.png` re-rendered from the 1024px master (img-102) for consistent anti-aliasing across the whole favicon set |
+| img-106 | `images/logos/cothrom-mark-kraft-512.png` | `cothrom-mark-kraft-512` | chrome | locked | Phase 5 favicons: copied as-is to `static/images/icons/android-chrome-512x512.png`, referenced from `static/site.webmanifest` |
 | img-107 | `images/gallery/first 218-1.png` | `first 218-1` | gallery | locked | Gallery Phase 3 marquee (g04). Resized to 1280px tall, PNG→JPG q85, saved as `content/gallery/photos/g04.jpg`. |

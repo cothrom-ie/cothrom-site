@@ -18,6 +18,69 @@ home
 
 NGINX
 
+## Build & Development
+
+Hugo Extended ≥ 0.158 is required (the No Fate theme needs the extended
+build for Sass/webp processing). `make hugo-install` downloads the pinned
+version into `./bin/hugo`; all other targets use that binary automatically
+if present.
+
+```sh
+make hugo-install   # one-time: download Hugo Extended into ./bin/hugo
+make serve          # dev server at http://127.0.0.1:1313/
+make build          # production build → ./site (matches compose.yml's mount)
+make clean          # remove ./site, caches, and Hugo's lock file
+make help           # list all targets
+```
+
+`publishDir` is `site/`, which is exactly what `compose.yml`'s `nginx`
+service mounts read-only — a plain `make build` followed by
+`docker compose up -d nginx` is enough to preview the production build
+behind the real nginx config locally (`http://127.0.0.1:8039/`).
+
+## Environment Variables
+
+Copy `.env.example` to `.env` (gitignored, never commit a filled-in copy)
+and fill in real values as needed. `make build` / `make serve` load `.env`
+automatically and pass the relevant variables through to Hugo as
+`HUGO_PARAMS_*` overrides at build time — see `hugo.toml`'s `[params.contact]`
+block and `systemPatterns.md` for the underscore-nesting gotcha in that
+mechanism.
+
+| Variable | Used by | Purpose |
+| --- | --- | --- |
+| `CLOUDFLARE_TUNNEL_TOKEN` | `compose.yml` (`cloudflare-tunnel` service) | Auth token for the `cloudflared` container that exposes the site publicly via Cloudflare Tunnel. |
+| `N8N_CONTACT_WEBHOOK_URL` | `make build`/`make serve` → Hugo `params.contact.webhookurl` | Full HTTPS URL of the n8n workflow that receives Contact form POSTs. Left blank, the form still renders but has no action URL and the page notes that submissions aren't wired (see `layouts/section/contact.html`). |
+| `TURNSTILE_SITE_KEY` | `make build`/`make serve` → Hugo `params.contact.turnstilesitekey` | Cloudflare Turnstile **public** site key, safe to ship in built HTML. The matching Turnstile secret key is verified inside the n8n workflow only and must never appear in this repo. |
+
+None of these variables are required for a local `make serve`/`make build` —
+the site builds and renders correctly with them unset.
+
+## Deploy (Docker Compose)
+
+`compose.yml` defines two independent services on a shared `frontend`
+network:
+
+- **`nginx`** — serves the already-built `./site` directory (read-only
+  bind mount) on port `8039`, using `nginx.conf`. This config sets
+  baseline AppSec headers (`X-Content-Type-Options`, `X-Frame-Options`,
+  `Referrer-Policy`, a `Content-Security-Policy` scoped to this site's
+  actual script/style/font usage plus the Cloudflare Turnstile origin),
+  the `/404.html` error page, 7-day caching for static assets, and an
+  explicit `application/manifest+json` MIME mapping for
+  `site.webmanifest`. It does **not** build the site itself — run
+  `make build` first (or as part of CI/CD) so `./site` is current before
+  starting or restarting this service.
+- **`cloudflare-tunnel`** — optional `cloudflared` sidecar that exposes
+  the `nginx` service publicly via a Cloudflare Tunnel, authenticated by
+  `CLOUDFLARE_TUNNEL_TOKEN`. Not required for local preview.
+
+```sh
+make build
+docker compose up -d nginx              # local preview on :8039
+docker compose up -d                    # nginx + the Cloudflare tunnel
+```
+
 ## Pages
 
 ### Home

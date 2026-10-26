@@ -1,0 +1,24 @@
+{{- /*
+  Site override of themes/no-fate/layouts/404.html.
+
+  Fix (Phase 5): the theme's own .not-found CSS (themes/no-fate/assets/css/
+  common/404.css) sets a blanket font-size: 160px on the whole container,
+  which was clearly written for the "wild" style's richer 404 override
+  (themes/no-fate/assets/css/styles/wild.css has its own dedicated .not-found
+  rules) — this site uses the "clean" base style (C1), which has no matching
+  override, so the inherited 160px cascaded down into the body text and
+  "Return home" link, producing a broken, oversized layout. Markup kept
+  functionally identical to the theme (same page-not-found/return-home copy,
+  via i18n keys) but laid out with a scoped kraft plate (same material
+  language as Contact's H1) instead of relying on the theme's .not-found CSS.
+  Does not edit theme files.
+*/ -}}
+{{- define "main" }}
+<section class="nf-404">
+    <div class="nf-404__plate">
+        <p class="nf-article__kicker">404</p>
+        <h1 class="post-title">{{ i18n "nf_not_found" | default "Page not found" }}</h1>
+        <p class="nf-404__cta"><a class="nf-cta nf-cta--secondary" href="{{ site.Home.RelPermalink }}">{{ i18n "nf_return_home" | default "Return home" }}</a></p>
+    </div>
+</section>
+{{- end }}

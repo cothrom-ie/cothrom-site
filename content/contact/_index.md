@@ -1,14 +1,11 @@
 ---
 title: "Contact"
-description: "Get in touch with Cothrom Productions."
-summary: "Contact stub — form and LinkedIn land in Phase 4."
+description: "Get in touch about a production, technical brief, or collaboration."
+summary: "Get in touch about a production, technical brief, or collaboration."
 date: 2026-10-25
 
 content:
-  format: "section"
-
-visual:
-  mode: "editorial"
+  format: "contact"
 ---
 
-Contact page stub (Phase 0). Form + LinkedIn; no phone or email on the published site.
+A short note works well for most enquiries. For anything time-sensitive, LinkedIn is usually the fastest way through.

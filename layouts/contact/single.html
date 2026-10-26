@@ -1,0 +1,36 @@
+{{- /*
+  Site override: Contact "thanks" page (C5 U1). Static confirmation shown
+  after n8n redirects a successful submission to /contact/thanks/; no form
+  re-display. This is the only Kind=page content under the /contact/ section
+  (the main Contact page is a branch bundle rendered by
+  layouts/section/contact.html), so this layouts/contact/single.html
+  override applies to content/contact/thanks/index.md only.
+
+  Does not edit theme files.
+*/ -}}
+{{- define "main" }}
+{{- $page := . -}}
+<div class="nf-article nf-contact-thanks" data-page-mode="contact-thanks">
+    <header class="post-header">
+        <h1 class="post-title">{{ $page.Title }}</h1>
+    </header>
+    <div class="nf-article__body">
+        {{- with $page.Content }}
+        <div class="post-content md-content nf-prose">
+            {{ . }}
+        </div>
+        {{- end }}
+        <ul class="nf-contact-thanks-links">
+            <li><a href="{{ "/" | relLangURL }}">Home</a></li>
+            {{- range site.Menus.main }}
+                {{- if ne .Identifier "contact" }}
+            <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                {{- end }}
+            {{- end }}
+            {{- with site.Params.social.linkedin }}
+            <li><a href="{{ . }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            {{- end }}
+        </ul>
+    </div>
+</div>
+{{- end }}

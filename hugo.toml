@@ -12,6 +12,12 @@ enableRobotsTXT = true
 [pagination]
   pagerSize = 12
 
+# Phase 5: no content on this site uses tags/categories front matter, so
+# disable Hugo's default taxonomies entirely rather than publishing empty
+# /categories/ and /tags/ list pages (previously showing up in sitemap.xml
+# with nothing on them).
+[taxonomies]
+
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
@@ -50,6 +56,10 @@ enableRobotsTXT = true
 [params]
   author = "Dominic Capparelli"
   description = "Production management, technical direction, creative technology, and system design for live events."
+  # Phase 5: sitewide fallback OG/Twitter image for pages with no visual.hero
+  # of their own (Contact, thanks, Gallery) — the theme's get-page-images.html
+  # falls back to this only when a page has no hero/seo.image/images/cover.
+  images = ["/images/social/og-default.jpg"]
   defaultTheme = "auto"
   disableThemeToggle = false
   hideAuthor = true
@@ -63,6 +73,29 @@ enableRobotsTXT = true
     hideCopyright = false
     hidePoweredBy = true
     text = "Cothrom Productions"
+
+  # C5 L1: LinkedIn is the only public contact channel — footer (all pages) + Contact page
+  [params.social]
+    linkedin = "https://www.linkedin.com/in/dominic-capparelli/"
+
+  # Phase 5: feeds the Organization schema.org "sameAs" property on Home
+  # (themes/no-fate/layouts/_partials/templates/schema_json.html) — otherwise
+  # it renders an empty array even though LinkedIn is configured above.
+  [params.schema]
+    sameAs = ["https://www.linkedin.com/in/dominic-capparelli/"]
+
+  # C5 T1/S2: contact form endpoint + Turnstile site key. Left blank here on
+  # purpose — real values are supplied at `hugo build` time via env vars
+  # (N8N_CONTACT_WEBHOOK_URL / TURNSTILE_SITE_KEY), mapped by the Makefile to
+  # Hugo's HUGO_PARAMS_* config overlay. Never commit real values here.
+  #
+  # NOTE: param keys below deliberately avoid underscores — Hugo's env var
+  # overlay treats every underscore as a new nesting level (HUGO_PARAMS_A_B
+  # sets params.a.b, not params.a_b), so "webhook_url" would not bind as a
+  # single key. Keep these as one unbroken word if you rename them.
+  [params.contact]
+    webhookurl = ""
+    turnstilesitekey = ""
 
   # No Fate theme contract (C1: clean + kraft overrides in assets/css/extended/)
   [params.noFate]
@@ -84,6 +117,18 @@ enableRobotsTXT = true
     [params.noFate.images]
       widths = [480, 800, 1200, 1600]
       webpQuality = 82
+
+  # Phase 5: favicons / site icons, generated from the locked kraft mark
+  # (assets-general/logos/cothrom-mark-kraft*.png — see docs/image-register.md
+  # "chrome" rows). Files live under static/ (static/favicon.ico,
+  # static/images/icons/*, static/site.webmanifest).
+  [params.assets]
+    favicon = "/favicon.ico"
+    favicon16x16 = "/images/icons/favicon-16x16.png"
+    favicon32x32 = "/images/icons/favicon-32x32.png"
+    apple_touch_icon = "/images/icons/apple-touch-icon.png"
+    theme_color = "#be9e6c"
+    msapplication_TileColor = "#be9e6c"
 
 [markup]
   [markup.goldmark]

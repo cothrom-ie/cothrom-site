@@ -10,7 +10,7 @@ content:
 visual:
   mode: "editorial"
   hero: "hero.jpg"
-  hero_alt: "A broadcast control room operator viewing a bank of multiview screens showing parliamentary chamber camera feeds and system status displays."
+  hero_alt: "Large-format technical drawings spread on a table, with an isometric seating and stage layout in the foreground and a stack of title blocks behind."
 ---
 
 ## Who it's for

@@ -1,0 +1,10 @@
+{{- /*
+  Site override of themes/no-fate/layouts/_partials/hooks/head-end.html
+  (designated theme extension point — does not edit the theme).
+
+  Phase 5: adds the one tag the theme's head.html doesn't already emit from
+  site.Params.assets — a web app manifest link. Standard favicons, the Apple
+  touch icon, and theme-color meta are already wired via
+  site.Params.assets.favicon* in hugo.toml; see head.html's "Favicons" block.
+*/ -}}
+<link rel="manifest" href="{{ "site.webmanifest" | absURL }}">

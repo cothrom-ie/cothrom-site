@@ -1,0 +1,123 @@
+/*
+ * Phase 4 — Contact (C5 H1/F1/S2): standalone kraft plate invite (no photo —
+ * Contact is a task page, not a hero page) + accessible form styling.
+ * Loaded after No Fate via assets/css/extended/*.css — do not edit the theme.
+ */
+
+.nf-contact-hero {
+  padding: var(--nf-gutter, 1.5rem) var(--nf-gutter, 1.5rem) 0;
+}
+
+.nf-contact-hero__plate {
+  max-width: 34rem;
+  padding: var(--nf-space-5, 2rem);
+  background: var(--brand-kraft);
+  border: 1px solid var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+.nf-contact-hero__plate .nf-article__kicker,
+.nf-contact-hero__plate .post-title,
+.nf-contact-hero__plate .nf-contact-hero__invite {
+  color: var(--brand-ink);
+}
+
+.nf-contact-hero__plate .nf-article__kicker {
+  margin: 0;
+  opacity: 0.75;
+}
+
+.nf-contact-hero__linkedin {
+  margin-top: var(--nf-space-3, 1rem);
+}
+
+.nf-contact-hero__plate .nf-cta--secondary {
+  border-color: rgba(29, 18, 13, 0.45);
+  color: var(--brand-ink);
+}
+
+.nf-contact-hero__plate .nf-cta--secondary:hover,
+.nf-contact-hero__plate .nf-cta--secondary:focus-visible {
+  background: rgba(29, 18, 13, 0.08);
+  border-color: var(--brand-ink);
+  color: var(--brand-ink);
+}
+
+@media (max-width: 40rem) {
+  .nf-contact-hero__plate {
+    max-width: none;
+  }
+}
+
+.nf-contact-body {
+  max-width: var(--nf-reading, 68ch);
+  padding: var(--nf-space-5, 2rem) var(--nf-gutter, 1.5rem);
+}
+
+.nf-contact-form .nf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: var(--nf-space-4, 1.25rem);
+}
+
+.nf-contact-form label {
+  font-family: var(--nf-font-meta, ui-monospace, monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nf-contact-form input,
+.nf-contact-form textarea {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--nf-rule-colour, currentColor);
+  background: var(--nf-surface);
+  color: var(--nf-ink);
+  font: inherit;
+}
+
+.nf-contact-form input:focus-visible,
+.nf-contact-form textarea:focus-visible {
+  outline: 2px solid var(--brand-kraft);
+  outline-offset: 2px;
+}
+
+/* Honeypot (S2): kept in normal flow and in the DOM (not display:none) so
+   naive scripted submissions still fill it in, but visually hidden and out
+   of the tab order so sighted and assistive-tech visitors never see it. */
+.nf-field--honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.nf-contact-form .cf-turnstile {
+  margin-bottom: var(--nf-space-4, 1.25rem);
+}
+
+.nf-contact-error {
+  margin-bottom: var(--nf-space-4, 1.25rem);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--nf-alert, #8a6f3f);
+  background: rgba(138, 111, 63, 0.12);
+  color: var(--nf-ink);
+}
+
+.nf-contact-note {
+  color: var(--nf-muted);
+  font-size: 0.9rem;
+}
+
+.nf-contact-thanks-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--nf-space-4, 1.25rem);
+  list-style: none;
+  margin: var(--nf-space-4, 1.25rem) 0 0;
+  padding: 0;
+}

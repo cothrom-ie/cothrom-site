@@ -671,12 +671,21 @@ venv/
 */.venv/
 
 assets-general/
-static/
+# NOTE (Phase 5): static/ was previously blanket-ignored here, which also hid
+# small, intentional, committed site chrome (favicons, site.webmanifest) from
+# git — the same class of issue as the memory-bank/ gitignore bug found in
+# Phase 3. static/ is the real Hugo static/ dir and must be tracked for the
+# site to be reproducible from a fresh clone. Do not re-add a blanket ignore
+# for it; ignore specific generated subpaths instead if ever needed.
 # Ignore local Cursor junk, but keep project skills/rules discoverable.
 # Cursor skill/rule discovery respects .gitignore; ignoring all of .cursor/
 # hides /build and other project skills from the slash menu.
 .cursor/
-images/
+# Anchored to repo root (Phase 5 fix): a bare `images/` matches a directory
+# named "images" at ANY depth, which was unintentionally also hiding the
+# committed `static/images/` site-chrome assets (favicons, logos). This line
+# is only meant to ignore the root-level raw working photo library.
+/images/
 
 # Hugo publish output (compose serves ./site) and local tooling
 site/

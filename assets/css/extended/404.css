@@ -1,0 +1,49 @@
+/*
+ * Phase 5 — 404 page: scoped layout that doesn't rely on the theme's
+ * .not-found CSS (which cascades a blanket 160px font-size intended for the
+ * "wild" style only — see layouts/404.html for the full explanation).
+ * Loaded after No Fate via assets/css/extended/*.css — do not edit the theme.
+ */
+
+.nf-404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: min(60vh, 32rem);
+  padding: var(--nf-gutter, 1.5rem);
+}
+
+.nf-404__plate {
+  max-width: 28rem;
+  padding: var(--nf-space-5, 2rem);
+  background: var(--brand-kraft);
+  border: 1px solid var(--brand-ink);
+  color: var(--brand-ink);
+  text-align: center;
+}
+
+.nf-404__plate .nf-article__kicker,
+.nf-404__plate .post-title {
+  color: var(--brand-ink);
+  margin: 0;
+}
+
+.nf-404__plate .nf-article__kicker {
+  opacity: 0.75;
+}
+
+.nf-404__cta {
+  margin-top: var(--nf-space-4, 1.25rem);
+}
+
+.nf-404__plate .nf-cta--secondary {
+  border-color: rgba(29, 18, 13, 0.45);
+  color: var(--brand-ink);
+}
+
+.nf-404__plate .nf-cta--secondary:hover,
+.nf-404__plate .nf-cta--secondary:focus-visible {
+  background: rgba(29, 18, 13, 0.08);
+  border-color: var(--brand-ink);
+  color: var(--brand-ink);
+}

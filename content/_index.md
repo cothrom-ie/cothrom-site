@@ -7,11 +7,20 @@ date: 2026-10-25
 content:
   format: "home"
 
+# Home's hero lives at opening.image (custom param, read by layouts/home.html /
+# _partials/home/opening.html — see systemPatterns.md), not the generic
+# visual.hero key get-page-images.html checks for OG/Twitter images. seo.image
+# is the theme's own supported override for exactly this case (checked before
+# visual.hero) — otherwise og:image/twitter:image would fall through to the
+# sitewide default (params.images in hugo.toml) instead of using this hero.
+seo:
+  image: "cothrom-home-hero.jpg"
+
 opening:
   headline: "Production management for ambitious live events."
-  deck: "Cothrom also provides technical direction, creative technology, and system design — from early planning through on-site delivery."
+  deck: "Cothrom also provides technical direction, creative technology consultation, and system design - from early planning through on-site delivery."
   image: "cothrom-home-hero.jpg"
-  image_alt: "An evening event space with round cocktail tables, string lighting, and a large LED backdrop screen showing a city skyline at sunset."
+  image_alt: "A cocktail event with super widescreen and custom scenic elements."
 
 visual:
   mode: "editorial"

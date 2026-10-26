@@ -15,6 +15,40 @@
 - [x] **Phase 1 / Gate 1** — Home live, reviewed (2026-10-25)
 - [x] **Phase 2 / Gate 2.1–2.4** — all four service pages live, reviewed (2026-10-25)
 - [x] **Phase 3 / Gate 3** — Gallery marquee live, reviewed (2026-10-25)
+- [x] **Phase 4 / Gate 4** — Contact form + thanks page + sitewide LinkedIn footer live, reviewed (2026-10-26)
+- [x] **Phase 5 / Gate 5** — Hardening & polish complete, full regression passed (2026-10-26)
+- [x] **Full-task reflection** — `memory-bank/reflection/reflection-cothrom-site.md` (2026-10-26)
+- [x] **Full-task archive** — `memory-bank/archive/archive-cothrom-site.md` (2026-10-26) — **TASK COMPLETE**
+
+## Phase 5 observations
+
+- **Gitignore integrity:** found and fixed two compounding, deploy-breaking bugs — `static/` was blanket-ignored (hiding favicons/`site.webmanifest`, same class of bug as the Phase 3 `memory-bank/` issue) and the root-only `images/` pattern was unanchored and so also caught `static/images/` at depth. Fixed by removing the `static/` line and anchoring to `/images/`; verified independently via `git check-ignore -v`
+- **Favicons/manifest:** full set generated via PIL from existing locked kraft-mark assets (no new artwork); wired through `site.Params.assets.*` plus a new `layouts/_partials/hooks/head-end.html` hook override for the `<link rel="manifest">` tag
+- **Upstream theme bug found and fixed (not forked):** `themes/no-fate/layouts/_partials/templates/opengraph.html` calls the image-resolution partial by the wrong path (missing the `templates/` prefix the sibling `twitter_cards.html` uses correctly), so `og:image` silently never picked up a page's own hero. Diagnosed via binary-search debugging (confirmed params → resource resolution → the called function itself were each correct, isolating the bug to the caller's path string); fixed via a one-line site-level override. One temporary theme-file edit was made for diagnosis, then fully reverted and confirmed clean (`diff` + `git status` on the submodule)
+- Home's bespoke `opening.image` hero needed its own fix — added `seo.image` front matter (the theme's supported override) since Home doesn't use the generic `visual.hero` key `get-page-images.html` checks
+- Disabled Hugo's default `tag`/`category` taxonomies (nothing uses them; they were producing empty pages in `sitemap.xml`) — page count 19 → 15
+- **404 page:** the theme's own `.not-found` CSS applies a blanket `font-size: 160px` apparently intended only for the "wild" style, breaking layout under this site's locked "clean" style. Fixed via a full site-level override (`layouts/404.html` + `assets/css/extended/404.css`) in the same kraft-plate language as Contact/Service heroes
+- **Accessibility:** axe-core (WCAG 2A/2AA + best-practice) across all 8 routes, light and dark colour schemes: **0 violations** both times; 1 `<h1>` per page, correct `lang`, skip-link present everywhere
+- **Image register audit:** every file in `content/`/`static/` (31 total) traces to exactly one `locked` register row (28 locked rows: 23 content photography 1:1, 8 favicon/OG derivatives from 5 chrome-category sources); 0 orphans, 0 duplicate basenames among locked rows
+- **Style-guide re-pass:** grep sweep for clichés/American spellings/contractions across all published content — clean, aside from the already-locked `## Who it's for`/`## What it's for` heading skeleton (not first-person prose)
+- **NGINX hardening:** added `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and a scoped `Content-Security-Policy` (allowing the one real external origin, Cloudflare Turnstile) to `nginx.conf`, plus an explicit `application/manifest+json` MIME mapping. Verified against the **real** nginx container (via `docker compose up -d --force-recreate nginx` against the production build, not just `hugo server`) — all 8 routes 200, `/404.html` returns true 404 status with custom content, correct content types/caching on favicon/webmanifest, headers present on every response. Added README **Build & Development**, **Environment Variables**, and **Deploy (Docker Compose)** sections documenting `make` targets and the `.env`/`.env.example` contract
+- **cspell:** 108 "unknown word" hits, all technical/infra vocabulary in config/templates/memory-bank docs — **zero in published content**. Added ~40 legitimate terms to the dictionary; re-run clean (0/46 files)
+- **Full regression:** `make clean && make build` → 15 pages, zero WARN/ERROR; Playwright across all 8 routes × 2 breakpoints — all 200, zero console errors, zero broken internal links
+- Sandbox note (recurring across all phases): starting the Hugo dev server or a Docker container in one Shell call and testing from a separate call fails due to per-call network/socket isolation; the reliable pattern is always to chain start + verification in one call
+
+## Phase 4 observations
+
+- `content/contact/_index.md` stays a **branch bundle** (same reasoning as Gallery: no No Fate mode dispatch needed) — `layouts/section/contact.html` fully replaces the theme's `list.html` for `/contact/` only. `content/contact/thanks/index.md` is a leaf bundle (the only Kind=`page` content under this section), rendered by its own `layouts/contact/single.html` override, so there's no template collision between the two
+- H1: a standalone kraft plate (no photo) — Contact is a task page, not a hero page, per C5's own rationale; reuses the same kraft/ink/`.nf-cta` material language as Home and the service pages via new rules in `assets/css/extended/contact.css`
+- **Hugo env-var gotcha (found and fixed):** Hugo's `HUGO_PARAMS_*` build-time config overlay treats every underscore in the variable name as a *new nesting level* — `HUGO_PARAMS_CONTACT_WEBHOOK_URL` sets `params.contact.webhook.url`, not the intended `params.contact.webhook_url`. Renamed the `hugo.toml` param keys to single unbroken words (`webhookurl`, `turnstilesitekey`); confirmed via `hugo config` and a real build with simulated env vars that the URL/key now land correctly. Documented inline in `hugo.toml` and in `systemPatterns.md` as a reusable gotcha
+- T1/W1: classic HTML `POST`, `action` URL and Turnstile site key sourced from `hugo build`-time env vars (`N8N_CONTACT_WEBHOOK_URL`, `TURNSTILE_SITE_KEY`), bridged into Hugo's config overlay by the Makefile (`-include .env` + `export`); neither value is committed — `.env.example` documents the contract, real `.env` stays gitignored. The Turnstile *secret* key is never read by Hugo at all — it belongs only in the n8n workflow
+- Graceful degradation verified both ways: no env vars → form still renders with `action=""`, no Turnstile widget, and a visible on-page dev note naming the missing variable; env vars present → correct `action` and `data-sitekey` both appear, widget script loads
+- S2 honeypot: visually hidden via the standard "clip to 1×1px + `overflow:hidden`" technique (deliberately **not** `display:none`, which naive-but-CSS-aware bots specifically check for and skip) + `tabindex="-1"` + `aria-hidden="true"` wrapper. Verified via Playwright: the wrapper's real bounding box is 1×1px with `clip: rect(0,0,0,0)`, and keyboard Tab from the Name field skips straight to Email
+- L1: LinkedIn (`https://www.linkedin.com/in/dominic-capparelli/`, from `superCV.yaml`'s `social_networks` username) on the Contact plate **and** sitewide in the footer, via a full site-level override of `layouts/_partials/footer.html` (theme file copied verbatim plus one added `<span><a>`) — confirmed present in the footer on all 8 built routes
+- U1 thanks page link list (Home / 4 services / Gallery / LinkedIn) is generated from `site.Menus.main` + `site.Params.social.linkedin` rather than hardcoded, so it can't drift from the live nav
+- Error path: n8n is documented to redirect failed submissions to `/contact/?error=1`; a small inline script reveals an `#nf-contact-error` banner on that query param — verified via Playwright
+- Full-site PII sweep of the built `site/` output for the CV email and phone number (all formats) returns **no matches**, before and after adding the form
+- `make build`: 19 pages, zero WARN/ERROR (both with and without simulated webhook/Turnstile env vars); cspell clean after adding `sitewide`, `vars`; visual + functional check via Playwright (desktop 1440×900 + mobile 390×844); all internal routes return 200
 
 ## Phase 3 observations
 
@@ -58,16 +92,22 @@
 
 ## In progress
 
-- [ ] Phase 4 — Contact (form + n8n webhook, per C5)
+- None — Memory Bank idle; start next task with `/van`
 
 ## Not started
 
-- [ ] Phase 5 (hardening)
-- [ ] Full-task reflect / archive (after Gate 5)
+- Next task (TBD via `/van`)
 
 ## Blockers
 
 | Item | Status |
 |------|--------|
 | ADR-01 / Hugo upgrade | Cleared (Phase 0) |
-| Gate 0 | Passed |
+| Gate 0–5 | Passed |
+| Reflect / Archive | Complete |
+
+## Archive references
+
+| Task | Archive | Completed |
+|------|---------|-----------|
+| cothrom-site | `memory-bank/archive/archive-cothrom-site.md` | 2026-10-26 |

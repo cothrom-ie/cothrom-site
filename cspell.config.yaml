@@ -6,21 +6,66 @@ ignorePaths:
 dictionaryDefinitions: []
 dictionaries: []
 words:
+  - appsec
   - Autoscrolling
+  - baseof
   - CACHEDIR
   - Capparelli
   - Cappy
+  - color
+  - CONTACTWEBHOOKURL
   - cothrom
+  - CURDIR
+  - dialog
+  - Dockerized
+  - dups
   - elif
+  - errorf
+  - fediverse
   - Finucane
   - fgrep
+  - Formspree
+  - FOUC
   - freestanding
+  - Getenv
+  - Getform
+  - gitlink
+  - goldmark
+  - IMAG
+  - incl
+  - isset
   - kickoff
+  - lightbox
+  - Lightbox
+  - markdownify
+  - msapplication
   - multiview
+  - nosniff
+  - offscreen
   - Oulu
   - Papercut
+  - photogallery
+  - Photogallery
   - pipefail
+  - plainify
+  - Prob
+  - scannable
+  - showthemetoggle
+  - sitekey
+  - sitewide
   - Soleil
+  - ssdls
   - timecode
+  - turnstilesitekey
+  - TURNSTILESITEKEY
+  - vars
+  - vendored
+  - wayfinding
+  - WCAG
+  - webhookurl
+  - WEBHOOKURL
+  - webp
+  - wordmark
+  - writable
 ignoreWords: []
 language: en-GB
