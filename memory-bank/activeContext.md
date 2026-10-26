@@ -2,38 +2,29 @@
 
 ## Mode
 
-**IDLE** — last task **cothrom-site** archived. Ready for next task via `/van`.
+**BUILD** — in-repo work complete; awaiting operator go-live, then **`/reflect`**
 
-## Last completed task
+## Current task
 
 | Field | Value |
 |-------|-------|
-| **Task** | Complete Cothrom CV/Portfolio Website (Level 4) |
-| **Archive** | `memory-bank/archive/archive-cothrom-site.md` |
-| **Reflection** | `memory-bank/reflection/reflection-cothrom-site.md` |
-| **Completed** | 2026-10-26 |
+| **Task** | Deploy to Cloudflare Pages via GitHub Actions |
+| **Task ID** | `deploy-cf-pages` |
+| **Complexity** | Level 2 |
+| **Source of truth** | `memory-bank/tasks.md` |
 
-Site is buildable (`make build` → `./site`), serveable via `make serve` or `docker compose up -d nginx` (after build). Production contact still needs `.env` + n8n/Turnstile outside the repo.
+## Shipped in-repo
 
-## Standing site facts (carry forward)
+- `.github/workflows/deploy-pages.yml`
+- `static/_headers` (verified in `site/` via `make build`)
+- README Deploy (Cloudflare Pages) + local Compose demoted
+- `.env.example` GH-secrets notes
 
-- Hugo Extended **0.158** (`./bin/hugo`); No Fate **v0.1.0** pinned; style **`clean`** + kraft
-- Theme overrides only — never edit `themes/no-fate`
-- No phone/email on site; LinkedIn only
-- Image uniqueness via `docs/image-register.md`
-- Contact env: `N8N_CONTACT_WEBHOOK_URL`, `TURNSTILE_SITE_KEY` (see `.env.example`)
-- Patterns: `memory-bank/systemPatterns.md` (leaf vs branch, `HUGO_PARAMS_*` nesting, OG override, nginx hardening)
+## Blocked / external
 
-## Creative ADRs (still valid)
+Cloudflare + GitHub secrets, custom domains, Bulk Redirect www→apex, first live deploy verification.
 
-| Phase | Locked summary |
-|-------|----------------|
-| C1 | No Fate + Hugo ≥ 0.158; kraft; system colour; n8n webhook pref |
-| C2 | Home H2 panoramic + kraft plate; 3rd-person bio |
-| C3 | Services S1/H1/R1/V1; `editorial` leaf bundles |
-| C4 | Gallery M1 marquee; reduced-motion; native dialog |
-| C5 | Contact form → n8n; Turnstile; LinkedIn + footer |
+## Next
 
-## Immediate next step
-
-**`/van`** — initialize the next task when ready.
+1. Operator completes go-live checklist (README / `tasks.md`)
+2. **`/reflect`** when deploy verified (or reflect on in-repo delivery if go-live deferred)

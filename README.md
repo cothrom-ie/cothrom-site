@@ -14,9 +14,12 @@ home
 
 ## Architecture
 
-[Hugo](https://gohugo.io/) (Theme: No Fate)
+[Hugo](https://gohugo.io/) (Theme: No Fate) → static `./site` →
+[Cloudflare Pages](https://pages.cloudflare.com/) via GitHub Actions + Wrangler.
 
-NGINX
+Local preview still uses nginx (`compose.yml`) against the same `./site`
+output. Production AppSec headers ship in `static/_headers` (copied into
+`site/` at build time).
 
 ## Build & Development
 
@@ -33,10 +36,9 @@ make clean          # remove ./site, caches, and Hugo's lock file
 make help           # list all targets
 ```
 
-`publishDir` is `site/`, which is exactly what `compose.yml`'s `nginx`
-service mounts read-only — a plain `make build` followed by
-`docker compose up -d nginx` is enough to preview the production build
-behind the real nginx config locally (`http://127.0.0.1:8039/`).
+`publishDir` is `site/`. CI deploys that directory to Cloudflare Pages.
+For a local production-like preview: `make build` then
+`docker compose up -d nginx` → `http://127.0.0.1:8039/`.
 
 ## Environment Variables
 
@@ -49,36 +51,76 @@ mechanism.
 
 | Variable | Used by | Purpose |
 | --- | --- | --- |
-| `CLOUDFLARE_TUNNEL_TOKEN` | `compose.yml` (`cloudflare-tunnel` service) | Auth token for the `cloudflared` container that exposes the site publicly via Cloudflare Tunnel. |
-| `N8N_CONTACT_WEBHOOK_URL` | `make build`/`make serve` → Hugo `params.contact.webhookurl` | Full HTTPS URL of the n8n workflow that receives Contact form POSTs. Left blank, the form still renders but has no action URL and the page notes that submissions aren't wired (see `layouts/section/contact.html`). |
-| `TURNSTILE_SITE_KEY` | `make build`/`make serve` → Hugo `params.contact.turnstilesitekey` | Cloudflare Turnstile **public** site key, safe to ship in built HTML. The matching Turnstile secret key is verified inside the n8n workflow only and must never appear in this repo. |
+| `N8N_CONTACT_WEBHOOK_URL` | `make build`/`make serve` → Hugo `params.contact.webhookurl`; production: GitHub Actions secret of the same name | Full HTTPS URL of the n8n workflow that receives Contact form POSTs. Left blank, the form still renders but has no action URL and the page notes that submissions aren't wired (see `layouts/section/contact.html`). |
+| `TURNSTILE_SITE_KEY` | `make build`/`make serve` → Hugo `params.contact.turnstilesitekey`; production: GitHub Actions secret of the same name | Cloudflare Turnstile **public** site key, safe to ship in built HTML. The matching Turnstile secret key is verified inside the n8n workflow only and must never appear in this repo. |
+| `CLOUDFLARE_TUNNEL_TOKEN` | `compose.yml` (`cloudflare-tunnel` service) only | Optional/legacy local tunnel. Not used by Cloudflare Pages production. |
 
 None of these variables are required for a local `make serve`/`make build` —
-the site builds and renders correctly with them unset.
+the site builds and renders correctly with them unset. For a live contact
+form on Pages, set the two contact secrets in GitHub Actions.
 
-## Deploy (Docker Compose)
+## Deploy (Cloudflare Pages)
 
-`compose.yml` defines two independent services on a shared `frontend`
-network:
+Production is **Cloudflare Pages** (Direct Upload). On every push to `main`
+(and on `workflow_dispatch`), `.github/workflows/deploy-pages.yml`:
 
-- **`nginx`** — serves the already-built `./site` directory (read-only
-  bind mount) on port `8039`, using `nginx.conf`. This config sets
-  baseline AppSec headers (`X-Content-Type-Options`, `X-Frame-Options`,
-  `Referrer-Policy`, a `Content-Security-Policy` scoped to this site's
-  actual script/style/font usage plus the Cloudflare Turnstile origin),
-  the `/404.html` error page, 7-day caching for static assets, and an
-  explicit `application/manifest+json` MIME mapping for
-  `site.webmanifest`. It does **not** build the site itself — run
-  `make build` first (or as part of CI/CD) so `./site` is current before
-  starting or restarting this service.
-- **`cloudflare-tunnel`** — optional `cloudflared` sidecar that exposes
-  the `nginx` service publicly via a Cloudflare Tunnel, authenticated by
-  `CLOUDFLARE_TUNNEL_TOKEN`. Not required for local preview.
+1. Checks out the repo **with submodules** (No Fate theme).
+2. Installs Hugo Extended **0.158.0**.
+3. Builds with `hugo --gc --minify` into `./site`, injecting contact params
+   from GitHub secrets.
+4. Deploys with Wrangler: `pages deploy site --project-name=cothrom-site`.
+
+### GitHub Actions secrets
+
+| Secret | Purpose |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | Account API token with **Cloudflare Pages: Edit** (least privilege). |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID. |
+| `N8N_CONTACT_WEBHOOK_URL` | Same as local `.env` — baked into the Contact form `action` at build time. |
+| `TURNSTILE_SITE_KEY` | Turnstile **public** site key baked into the form widget. |
+
+Never commit these values. The Turnstile **secret** key stays in n8n only.
+
+### Custom domains (apex + www)
+
+Canonical host is the apex (`baseURL` = `https://cothrom.ie/`).
+
+1. Create the Pages project `cothrom-site` (or let the first successful
+   Wrangler deploy create it).
+2. Attach **both** custom domains on the project: `cothrom.ie` and
+   `www.cothrom.ie` (so both have TLS and resolve to Pages).
+3. Add a **Bulk Redirect** (account-level) so www permanently redirects to
+   apex — see [Redirecting www to domain apex](https://developers.cloudflare.com/pages/how-to/www-redirect/):
+
+   | Source | Target | Status | Parameters |
+   | --- | --- | --- | --- |
+   | `www.cothrom.ie` | `https://cothrom.ie` | 301 | Preserve query string, subpath matching, preserve path suffix |
+
+4. In Turnstile, allow hostnames `cothrom.ie` and `www.cothrom.ie`.
+5. After Pages DNS is live, disable any Cloudflare Tunnel public hostnames
+   that previously pointed at the nginx sidecar.
+
+Verify:
+
+```sh
+curl -sI https://cothrom.ie/          # expect 200
+curl -sI https://www.cothrom.ie/      # expect 301 → https://cothrom.ie/
+curl -sI 'https://www.cothrom.ie/contact/?x=1'  # Location keeps path + query
+```
+
+## Local preview (Docker Compose)
+
+`compose.yml` is for **local** production-like preview, not production:
+
+- **`nginx`** — serves `./site` on port `8039` with `nginx.conf` (same
+  AppSec headers as `static/_headers`, plus MIME mapping for
+  `site.webmanifest`). Run `make build` first.
+- **`cloudflare-tunnel`** — optional/legacy `cloudflared` sidecar using
+  `CLOUDFLARE_TUNNEL_TOKEN`. Not required for local preview or Pages.
 
 ```sh
 make build
 docker compose up -d nginx              # local preview on :8039
-docker compose up -d                    # nginx + the Cloudflare tunnel
 ```
 
 ## Pages

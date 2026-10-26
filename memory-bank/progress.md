@@ -92,19 +92,27 @@
 
 ## In progress
 
-- None — Memory Bank idle; start next task with `/van`
+- [ ] **deploy-cf-pages** (Level 2) — in-repo BUILD complete 2026-10-26; operator go-live then `/reflect`
+
+## Build observations (deploy-cf-pages)
+
+- `static/_headers` mirrors nginx AppSec CSP/nosniff/frame/referrer; Hugo copies into `site/` (verified `make build`, 15 pages)
+- Workflow: `peaceiris/actions-hugo@v3` @ 0.158.0 extended + `cloudflare/wrangler-action@v4` → `pages deploy site --project-name=cothrom-site`; checkout `submodules: true`
+- README now treats Pages as production; Compose nginx = local preview; tunnel = optional/legacy
+- Live deploy / apex+www Bulk Redirect cannot be verified in this environment without CF/GH credentials
 
 ## Not started
 
-- Next task (TBD via `/van`)
+- REFLECT / ARCHIVE after go-live (or after accepting in-repo-only delivery)
 
 ## Blockers
 
 | Item | Status |
 |------|--------|
-| ADR-01 / Hugo upgrade | Cleared (Phase 0) |
-| Gate 0–5 | Passed |
-| Reflect / Archive | Complete |
+| Cloudflare account / Pages project / API token | **Open** — operator |
+| GH secrets (`CLOUDFLARE_*`, contact build vars) | **Open** — operator |
+| Custom domains + Bulk Redirect www→apex | **Open** — operator (documented in README) |
+| DNS cutover Tunnel → Pages | **Open** — after green Pages deploy |
 
 ## Archive references
 

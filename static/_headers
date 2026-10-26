@@ -1,0 +1,43 @@
+# Cloudflare Pages headers (parity with nginx.conf AppSec hardening).
+# Hugo copies static/ → site/ at build time. CSP allows 'unsafe-inline' for
+# script/style because the No Fate theme (FOUC prevention) and this site's
+# Gallery/Contact scripts are inline. Turnstile is the only third-party origin.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; form-action 'self' https:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+
+/*.css
+  Cache-Control: public, max-age=604800
+
+/*.js
+  Cache-Control: public, max-age=604800
+
+/*.jpg
+  Cache-Control: public, max-age=604800
+
+/*.jpeg
+  Cache-Control: public, max-age=604800
+
+/*.png
+  Cache-Control: public, max-age=604800
+
+/*.gif
+  Cache-Control: public, max-age=604800
+
+/*.ico
+  Cache-Control: public, max-age=604800
+
+/*.svg
+  Cache-Control: public, max-age=604800
+
+/*.webp
+  Cache-Control: public, max-age=604800
+
+/*.woff
+  Cache-Control: public, max-age=604800
+
+/*.woff2
+  Cache-Control: public, max-age=604800
