@@ -72,6 +72,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Explicit production branch; creates the Direct Upload project on first success.
-          command: pages deploy site --project-name=cothrom-site --branch=main
+          # --commit-dirty: Hugo writes into ./site on a clean checkout (uncommitted).
+          # Creates the Direct Upload project on first success if it does not exist.
+          command: pages deploy site --project-name=cothrom-site --branch=main --commit-dirty=true
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
