@@ -2,29 +2,26 @@
 
 ## Mode
 
-**BUILD** — in-repo work complete; awaiting operator go-live, then **`/reflect`**
+**ARCHIVE complete** — Memory Bank ready for next task (`/van`)
 
 ## Current task
+
+_(none)_
+
+## Recently completed
 
 | Field | Value |
 |-------|-------|
 | **Task** | Deploy to Cloudflare Pages via GitHub Actions |
 | **Task ID** | `deploy-cf-pages` |
 | **Complexity** | Level 2 |
-| **Source of truth** | `memory-bank/tasks.md` |
+| **Completed** | 2026-10-26 |
+| **Archive** | `memory-bank/archive/archive-deploy-cf-pages.md` |
+| **Reflection** | `memory-bank/reflection/reflection-deploy-cf-pages.md` |
 
-## Shipped in-repo
+In-repo pipeline (workflow, `_headers`, docs) archived. **Operator go-live** (CF/GH secrets, domains, Bulk Redirect, first live smoke) remains open — see archive follow-up checklist.
 
-- `.github/workflows/deploy-pages.yml`
-- `static/_headers` (verified in `site/` via `make build`)
-- README Deploy (Cloudflare Pages) + local Compose demoted
-- `.env.example` GH-secrets notes
+## Current focus
 
-## Blocked / external
-
-Cloudflare + GitHub secrets, custom domains, Bulk Redirect www→apex, first live deploy verification.
-
-## Next
-
-1. Operator completes go-live checklist (README / `tasks.md`)
-2. **`/reflect`** when deploy verified (or reflect on in-repo delivery if go-live deferred)
+- Ready for next task via **`/van`**
+- Or: execute operator go-live for `cothrom.ie` Pages cutover (no new Memory Bank task required unless verification work is tracked)

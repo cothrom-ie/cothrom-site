@@ -21,7 +21,7 @@ System Design exists to develop technical systems that meet defined operational 
 
 Depending on the engagement, the work can extend from requirements gathering and system architecture through detailed design, documentation, programming, commissioning, and management of on-site implementation. Installation can be coordinated and managed as part of the agreed scope, though it does not require carrying out the physical installation personally — the priority is a coherent, practical solution that can be implemented and operated reliably by the people responsible for it.
 
-## Evidence
+## Why work with Cothrom
 
 At Pi Communications, Dominic designed the complete long-term facilities for the Omagh Bombing Inquiry and the Pat Finucane Inquiry, combining established baseband SDI technology with modern IP-based audio, video, and control infrastructure, each intended to operate continuously over several years.
 

@@ -22,7 +22,7 @@ The role is commonly focused on on-site delivery: coordinating between departmen
 
 Responsibilities and decision-making authority are agreed according to the project, the client, and the contractual scope — Technical Direction can sit alongside Production Management or stand on its own, depending on how the production is structured.
 
-## Evidence
+## Why work with Cothrom
 
 With Cirque du Soleil, Dominic toured internationally coordinating electronics and automation systems, designing custom circuits for lighting effects and production-wide visual cueing, and leading cross-departmental projects spanning automation, audio, lighting, and rigging across 11 countries.
 

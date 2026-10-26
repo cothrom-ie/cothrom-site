@@ -19,6 +19,7 @@
 - [x] **Phase 5 / Gate 5** — Hardening & polish complete, full regression passed (2026-10-26)
 - [x] **Full-task reflection** — `memory-bank/reflection/reflection-cothrom-site.md` (2026-10-26)
 - [x] **Full-task archive** — `memory-bank/archive/archive-cothrom-site.md` (2026-10-26) — **TASK COMPLETE**
+- [x] **deploy-cf-pages** (Level 2) — BUILD + REFLECT + ARCHIVE (2026-10-26) — `memory-bank/archive/archive-deploy-cf-pages.md` (operator go-live still open)
 
 ## Phase 5 observations
 
@@ -92,30 +93,36 @@
 
 ## In progress
 
-- [ ] **deploy-cf-pages** (Level 2) — in-repo BUILD complete 2026-10-26; operator go-live then `/reflect`
+_(none)_
 
-## Build observations (deploy-cf-pages)
+## Completed (deploy-cf-pages)
+
+- [x] **deploy-cf-pages** (Level 2) — ARCHIVE complete 2026-10-26 — `memory-bank/archive/archive-deploy-cf-pages.md`
+- Reflection: `memory-bank/reflection/reflection-deploy-cf-pages.md`
+
+### Build observations (deploy-cf-pages)
 
 - `static/_headers` mirrors nginx AppSec CSP/nosniff/frame/referrer; Hugo copies into `site/` (verified `make build`, 15 pages)
-- Workflow: `peaceiris/actions-hugo@v3` @ 0.158.0 extended + `cloudflare/wrangler-action@v4` → `pages deploy site --project-name=cothrom-site`; checkout `submodules: true`
-- README now treats Pages as production; Compose nginx = local preview; tunnel = optional/legacy
-- Live deploy / apex+www Bulk Redirect cannot be verified in this environment without CF/GH credentials
+- Workflow: `peaceiris/actions-hugo@v3` @ 0.158.0 extended + `cloudflare/wrangler-action@v4` → `pages deploy site --project-name=cothrom-site --commit-dirty=true`; checkout `submodules: true`; CF secret preflight before Wrangler
+- README treats Pages as production; Compose nginx = local preview; tunnel = optional/legacy
+- Live deploy / apex+www Bulk Redirect not verified in-agent (no CF/GH credentials) — operator follow-up in archive
 
-## Not started
+## Not started / follow-up
 
-- REFLECT / ARCHIVE after go-live (or after accepting in-repo-only delivery)
+- Operator go-live (CF/GH secrets, domains, Bulk Redirect, smoke) — see archive + README
 
-## Blockers
+## Blockers (operator — not blocking Memory Bank)
 
 | Item | Status |
 |------|--------|
 | Cloudflare account / Pages project / API token | **Open** — operator |
 | GH secrets (`CLOUDFLARE_*`, contact build vars) | **Open** — operator |
-| Custom domains + Bulk Redirect www→apex | **Open** — operator (documented in README) |
+| Custom domains + Bulk Redirect www→apex | **Open** — operator (README) |
 | DNS cutover Tunnel → Pages | **Open** — after green Pages deploy |
 
 ## Archive references
 
 | Task | Archive | Completed |
 |------|---------|-----------|
+| deploy-cf-pages | `memory-bank/archive/archive-deploy-cf-pages.md` | 2026-10-26 |
 | cothrom-site | `memory-bank/archive/archive-cothrom-site.md` | 2026-10-26 |

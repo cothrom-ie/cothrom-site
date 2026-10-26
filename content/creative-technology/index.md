@@ -21,7 +21,7 @@ Creative Technology exists to help creatives explore, develop, and realise ideas
 
 Work can start with a simple consultation and grow from there: understanding the creative intention first, then exploring what approach could support it, before moving into detailed design and, where needed, management of implementation. The scope is tailored to the project rather than fixed in advance, so it suits a quick feasibility conversation as readily as a fully developed technical build.
 
-## Evidence
+## Why work with Cothrom
 
 Dominic's work as Production Manager and Creative Technology for Cothrom includes CAD schematics, network diagrams, and automation cue sheets for multidisciplinary productions. In R&D at Tait Towers, he collaborated with designers to troubleshoot prototype automation systems for clients including Disney, Las Vegas productions, and Hollywood film projects, developing new control methodologies to improve reliability.
 

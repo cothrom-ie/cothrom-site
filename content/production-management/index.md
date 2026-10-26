@@ -23,7 +23,7 @@ Where possible, involvement starts well before the event itself: planning and co
 
 Responsibilities and decision-making authority are agreed with the client rather than fixed in advance, so the scope can range from a specific area of responsibility to comprehensive management of the whole production.
 
-## Evidence
+## Why work with Cothrom
 
 Most recently, Dominic was Production Manager for the Irish Festival of Oulu in Finland — a four-day, five-stage street festival with more than a dozen bands, local artists, and an 18-tonne, two-storey mechanical Pegasus, delivered for audiences in the thousands.
 
