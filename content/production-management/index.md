@@ -11,6 +11,8 @@ visual:
   mode: "editorial"
   hero: "hero.jpg"
   hero_alt: "A hotel ballroom event stage with a large video wall reading 'welcome, campers!' beside rows of seated conference attendees."
+  secondary: "secondary.jpg"
+  secondary_alt: "Two costumed characters in safari-style outfits perform for guests at a corporate event, one holding a clipboard and telescopic pointer."
 ---
 
 ## What it's for

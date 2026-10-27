@@ -23,6 +23,23 @@ HUGO_CACHEDIR ?= $(CURDIR)/temp/hugo_cache
 export HUGO_CACHEDIR
 HUGO_URL := https://github.com/gohugoio/hugo/releases/download/v$(HUGO_VERSION)/hugo_extended_$(HUGO_VERSION)_linux-amd64.tar.gz
 
+# Dev server networking (make serve). Binds all interfaces by default so the
+# site is reachable from other devices on the LAN (e.g. VS Code on a remote/
+# headless box, phone/tablet preview) rather than only localhost.
+# Override on the command line if needed, e.g.:
+#   make serve LAN_IP=192.168.1.42
+#   make serve BIND=127.0.0.1 LAN_IP=127.0.0.1   # old localhost-only behaviour
+PORT ?= 1313
+BIND ?= 0.0.0.0
+LAN_IP ?= $(shell ip -4 -o addr show scope global 2>/dev/null | awk '{print $$4}' | cut -d/ -f1 | head -n1)
+ifeq ($(strip $(LAN_IP)),)
+LAN_IP := $(shell hostname -I 2>/dev/null | awk '{print $$1}')
+endif
+ifeq ($(strip $(LAN_IP)),)
+LAN_IP := 0.0.0.0
+endif
+BASEURL ?= http://$(LAN_IP):$(PORT)/
+
 .PHONY: help hugo-install build serve clean check-hugo
 
 help: ## Show available targets
@@ -52,10 +69,11 @@ build: check-hugo ## Production build → ./site
 		echo "NOTE: N8N_CONTACT_WEBHOOK_URL not set — contact form will build with no action URL (see .env.example)."; \
 	fi
 
-serve: check-hugo ## Dev server (bind 127.0.0.1)
+serve: check-hugo ## Dev server, LAN-reachable (bind 0.0.0.0; see BASEURL/BIND overrides above)
+	@echo "Serving on $(BIND):$(PORT) — open $(BASEURL) from this machine or another device on the LAN"
 	@HUGO_PARAMS_CONTACT_WEBHOOKURL="$${N8N_CONTACT_WEBHOOK_URL:-}" \
 	 HUGO_PARAMS_CONTACT_TURNSTILESITEKEY="$${TURNSTILE_SITE_KEY:-}" \
-	 $(HUGO) server --bind 127.0.0.1 --baseURL http://127.0.0.1:1313/
+	 $(HUGO) server --bind $(BIND) --port $(PORT) --baseURL $(BASEURL)
 
 clean: ## Remove publish output and Hugo caches
 	@rm -rf "$(PUBLISH_DIR)" public resources/_gen .hugo_build.lock temp/hugo_cache

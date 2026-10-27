@@ -30,7 +30,11 @@ if present.
 
 ```sh
 make hugo-install   # one-time: download Hugo Extended into ./bin/hugo
-make serve          # dev server at http://127.0.0.1:1313/
+make serve          # dev server, LAN-reachable (binds 0.0.0.0; auto-detects
+                    # the host's LAN IP for --baseURL, e.g. http://192.168.1.x:1313/).
+                    # Override with `make serve LAN_IP=... PORT=... BIND=...`
+                    # (e.g. `make serve BIND=127.0.0.1 LAN_IP=127.0.0.1` for
+                    # the old localhost-only behaviour)
 make build          # production build → ./site (matches compose.yml's mount)
 make clean          # remove ./site, caches, and Hugo's lock file
 make help           # list all targets

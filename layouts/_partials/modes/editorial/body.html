@@ -7,16 +7,56 @@
   article-shell.html's body markup omits the duplicate hero/cover figure and keeps
   the table of contents and prose rendering untouched.
 
+  service-secondary-images: also renders an optional second evidence image (C3 E1 —
+  "Hero only; optional one inline image if the register has a spare unique shot"),
+  driven by native-feeling visual.secondary / visual.secondary_alt front matter (same
+  pattern as visual.hero / visual.hero_alt, but read directly here rather than via
+  content-model.html since that partial only returns the keys the theme itself
+  understands — it safely ignores unknown keys, see themes/no-fate/layouts/_partials/
+  content-model.html). The figure is placed as the FIRST element inside .post-content,
+  before {{ .Content }}, not as a sibling in .nf-article__body (which is display:grid —
+  floats don't interact with sibling grid items, so this must live inside the normal-
+  flow prose container for text to wrap beside it via CSS float in kraft.css).
+
+  When a secondary image is present, {{ .Content }} is additionally wrapped in a
+  plain .nf-service-text div so kraft.css can re-apply the theme's 68ch reading
+  measure to the *markdown content as a whole* rather than to .nf-prose itself
+  (which also has to grow to the full article width so the float can reach the
+  hero's right edge). Capping each markdown element individually doesn't work:
+  `ch` resolves against the font-size of the element it's set on, so a heading's
+  much larger font-size would resolve 68ch to a far wider box than body text.
+
   Does not edit theme files.
 */ -}}
 {{- $page := . -}}
+{{- $visual := $page.Params.visual | default dict -}}
+{{- $secondary := index $visual "secondary" | default "" -}}
+{{- $secondaryAlt := index $visual "secondary_alt" | default "" -}}
+{{- if and $secondary (not $secondaryAlt) -}}
+    {{- errorf "Cothrom service secondary image: visual.secondary_alt is required when visual.secondary is set on %s" $page.RelPermalink -}}
+{{- end -}}
 <div class="nf-article__body nf-article__body--editorial" data-mode-body="editorial">
     {{- if $page.Param "ShowToc" }}
         {{- partial "toc.html" $page }}
     {{- end }}
-    {{- with $page.Content }}
+    {{- $content := $page.Content }}
+    {{- with $content }}
     <div class="post-content md-content nf-prose">
+        {{- if $secondary }}
+        <figure class="nf-figure nf-service-secondary">
+            {{- partial "responsive-image.html" (dict
+                "page" $page
+                "src" $secondary
+                "alt" $secondaryAlt
+                "loading" "lazy"
+                "class" "nf-content-image"
+                "sizes" "(min-width: 40rem) 24rem, 100vw"
+            ) -}}
+        </figure>
+        <div class="nf-service-text">{{ $content }}</div>
+        {{- else }}
         {{- . -}}
+        {{- end }}
     </div>
     {{- end }}
     {{- partial "extend_post_content.html" $page }}

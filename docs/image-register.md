@@ -37,6 +37,14 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/logos/cothrom-mark-kraft-192.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-192x192.png` |
 | `images/logos/cothrom-mark-kraft-512.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-512x512.png` |
 | `images/logos/cothrom-mark-kraft.svg` | chrome (nav header logo) | **locked** — see `static/images/logos/cothrom-mark-kraft.svg` |
+| `images/new/prodMan_second.png` | production-management (secondary) | **locked** — see `content/production-management/secondary.jpg` |
+| `images/new/techDirSec.png` | technical-direction (secondary) | **locked** — see `content/technical-direction/secondary.jpg` |
+| `images/new/creatTechSecond.png` | creative-technology (secondary) | **locked** — see `content/creative-technology/secondary.jpg` |
+| `images/new/sysDes_second.png` | system-design (secondary) | **locked** — see `content/system-design/secondary.jpg` |
+
+**Note:** `images/new/*Hero*.png` and `images/new/homeHero.png` (the five hero-sized images in
+that folder) are intentionally **excluded** from `service-secondary-images` — reserved for a
+different project, per explicit user instruction. Not used, resized, or moved by this task.
 
 ## Snapshot
 
@@ -48,6 +56,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | creativeTech | 9 | creative-technology |
 | sysDesign | 4 | system-design |
 | logos | 9 | chrome |
+| new | 9 (4 locked to services, 5 reserved — different project) | see note above |
 
 ## Duplicate basenames (service owns; gallery twin → omit)
 
@@ -182,3 +191,12 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | img-105 | `images/logos/cothrom-mark-kraft-32.png` | `cothrom-mark-kraft-32` | chrome | superseded | Phase 0 smoke-test file at `static/images/logos/` (never templated in). Removed in Phase 5 — replaced by `favicon-32x32.png` re-rendered from the 1024px master (img-102) for consistent anti-aliasing across the whole favicon set |
 | img-106 | `images/logos/cothrom-mark-kraft-512.png` | `cothrom-mark-kraft-512` | chrome | locked | Phase 5 favicons: copied as-is to `static/images/icons/android-chrome-512x512.png`, referenced from `static/site.webmanifest` |
 | img-107 | `images/gallery/first 218-1.png` | `first 218-1` | gallery | locked | Gallery Phase 3 marquee (g04). Resized to 1280px tall, PNG→JPG q85, saved as `content/gallery/photos/g04.jpg`. |
+| img-108 | `images/new/creatTechHero.png` | `creatTechHero` | creative-technology | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
+| img-109 | `images/new/creatTechSecond.png` | `creatTechSecond` | creative-technology | locked | service-secondary-images: Creative Technology secondary/evidence image. Resized 2385×3024→1893×2400 (long edge capped, no upscale), PNG→JPG q85, saved as `content/creative-technology/secondary.jpg` (page resource). |
+| img-110 | `images/new/homeHero.png` | `homeHero` | home | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
+| img-111 | `images/new/prodManHero.png` | `prodManHero` | production-management | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
+| img-112 | `images/new/prodMan_second.png` | `prodMan_second` | production-management | locked | service-secondary-images: Production Management secondary/evidence image. Resized 3187×2972→2400×2238 (long edge capped, no upscale), PNG→JPG q85, saved as `content/production-management/secondary.jpg` (page resource). |
+| img-113 | `images/new/sysDes_hero.png` | `sysDes_hero` | system-design | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
+| img-114 | `images/new/sysDes_second.png` | `sysDes_second` | system-design | locked | service-secondary-images: System Design secondary/evidence image. Resized 2407×3109→1858×2400 (long edge capped, no upscale), PNG→JPG q85, saved as `content/system-design/secondary.jpg` (page resource). |
+| img-115 | `images/new/techDirHero.png` | `techDirHero` | technical-direction | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
+| img-116 | `images/new/techDirSec.png` | `techDirSec` | technical-direction | locked | service-secondary-images: Technical Direction secondary/evidence image. Native resolution 1452×1512 kept as-is (below the 2400px cap — never upscale), PNG→JPG q85, saved as `content/technical-direction/secondary.jpg` (page resource). |

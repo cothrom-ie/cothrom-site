@@ -296,6 +296,59 @@
   }
 }
 
+/* service-secondary-images (C3 E1): one optional evidence image per service page,
+   floated right so the body copy wraps beside it. Two separate theme caps would
+   otherwise stop the image reaching the hero's right edge:
+   1. .nf-article__body { max-width: min(78rem, var(--nf-page)) } (60-article.css)
+      is 32px narrower per side than the hero's full content-box width — redefine
+      the custom property on the editorial variant only (scoped via the modifier
+      class our body.html override already applies).
+   2. .nf-prose (and .md-content) { max-width: var(--nf-reading-measure) } i.e.
+      68ch (40-typography.css) caps the *prose container itself*, not just its
+      text — the floated figure lives inside .nf-prose, so without (2) it would
+      still be clipped to a 68ch-wide box regardless of (1). Lift that cap on the
+      container, and instead re-apply the 68ch measure to a dedicated text
+      wrapper (.nf-service-text, added by body.html around .Content) rather than
+      to each markdown child individually: `ch` resolves against the font-size of
+      the element it's set on, and the theme's own h1/h2 rules (md-content.css)
+      set `margin: … auto …`, so capping headings directly (which render at a
+      much larger font-size) resolved to a far wider box than body text and then
+      centred them via their own auto margins. Capping one plain wrapper (body
+      font-size, no margin:auto of its own) keeps paragraphs/headings at a
+      comfortable, *consistent* line length while the container — and the
+      float inside it — can still reach the hero's full width. */
+.nf-article__body--editorial {
+  --nf-article-width: none;
+}
+
+.nf-article__body--editorial .post-content.nf-prose {
+  max-width: none;
+}
+
+.nf-article__body--editorial .nf-service-text {
+  max-width: var(--nf-reading-measure, 68ch);
+}
+
+.nf-service-secondary {
+  float: right;
+  width: clamp(14rem, 34vw, 24rem);
+  margin: 0 0 var(--nf-space-5, 1.5rem) var(--nf-space-5, 1.5rem);
+}
+
+.nf-service-secondary img {
+  display: block;
+  width: 100%;
+  height: auto; /* preserve each image's own aspect ratio — no forced crop */
+}
+
+@media (max-width: 40rem) {
+  .nf-service-secondary {
+    float: none;
+    width: 100%;
+    margin: 0 0 var(--nf-space-5, 1.5rem);
+  }
+}
+
 /* "Next step" CTA: a plain markdown link styled as a button, so service page
    bodies stay goldmark-safe prose (no raw HTML / unsafe renderer needed). */
 .nf-prose h2#next-step + p a {

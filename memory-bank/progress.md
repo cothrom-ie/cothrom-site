@@ -95,6 +95,19 @@
 
 _(none)_
 
+## Completed (service-secondary-images)
+
+- [x] **service-secondary-images** (Level 2) — ARCHIVE complete 2026-10-27 — `memory-bank/archive/archive-service-secondary-images.md`
+- Reflection: `memory-bank/reflection/reflection-service-secondary-images.md`
+
+### Build observations (service-secondary-images)
+
+- 4 page-resource `secondary.jpg` files from `images/new/{prodMan_second,techDirSec,creatTechSecond,sysDes_second}.png` (2400px long-edge cap, never upscale, JPG q85); native aspect ratios kept
+- `images/new/*Hero*` + `homeHero.png` left as register `reserved` (different project)
+- Site override: floated `.nf-service-secondary` + `.nf-service-text` measure wrapper; theme untouched
+- **BUILD bug:** `--nf-article-width: none` alone insufficient — theme also caps `.nf-prose` at 68ch; per-child `ch` re-cap mis-centred headings; final fix caps one body-size wrapper. Full writeup in archive + reflection
+- Verified: Playwright right edges `1376px` match on all 4 pages; mobile unfloat; cspell clean; `make build` 15 pages 0 WARN/ERROR
+
 ## Completed (nav-chrome-light-logo)
 
 - [x] **nav-chrome-light-logo** (Level 1) — ARCHIVE complete 2026-10-26 — `memory-bank/archive/archive-nav-chrome-light-logo.md`
@@ -121,7 +134,7 @@ _(none)_
 
 ## Not started / follow-up
 
-_(none — deploy-cf-pages fully closed)_
+_(none — ready for next `/van`)_
 
 ## Blockers (operator) — RESOLVED 2026-10-26
 
@@ -136,6 +149,7 @@ _(none — deploy-cf-pages fully closed)_
 
 | Task | Archive | Completed |
 |------|---------|-----------|
+| service-secondary-images | `memory-bank/archive/archive-service-secondary-images.md` | 2026-10-27 |
 | nav-chrome-light-logo | `memory-bank/archive/archive-nav-chrome-light-logo.md` | 2026-10-26 |
 | deploy-cf-pages | `memory-bank/archive/archive-deploy-cf-pages.md` | 2026-10-26 |
 | cothrom-site | `memory-bank/archive/archive-cothrom-site.md` | 2026-10-26 |

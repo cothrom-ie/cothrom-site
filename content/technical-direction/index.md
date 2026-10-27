@@ -11,6 +11,8 @@ visual:
   mode: "editorial"
   hero: "hero.jpg"
   hero_alt: "A broadcast camera crew and lighting setup in a wood-panelled committee room ahead of a press conference."
+  secondary: "secondary.jpg"
+  secondary_alt: "Three crew members in high-visibility vests examine large rigging drawings spread across a round table in an event ballroom."
 ---
 ## What it's for
 

@@ -11,6 +11,8 @@ visual:
   mode: "editorial"
   hero: "hero.jpg"
   hero_alt: "Large-format technical drawings spread on a table, with an isometric seating and stage layout in the foreground and a stack of title blocks behind."
+  secondary: "secondary.jpg"
+  secondary_alt: "Large-format technical drawings, including an isometric stage and seating layout, stacked on a table beside conference title sheets."
 ---
 
 ## What it's for

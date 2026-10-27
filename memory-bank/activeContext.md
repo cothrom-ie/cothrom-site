@@ -2,7 +2,7 @@
 
 ## Mode
 
-**ARCHIVE complete** — Memory Bank ready for next task (`/van`)
+**Idle** — last task archived; ready for **`/van`**
 
 ## Current task
 
@@ -10,18 +10,12 @@ _(none)_
 
 ## Recently completed
 
-| Field | Value |
-|-------|-------|
-| **Task** | Nav chrome: light-only + logo beside site name |
-| **Task ID** | `nav-chrome-light-logo` |
-| **Complexity** | Level 1 |
-| **Completed** | 2026-10-26 |
-| **Archive** | `memory-bank/archive/archive-nav-chrome-light-logo.md` |
-| **Reflection** | `memory-bank/reflection/reflection-nav-chrome-light-logo.md` |
+- `service-secondary-images` — archive `memory-bank/archive/archive-service-secondary-images.md` (2026-10-27)
+- `nav-chrome-light-logo` — archive `memory-bank/archive/archive-nav-chrome-light-logo.md`
+- `deploy-cf-pages` — archive `memory-bank/archive/archive-deploy-cf-pages.md` (go-live confirmed)
 
-Theme toggle removed (site locked light-only); kraft mark now renders left of "Cothrom" in the header. Resolves the deferred "Theme-toggle label polish" item from the full-site reflection.
+## Notes for next task
 
-## Current focus
-
-- Ready for next task via **`/van`**
-- Still open (operator, from prior task): `deploy-cf-pages` go-live — CF/GH secrets, custom domains, Bulk Redirect, first live smoke (see `memory-bank/archive/archive-deploy-cf-pages.md`)
+- Service pages now have hero + optional secondary (C3 E1 fulfilled for all four).
+- `images/new/*Hero*` and `homeHero.png` remain **reserved** in `docs/image-register.md` — use only under a new explicit task.
+- For future hero-edge alignments: inventory all max-width ancestors (article shell *and* `.nf-prose` reading measure) during VAN; prefer one body-size measure wrapper over per-child `ch`.

@@ -11,6 +11,8 @@ visual:
   mode: "editorial"
   hero: "hero.jpg"
   hero_alt: "A performer ramp lit in pink and blue beneath a large video screen on a television entertainment set, with a judges' desk in the foreground."
+  secondary: "secondary.jpg"
+  secondary_alt: "A custom-built black control box labelled 'Interactive Cue Light System' with three numbered buttons and a system reset button."
 ---
 
 ## What it's for
