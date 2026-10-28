@@ -1,7 +1,7 @@
 ---
 title: "Cothrom Productions"
 description: "Production management, technical direction, creative technology, and system design for live events."
-summary: "Cothrom provides production management, technical direction, creative technology, and system design for live events."
+summary: "Cothrom provides production management, technical direction, creative technology, and system design for live events and festivals"
 date: 2026-10-25
 
 content:
