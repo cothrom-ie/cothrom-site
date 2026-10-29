@@ -15,21 +15,41 @@ visual:
   secondary_alt: "Two costumed characters in safari-style outfits perform for guests at a corporate event, one holding a clipboard and telescopic pointer."
 ---
 
+## Why you need it
+
+Production management for festivals, live events, and creative productions.
+
+I work alongside producers, artistic directors, and event organisers to develop and deliver productions that support their artistic objectives and provide the best possible experience for their audiences.
+
+My role is to take responsibility for the technical and production aspects of an event, allowing the creative team to concentrate on what they do best.
+
 ## What it's for
 
-Production Management exists to translate creative ambitions into a practical plan and to see that plan through to delivery. It sits between artistic, technical, and management stakeholders, helping keep the creative vision aligned with what is actually achievable on the ground.
+As productions develop, their technical and logistical requirements become increasingly complex. Coordinating suppliers, managing budgets, planning schedules, and bringing together different technical departments can demand considerable time and attention.
+
+I provide the production management needed to bring these elements together, working as part of the wider production team to develop practical plans that support the artistic direction.
+
+Whether it is a developing cultural festival, an established live event, or a complex corporate production, the objective remains the same: a well-managed production that supports the people creating it and the audience experiencing it.
 
 ## How it works
 
-Where possible, involvement starts well before the event itself: planning and coordination can run across several months, followed by a concentrated period on site. Depending on the brief, this can include pre-production planning, coordinating creative and technical design, scheduling, supplier management, resource planning, and managing on-site teams.
+I typically become involved once the broad concept and artistic objectives have been established, working closely with the producer or artistic director throughout pre-production and delivery.
 
-Responsibilities and decision-making authority are agreed with the client rather than fixed in advance, so the scope can range from a specific area of responsibility to comprehensive management of the whole production.
+My responsibilities can include production planning, budgeting, technical coordination, supplier selection, contractor management, scheduling, logistics, and on-site production management.
+
+I approach technical and practical challenges with the artistic objectives in mind. When limitations arise, I work to identify alternatives, understand their implications, and prioritise solutions that preserve the elements most important to the production.
+
+Collaboration is central to this process. I aim to build strong working relationships with the creative team, technical departments, and suppliers, ensuring that everyone understands their responsibilities and how their work contributes to the overall production.
 
 ## Why work with Cothrom
 
-Most recently, Dominic was Production Manager for the Irish Festival of Oulu in Finland — a four-day, five-stage street festival with more than a dozen bands, local artists, and an 18-tonne, two-storey mechanical Pegasus, delivered for audiences in the thousands.
+I bring more than 20 years of experience across live entertainment, international touring, corporate events, and technically demanding productions.
 
-Earlier, with Encore Global in the United States, he directed technical delivery for corporate events of up to 8,000 attendees, managing a $10M+ annual portfolio and the full project lifecycle — venue selection, crewing, budgets, and financial reconciliation. With Papercut Design, he managed on-site delivery and operations for international productions, coordinating crews of up to 40.
+My background combines hands-on technical expertise with production management, budgeting, and team leadership. This allows me to work comfortably between the artistic and technical sides of a production, understanding the objectives of one and the practical requirements of the other.
+
+I have managed large corporate productions, worked internationally with Cirque du Soleil, and more recently served as Production Manager for the Irish Festival of Oulu in Finland.
+
+I understand the importance of building a production team that supports the creative process. My aim is to establish a close working partnership with producers and artists, taking responsibility for technical and production delivery while keeping their objectives and the audience experience at the centre of the work.
 
 ## Next step {#next-step}
 
