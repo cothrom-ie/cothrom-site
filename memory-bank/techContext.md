@@ -4,7 +4,7 @@
 
 | Layer | Choice | Status |
 |-------|--------|--------|
-| SSG | Hugo Extended **0.158.0** (`./bin/hugo`) | Gate 0 OK — `make hugo-install` if missing |
+| SSG | Hugo Extended **0.158.0** (`./bin/hugo`) | Gate 0 OK — arch-aware `make hugo-install` (amd64/arm64) |
 | Theme | No Fate **v0.1.0** (`f2703f64`), style `clean` | `themes/no-fate` submodule |
 | Content | Markdown under `content/` | IA stubs present |
 | Images | Source `images/`; register `docs/image-register.md` | Static smoke logo under `static/images/logos/` (dir gitignored) |
@@ -30,7 +30,8 @@
 
 ## Local / platform
 
-- OS: Linux · Shell: zsh · Workspace: `/home/server/code/cothrom-site`
+- OS: Linux (amd64 or aarch64) · Shell: zsh · Workspace: `/home/cappy/code/cothrom-site`
+- First-run: `git submodule update --init themes/no-fate` then `make hugo-install`
 
 ## Testing expectations
 

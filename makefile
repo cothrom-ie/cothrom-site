@@ -17,11 +17,35 @@ export
 
 HUGO_VERSION ?= 0.158.0
 HUGO_BIN := ./bin/hugo
-HUGO ?= $(shell if [ -x "$(HUGO_BIN)" ]; then echo "$(HUGO_BIN)"; elif command -v hugo >/dev/null 2>&1; then command -v hugo; else echo "$(HUGO_BIN)"; fi)
+# Prefer ./bin/hugo only when it actually runs (avoids wrong-arch leftovers
+# from another machine). Fall back to PATH hugo, else point at HUGO_BIN so
+# check-hugo / hugo-install can give a clear install hint.
+HUGO ?= $(shell \
+	if [ -x "$(HUGO_BIN)" ] && "$(HUGO_BIN)" version >/dev/null 2>&1; then \
+		echo "$(HUGO_BIN)"; \
+	elif command -v hugo >/dev/null 2>&1; then \
+		command -v hugo; \
+	else \
+		echo "$(HUGO_BIN)"; \
+	fi)
 PUBLISH_DIR := site
 HUGO_CACHEDIR ?= $(CURDIR)/temp/hugo_cache
 export HUGO_CACHEDIR
-HUGO_URL := https://github.com/gohugoio/hugo/releases/download/v$(HUGO_VERSION)/hugo_extended_$(HUGO_VERSION)_linux-amd64.tar.gz
+
+# Map uname -m → Hugo release arch (linux-amd64 / linux-arm64).
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_M),x86_64)
+HUGO_ARCH := amd64
+else ifeq ($(UNAME_M),amd64)
+HUGO_ARCH := amd64
+else ifeq ($(UNAME_M),aarch64)
+HUGO_ARCH := arm64
+else ifeq ($(UNAME_M),arm64)
+HUGO_ARCH := arm64
+else
+HUGO_ARCH :=
+endif
+HUGO_URL := https://github.com/gohugoio/hugo/releases/download/v$(HUGO_VERSION)/hugo_extended_$(HUGO_VERSION)_linux-$(HUGO_ARCH).tar.gz
 
 # Dev server networking (make serve). Binds all interfaces by default so the
 # site is reachable from other devices on the LAN (e.g. VS Code on a remote/
@@ -47,17 +71,41 @@ help: ## Show available targets
 	@fgrep -h "##" $(MAKEFILE_LIST) | grep -v fgrep | sed -e 's/\([^:]*\):[^#]*##\(.*\)/  \1|\2/' | column -t -s '|'
 
 hugo-install: ## Download Hugo Extended $(HUGO_VERSION) into ./bin/hugo
+	@if [ -z "$(HUGO_ARCH)" ]; then \
+		echo "Unsupported architecture: $(UNAME_M) (need x86_64 or aarch64/arm64)"; \
+		exit 1; \
+	fi
 	@mkdir -p bin temp
+	@echo "Downloading Hugo Extended $(HUGO_VERSION) (linux-$(HUGO_ARCH))…"
 	@curl -fsSL -o temp/hugo.tgz "$(HUGO_URL)"
 	@tar -xzf temp/hugo.tgz -C bin hugo
 	@chmod +x bin/hugo
 	@rm -f temp/hugo.tgz
 	@$(HUGO_BIN) version
 
-check-hugo: ## Fail if Hugo Extended < 0.158
+check-hugo: ## Fail if Hugo Extended < $(HUGO_VERSION)
+	@if [ -x "$(HUGO_BIN)" ] && ! "$(HUGO_BIN)" version >/dev/null 2>&1; then \
+		echo "Found $(HUGO_BIN) but it cannot run (wrong architecture for this host)."; \
+		echo "Run: make hugo-install"; \
+		exit 1; \
+	fi
 	@test -x "$(HUGO)" || { echo "Hugo not found. Run: make hugo-install"; exit 1; }
-	@$(HUGO) version
-	@$(HUGO) version | grep -qi extended || { echo "Hugo Extended required"; exit 1; }
+	@if ! "$(HUGO)" version >/dev/null 2>&1; then \
+		echo "Hugo at $(HUGO) cannot run. Run: make hugo-install"; \
+		exit 1; \
+	fi
+	@"$(HUGO)" version
+	@"$(HUGO)" version | grep -qi extended || { echo "Hugo Extended required"; exit 1; }
+	@ver=$$("$(HUGO)" version | sed -n 's/^hugo v\([0-9.]*\).*/\1/p'); \
+	IFS=. read -r maj min pat <<< "$$ver"; \
+	IFS=. read -r rmaj rmin rpat <<< "$(HUGO_VERSION)"; \
+	pat=$${pat:-0}; rpat=$${rpat:-0}; \
+	if [ "$$maj" -lt "$$rmaj" ] || \
+	   { [ "$$maj" -eq "$$rmaj" ] && [ "$$min" -lt "$$rmin" ]; } || \
+	   { [ "$$maj" -eq "$$rmaj" ] && [ "$$min" -eq "$$rmin" ] && [ "$$pat" -lt "$$rpat" ]; }; then \
+		echo "Hugo $$ver is too old (need Extended ≥ $(HUGO_VERSION)). Run: make hugo-install"; \
+		exit 1; \
+	fi
 
 build: check-hugo ## Production build → ./site
 	@HUGO_PARAMS_CONTACT_WEBHOOKURL="$${N8N_CONTACT_WEBHOOK_URL:-}" \

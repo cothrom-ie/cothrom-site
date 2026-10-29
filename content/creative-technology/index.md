@@ -17,18 +17,30 @@ visual:
 
 ## What it's for
 
-Creative Technology exists to help creatives explore, develop, and realise ideas that require a technical solution — from straightforward technical documentation, such as a stage plot, to something more elaborate involving custom mechanisms, interactive systems, or specialised performance effects.
+Some of the most interesting creative ideas do not come with an obvious technical solution. That is where I enjoy getting involved.
+
+I work with artists, performers, and creative teams to explore unusual ideas, investigate technical possibilities, and develop practical solutions that support their creative objectives.
+
+Whether it is an unconventional stage effect, automated scenery, an interactive installation, or simply a band developing its technical requirements for live performances, I bring the experience needed to help move an idea forward.
 
 ## How it works
 
-Work can start with a simple consultation and grow from there: understanding the creative intention first, then exploring what approach could support it, before moving into detailed design and, where needed, management of implementation. The scope is tailored to the project rather than fixed in advance, so it suits a quick feasibility conversation as readily as a fully developed technical build.
+Every project starts with understanding what you want to achieve.
+
+Sometimes the solution is straightforward. Other times it requires research, experimentation, and an approach that draws on several technical disciplines.
+
+I work collaboratively with artists and designers to explore the possibilities, establish practical requirements, and develop an appropriate solution. My involvement can range from an initial consultation or technical documentation to detailed design, prototyping, programming, and coordination of implementation.
+
+I am also interested in building long-term relationships with artists, providing technical advice and support as their productions and requirements develop.
 
 ## Why work with Cothrom
 
-Dominic's work as Production Manager and Creative Technology for Cothrom includes CAD schematics, network diagrams, and automation cue sheets for multidisciplinary productions. In R&D at Tait Towers, he collaborated with designers to troubleshoot prototype automation systems for clients including Disney, Las Vegas productions, and Hollywood film projects, developing new control methodologies to improve reliability.
+I bring more than 20 years of experience across live entertainment, international touring, automation, electronics, and technical system design.
 
-With Cirque du Soleil, he designed custom electronic solutions under tight timelines, including specialised circuits for lighting effects and visual cueing systems used production-wide. His film and television credits include work as an automation systems operator on *Ireland's Got Talent* and as an LED video wall technician on *The Oprah Winfrey Show*.
+With Cirque du Soleil, I developed custom electronic solutions for production effects and show control. At TAIT, I worked alongside designers and engineers on prototype automation systems for major entertainment productions.
+
+I enjoy technical challenges that require looking beyond conventional solutions, particularly when they involve combining technologies from different disciplines. I prefer to become involved early, understanding the idea and working through the technical challenges alongside the people who imagined it.
 
 ## Next step {#next-step}
 
-[Get in touch with your idea, however early-stage.](/contact/)
+[Have an unusual idea? I would like to hear it.](/contact/)

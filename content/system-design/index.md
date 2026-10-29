@@ -14,21 +14,32 @@ visual:
   secondary: "secondary.jpg"
   secondary_alt: "Large-format technical drawings, including an isometric stage and seating layout, stacked on a table beside conference title sheets."
 ---
-
 ## What it's for
 
-System Design exists to develop technical systems that meet defined operational and production requirements — primarily temporary technical systems for AV, live events, and outside broadcast, but also more specialised individual systems such as recording, media management, and archival systems for broadcast facilities.
+I provide freelance system design and technical documentation for AV and production companies, primarily supporting live events and outside broadcast.
+
+My work covers audio, lighting, video, networking, and control systems, from individual technical requirements to coordinated, multidisciplinary production designs.
+
+I can contribute to an existing design team or take responsibility for developing a design package, providing the technical drawings, equipment information, and documentation needed to support implementation.
 
 ## How it works
 
-Depending on the engagement, the work can extend from requirements gathering and system architecture through detailed design, documentation, programming, commissioning, and management of on-site implementation. Installation can be coordinated and managed as part of the agreed scope, though it does not require carrying out the physical installation personally — the priority is a coherent, practical solution that can be implemented and operated reliably by the people responsible for it.
+I can work from an established equipment specification, review an existing technical approach, or become involved earlier, helping develop system architecture and equipment selections alongside the project's technical team.
+
+Working in Vectorworks, I produce system schematics, signal flow diagrams, equipment layouts, and supporting technical documentation. Equipment schedules and bills of materials can be developed and maintained throughout the design process.
+
+Where suitable venue drawings are available, I can also produce 3D technical visualisations to assist with event planning and coordination between departments.
+
+Design services can be provided independently or incorporated into a wider Production Management or Technical Direction engagement.
 
 ## Why work with Cothrom
 
-At Pi Communications, Dominic designed the complete long-term facilities for the Omagh Bombing Inquiry and the Pat Finucane Inquiry, combining established baseband SDI technology with modern IP-based audio, video, and control infrastructure, each intended to operate continuously over several years.
+I bring more than 20 years of experience designing, installing, operating, and commissioning technical systems across live entertainment, corporate events, international touring, and broadcast environments.
 
-At Queen's University Belfast, he designed and commissioned AVoIP infrastructure with VLANs and QoS for real-time media across more than 180 AV spaces. At EOS ITS, he designed AV and collaboration systems for hotels, offices, and public-facing businesses, delivering projects within ±3% of target cost.
+My background spans multiple technical disciplines, giving me a practical understanding of how systems interact and the requirements involved in implementing them.
+
+I understand the importance of accurate drawings, clear documentation, and equipment information that remains useful throughout the production process. My experience on-site informs my approach to design, with consideration for the people responsible for installing, operating, and maintaining the systems.
 
 ## Next step {#next-step}
 
-[Get in touch to discuss your system requirements.](/contact/)
+[Get in touch to discuss your design requirements.](/contact/)

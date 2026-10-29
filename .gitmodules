@@ -1,6 +1,4 @@
 [submodule "themes/no-fate"]
 	path = themes/no-fate
 	url = https://github.com/OliverObst/no-fate.git
-[submodule "assets-general"]
-	path = assets-general
-	url = https://github.com/cothrom-ie/assets-general
+

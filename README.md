@@ -25,10 +25,14 @@ output. Production AppSec headers ship in `static/_headers` (copied into
 
 Hugo Extended ≥ 0.158 is required (the No Fate theme needs the extended
 build for Sass/webp processing). `make hugo-install` downloads the pinned
-version into `./bin/hugo`; all other targets use that binary automatically
-if present.
+version into `./bin/hugo` for the host architecture (linux-amd64 or
+linux-arm64); all other targets use that binary automatically when it runs.
+
+On a fresh clone (or a machine move), initialize the theme submodule first,
+then install Hugo:
 
 ```sh
+git submodule update --init themes/no-fate
 make hugo-install   # one-time: download Hugo Extended into ./bin/hugo
 make serve          # dev server, LAN-reachable (binds 0.0.0.0; auto-detects
                     # the host's LAN IP for --baseURL, e.g. http://192.168.1.x:1313/).

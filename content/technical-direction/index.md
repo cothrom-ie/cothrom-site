@@ -16,20 +16,30 @@ visual:
 ---
 ## What it's for
 
-Technical Direction exists to lead the technical implementation of a production and make sure the technical departments deliver the agreed plan together, rather than working to cross-purposes.
+I provide technical direction for live events, corporate productions, and other technically demanding projects.
+
+Working with production companies, AV suppliers, and project managers, I take responsibility for coordinating the technical implementation of a production, from installation and operation through to dismantling.
+
+I work between the project manager and technical departments, keeping everyone informed, resolving conflicts, and making sure the production stays on track.
 
 ## How it works
 
-The role is commonly focused on on-site delivery: coordinating between department heads, resolving technical conflicts as they arise, and communicating between technical teams and technical management. Earlier involvement, during pre-production and technical planning, is welcome where it is useful.
+My involvement typically begins during pre-production, reviewing technical drawings, schedules, infrastructure requirements, and the teams responsible for delivery. On larger projects, this can extend into more detailed planning and coordination.
 
-Responsibilities and decision-making authority are agreed according to the project, the client, and the contractual scope — Technical Direction can sit alongside Production Management or stand on its own, depending on how the production is structured.
+On-site, I work closely with project managers and department heads to manage installation schedules, coordinate technical activities, and resolve issues as they arise.
+
+My experience across audio, lighting, video, automation, and networking allows me to approach each department with an understanding of its requirements, establish realistic expectations, and recognise where decisions in one area affect another.
+
+I adapt my involvement to the scale of the production. On larger projects, I focus on leading and supporting department heads. On smaller projects, I am equally comfortable taking a hands-on technical role where needed.
 
 ## Why work with Cothrom
 
-With Cirque du Soleil, Dominic toured internationally coordinating electronics and automation systems, designing custom circuits for lighting effects and production-wide visual cueing, and leading cross-departmental projects spanning automation, audio, lighting, and rigging across 11 countries.
+I bring more than 20 years of experience across international touring, live entertainment, corporate events, and technically complex productions.
 
-At Pi Communications, he manages parliamentary and live-stream operations across SDI, Dante, and IP workflows. With Encore Global, he directed technical delivery for large-scale corporate events, integrating timecode-driven video and lighting control with redundant network topologies.
+My background combines hands-on engineering with technical leadership and production management, including international touring with Cirque du Soleil and large-scale corporate events with Encore Global.
+
+I value clear communication, well-organised teams, and a calm approach to problem-solving. My aim is to provide the technical leadership that allows everyone to concentrate on their responsibilities and deliver the production effectively.
 
 ## Next step {#next-step}
 
-[Get in touch to talk through your technical requirements.](/contact/)
+[Get in touch to discuss your production's technical requirements.](/contact/)

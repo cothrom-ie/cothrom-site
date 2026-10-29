@@ -25,11 +25,12 @@ opening:
 visual:
   mode: "editorial"
 ---
+## Behind Cothrom
 
-Dominic Capparelli is a production manager with more than 20 years of experience delivering live events, touring productions, corporate shows, and broadcast projects. Cothrom is his independent practice, focused on turning ambitious ideas into practical production plans and carrying them through to show day.
+Cothrom is my independent practice, bringing together more than 20 years of experience in live production, technical engineering, and international touring.
 
-Most recently, Dominic was Production Manager for the Irish Festival of Oulu in Finland. Across four days, he coordinated technical delivery for a five-stage street festival featuring more than a dozen bands, local artists, traditional storytelling, and an 18-tonne, two-storey mechanical Pegasus, for audiences numbering in the thousands.
+I am Dominic Capparelli, originally from Chicago and now based in Northern Ireland. My career has taken me across the United States, Europe, and Australia, working on productions ranging from international entertainment and major corporate events to cultural festivals and specialist technical projects.
 
-Previously, he directed large-scale corporate events across the United States with Encore Global, leading delivery for audiences of up to 8,000 and managing a $10M+ annual portfolio. His work covered venue evaluation, budgets and P&L, crewing, contractors, client relationships, and the production of music and theatrical elements. He also toured internationally with Cirque du Soleil, coordinating show electronics, automation, cross-department projects, and logistics across 11 countries.
+I bring experience across production management, technical direction, and engineering, with an understanding of both the creative objectives and practical requirements of delivering a production.
 
-Dominic's background in broadcast, automation, and AV design gives him the technical depth to engage with the detail without losing sight of the production as a whole. He works closely with clients, creative teams, suppliers, and crew from early planning through on-site delivery, bringing clear communication, practical problem-solving, and calm leadership when the pressure is on.
+Cothrom gives me the opportunity to work independently, build lasting professional relationships, and contribute to projects where trust, collaboration, and shared objectives are central to the work.
