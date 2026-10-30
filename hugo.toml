@@ -65,7 +65,7 @@ enableRobotsTXT = true
   disableThemeToggle = true
   hideAuthor = true
   ShowReadingTime = false
-  ShowBreadCrumbs = true
+  ShowBreadCrumbs = false
   ShowPostNavLinks = false
   ShowShareButtons = false
   [params.label]

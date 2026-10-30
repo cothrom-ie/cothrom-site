@@ -10,6 +10,7 @@ _(none)_
 
 ## Recently completed
 
+- `footer-layout-breadcrumbs` — Level 1 (2026-10-30): breadcrumbs off; LinkedIn icon left / copyright centre in footer
 - `service-secondary-images` — archive `memory-bank/archive/archive-service-secondary-images.md` (2026-10-27)
 - `nav-chrome-light-logo` — archive `memory-bank/archive/archive-nav-chrome-light-logo.md`
 - `deploy-cf-pages` — archive `memory-bank/archive/archive-deploy-cf-pages.md` (go-live confirmed)

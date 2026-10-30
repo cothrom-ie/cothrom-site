@@ -2,6 +2,7 @@
 
 ## Completed
 
+- [x] **footer-layout-breadcrumbs** Level 1 (2026-10-30) — breadcrumbs off; LinkedIn SVG icon left / copyright centre
 - [x] VAN: Memory Bank; Level 4
 - [x] PLAN: Phased plan + architecture
 - [x] CREATIVE **C1**: Theme & visual system locked
