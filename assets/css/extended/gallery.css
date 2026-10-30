@@ -1,5 +1,7 @@
 /*
- * Phase 3 — Gallery (C4): continuous marquee + reduced-motion fallback.
+ * Gallery (C4-tiled): static justified-row tiled grid + lightbox with caption.
+ * Supersedes the original Phase 3 continuous marquee — see
+ * memory-bank/creative/creative-gallery-tiled.md for the decision record.
  * Loaded after No Fate via assets/css/extended/*.css — do not edit the theme.
  */
 
@@ -7,122 +9,90 @@
   max-width: var(--nf-reading, 68ch);
 }
 
-.nf-gallery__controls {
+/*
+ * Grid: before the inline layout script runs (or if JS is unavailable), this is a
+ * plain wrapping flex row. Each tile already carries the photo's real aspect ratio
+ * via an inline `aspect-ratio` style (set at build time from the Hugo-resized
+ * derivative), so even this fallback never crops or stretches a photo — it just
+ * doesn't pack rows flush to the edge the way the justified-layout script does.
+ */
+.nf-gallery__grid {
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: var(--nf-space-2, 0.5rem);
+  margin: 0;
   padding: 0 var(--nf-gutter, 1.5rem);
-  margin-bottom: var(--nf-space-3, 1rem);
-}
-
-.nf-gallery__pause {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--nf-rule-colour);
-  background: transparent;
-  color: var(--nf-ink);
-  font-family: var(--nf-font-meta, ui-monospace, monospace);
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.nf-gallery__pause:hover,
-.nf-gallery__pause:focus-visible {
-  border-color: var(--brand-kraft);
-  color: var(--brand-kraft);
-}
-
-.nf-gallery__viewport {
-  overflow: hidden;
+  list-style: none;
+  box-sizing: border-box;
   width: 100%;
 }
 
-.nf-gallery__track {
-  display: flex;
-  width: max-content;
-  gap: var(--nf-space-3, 1rem);
-  padding: 0 var(--nf-gutter, 1.5rem);
+.nf-gallery__tile {
+  box-sizing: border-box;
+  flex: 1 1 16rem;
+  min-width: 10rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Once JS has packed a row, tiles get explicit pixel width/height — stop flex-growing. */
+.nf-gallery__grid.is-justified .nf-gallery__tile {
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
 .nf-gallery__item {
-  flex: 0 0 auto;
+  display: block;
+  width: 100%;
+  height: 100%;
   padding: 0;
   border: 0;
   background: none;
   cursor: zoom-in;
   line-height: 0;
+  transition: transform var(--nf-fast, 140ms) var(--nf-ease, ease);
 }
 
+.nf-gallery__item:hover,
+.nf-gallery__item:focus-visible {
+  transform: scale(1.015);
+}
+
+.nf-gallery__item picture,
 .nf-gallery__item img {
   display: block;
-  height: 46vh;
-  max-height: 26rem;
-  width: auto;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
-/* M1: continuous marquee, only when the OS has no motion preference set */
-@media (prefers-reduced-motion: no-preference) {
-  .nf-gallery__track {
-    animation: nf-gallery-scroll 90s linear infinite;
-  }
-
-  /* I1: hover/focus pauses; the clone set duplicates content so -50% loops seamlessly */
-  .nf-gallery__track:hover,
-  .nf-gallery__track:focus-within,
-  .nf-gallery__track.is-paused {
-    animation-play-state: paused;
-  }
+/* Box aspect ratio already matches the photo — fill, don't crop. */
+.nf-gallery__image {
+  object-fit: fill;
 }
 
-@keyframes nf-gallery-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* A3: OS reduced-motion -> static responsive grid; Pause control has nothing to do, so hide it */
 @media (prefers-reduced-motion: reduce) {
-  .nf-gallery__controls {
-    display: none;
-  }
-
-  .nf-gallery__viewport {
-    overflow: visible;
-  }
-
-  .nf-gallery__track {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-    width: 100%;
-    padding: 0 var(--nf-gutter, 1.5rem);
-  }
-
-  .nf-gallery__track [aria-hidden="true"] {
-    display: none;
-  }
-
-  .nf-gallery__item img {
-    height: auto;
-    width: 100%;
-    max-height: none;
+  .nf-gallery__item,
+  .nf-gallery__item:hover,
+  .nf-gallery__item:focus-visible {
+    transition: none;
+    transform: none;
   }
 }
 
-/* I1: lightbox */
+@media (max-width: 30rem) {
+  .nf-gallery__grid {
+    padding: 0 var(--nf-gutter, 1rem);
+  }
+}
+
+/* I1: lightbox, now with a visible caption (the photo's alt text) */
 .nf-gallery__lightbox {
   position: relative;
   max-width: min(92vw, 70rem);
-  max-height: 88vh;
+  max-height: 90vh;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--brand-ink);
   background: var(--nf-paper);
 }
 
@@ -130,13 +100,30 @@
   background: rgba(29, 18, 13, 0.82);
 }
 
+.nf-gallery__lightbox-figure {
+  margin: 0;
+}
+
 .nf-gallery__lightbox picture,
 .nf-gallery__lightbox img {
   display: block;
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 78vh;
   width: auto;
   height: auto;
+  margin-inline: auto;
+}
+
+.nf-gallery__lightbox-caption {
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--nf-rule-colour, rgba(29, 18, 13, 0.2));
+  color: var(--nf-muted, var(--nf-ink));
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.nf-gallery__lightbox-caption:empty {
+  display: none;
 }
 
 .nf-gallery__lightbox-close {

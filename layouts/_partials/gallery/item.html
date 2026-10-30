@@ -1,31 +1,46 @@
 {{- /*
-  One gallery strip item (C4 L1/I1). Called twice from layouts/section/gallery.html —
-  once for the visible set, once more (clone=true) so the CSS marquee has a second,
-  accessibility-hidden copy to scroll into for a seamless loop.
+  One gallery tile (C4-tiled). Called once per photo from layouts/section/gallery.html.
+
+  No disciplined cropping required: Hugo-resized derivatives keep each photo's native
+  aspect ratio, and the <li> carries that ratio as data-w/data-h so the page's justified
+  layout script (inline in gallery.html) can size every tile — before or after the image
+  decodes — without ever stretching or cutting the photo. The CSS-only fallback (no JS)
+  uses the same data via an inline `aspect-ratio` style, so the grid still tiles sensibly
+  with JS disabled.
 */ -}}
 {{- $page := .page -}}
 {{- $p := .photo -}}
 {{- $i := .index -}}
-{{- $clone := .clone -}}
 {{- $src := $p.image -}}
 {{- $alt := $p.alt | default "" -}}
 {{- with $page.Resources.GetMatch $src }}
-    {{- $strip := .Resize "x640 q82" -}}
-    {{- $stripWebp := .Resize "x640 webp q82" -}}
-    {{- $full := .Resize "x1400 q85" -}}
-    {{- $fullWebp := .Resize "x1400 webp q82" -}}
-    <button type="button" class="nf-gallery__item" data-full="{{ $full.RelPermalink }}" data-full-webp="{{ $fullWebp.RelPermalink }}" data-alt="{{ $alt }}"{{ if $clone }} aria-hidden="true" tabindex="-1"{{ end }}>
-        <picture>
-            <source srcset="{{ $stripWebp.RelPermalink }}" type="image/webp">
-            <img
-                src="{{ $strip.RelPermalink }}"
-                width="{{ $strip.Width }}"
-                height="{{ $strip.Height }}"
-                alt="{{ if $clone }}{{ else }}{{ $alt }}{{ end }}"
-                loading="{{ if and (not $clone) (lt $i 4) }}eager{{ else }}lazy{{ end }}"
-                class="nf-content-image raw">
-        </picture>
-    </button>
+    {{- $img := . -}}
+    {{- /* Tile derivative: cap width so the grid never ships a multi-MB original. */ -}}
+    {{- $tileMaxW := 1600 -}}
+    {{- $tileW := $img.Width -}}
+    {{- if gt $tileW $tileMaxW }}{{ $tileW = $tileMaxW }}{{ end -}}
+    {{- $tile := $img.Resize (printf "%dx q82" $tileW) -}}
+    {{- $tileWebp := $img.Resize (printf "%dx webp q82" $tileW) -}}
+    {{- /* Lightbox derivative: larger cap for the enlarged view. */ -}}
+    {{- $fullMaxW := 2200 -}}
+    {{- $fullW := $img.Width -}}
+    {{- if gt $fullW $fullMaxW }}{{ $fullW = $fullMaxW }}{{ end -}}
+    {{- $full := $img.Resize (printf "%dx q85" $fullW) -}}
+    {{- $fullWebp := $img.Resize (printf "%dx webp q82" $fullW) -}}
+    <li class="nf-gallery__tile" data-w="{{ $tile.Width }}" data-h="{{ $tile.Height }}" style="aspect-ratio:{{ $tile.Width }} / {{ $tile.Height }}">
+        <button type="button" class="nf-gallery__item" data-full="{{ $full.RelPermalink }}" data-full-webp="{{ $fullWebp.RelPermalink }}" data-alt="{{ $alt }}">
+            <picture>
+                <source srcset="{{ $tileWebp.RelPermalink }}" type="image/webp">
+                <img
+                    src="{{ $tile.RelPermalink }}"
+                    width="{{ $tile.Width }}"
+                    height="{{ $tile.Height }}"
+                    alt="{{ $alt }}"
+                    loading="{{ if lt $i 6 }}eager{{ else }}lazy{{ end }}"
+                    class="nf-content-image nf-gallery__image">
+            </picture>
+        </button>
+    </li>
 {{- else }}
     {{- errorf "Gallery: photo %q not found as a page resource on %s" $src $page.RelPermalink -}}
 {{- end -}}

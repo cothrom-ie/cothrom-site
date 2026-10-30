@@ -1,11 +1,30 @@
 {{- /*
-  Site override of the Gallery section (C4): themes/no-fate/layouts/list.html renders a
-  chronological article index, which doesn't fit a curated photo marquee, so this section
+  Site override of the Gallery section (C4-tiled): themes/no-fate/layouts/list.html renders
+  a chronological article index, which doesn't fit a curated photo wall, so this section
   template (layouts/section/gallery.html) replaces it entirely for /gallery/ only — every
-  other section still falls back to the theme's default list.html. Does not edit theme files.
+  other section still falls back to the theme's default list.html. Does not edit theme
+  files.
 
-  M1 continuous marquee, L1 single full-bleed row, I1 click-to-lightbox, A3 reduced-motion
-  static grid + always-visible Pause control, P1 minimal chrome (title + one line).
+  Supersedes the original C4 marquee (see memory-bank/creative/creative-gallery-autoscroll.md)
+  with a static **justified tiled grid**: rows are packed so every full row fits the
+  container's exact width (classic "justified gallery" row-packing, the same idea behind
+  Flickr's photo grid), by scaling each row's height so width_i = aspect_i * rowHeight sums
+  to the container width. Because each tile's box aspect ratio is set to exactly match its
+  photo's aspect ratio, no photo is ever cropped or stretched — there's nothing to curate or
+  recrop when adding new photos. See memory-bank/creative/creative-gallery-tiled.md for the
+  options considered (CSS multi-column "masonry" vs this row-justified approach) and why no
+  third-party layout library was added (AppSec: no new dependency without review; this site
+  has no npm/node pipeline at all — the algorithm below is a small, dependency-free,
+  hand-written implementation of a well-known public technique, not copied from any
+  library's source).
+
+  I1 click-to-lightbox with a visible caption (page's `alt` text, shown under the enlarged
+  photo, not just in the attribute). A11y: static grid means there is no motion to manage —
+  prefers-reduced-motion now only has to disable the small hover scale.
+
+  Updating the gallery: drop a new image into content/gallery/photos/ and add one
+  `- image: "photos/xx.jpg"` / `alt: "..."` pair to this page's front matter. No cropping,
+  no manual layout — the script below re-packs every tile on load and on resize.
 */ -}}
 {{- define "main" }}
 {{- $page := . -}}
@@ -19,51 +38,123 @@
     </header>
 
     {{- if $photos }}
-    <div class="nf-gallery__controls">
-        <button type="button" id="nf-gallery-pause" class="nf-gallery__pause" aria-pressed="false">
-            <span class="nf-gallery__pause-label">Pause motion</span>
-        </button>
-    </div>
-
-    <div class="nf-gallery__viewport">
-        <div class="nf-gallery__track" id="nf-gallery-track" aria-label="Photo gallery, continuously scrolling">
-            {{- range $i, $p := $photos }}
-                {{- partial "gallery/item.html" (dict "page" $page "photo" $p "index" $i "clone" false) -}}
-            {{- end }}
-            {{- range $i, $p := $photos }}
-                {{- partial "gallery/item.html" (dict "page" $page "photo" $p "index" $i "clone" true) -}}
-            {{- end }}
-        </div>
-    </div>
+    <ul class="nf-gallery__grid" id="nf-gallery-grid" aria-label="Photo gallery">
+        {{- range $i, $p := $photos }}
+            {{- partial "gallery/item.html" (dict "page" $page "photo" $p "index" $i) -}}
+        {{- end }}
+    </ul>
 
     <dialog class="nf-gallery__lightbox" id="nf-gallery-lightbox" aria-label="Expanded photo">
         <button type="button" class="nf-gallery__lightbox-close" id="nf-gallery-lightbox-close" aria-label="Close">&times;</button>
-        <picture>
-            <source id="nf-gallery-lightbox-source" srcset="" type="image/webp">
-            <img id="nf-gallery-lightbox-img" src="" alt="">
-        </picture>
+        <figure class="nf-gallery__lightbox-figure">
+            <picture>
+                <source id="nf-gallery-lightbox-source" srcset="" type="image/webp">
+                <img id="nf-gallery-lightbox-img" src="" alt="">
+            </picture>
+            <figcaption id="nf-gallery-lightbox-caption" class="nf-gallery__lightbox-caption"></figcaption>
+        </figure>
     </dialog>
 
     <script>
     (function () {
-        var track = document.getElementById('nf-gallery-track');
-        var pauseBtn = document.getElementById('nf-gallery-pause');
+        var grid = document.getElementById('nf-gallery-grid');
         var lightbox = document.getElementById('nf-gallery-lightbox');
         var lightboxImg = document.getElementById('nf-gallery-lightbox-img');
         var lightboxSource = document.getElementById('nf-gallery-lightbox-source');
+        var lightboxCaption = document.getElementById('nf-gallery-lightbox-caption');
         var lightboxClose = document.getElementById('nf-gallery-lightbox-close');
-        if (!track) { return; }
+        if (!grid) { return; }
 
-        if (pauseBtn) {
-            pauseBtn.addEventListener('click', function () {
-                var paused = track.classList.toggle('is-paused');
-                pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-                var label = pauseBtn.querySelector('.nf-gallery__pause-label');
-                if (label) { label.textContent = paused ? 'Play motion' : 'Pause motion'; }
+        /*
+         * Full-justified row packing (dependency-free). Every row — including the
+         * last — is scaled so its tiles + gaps fill the container's exact width.
+         * Each tile keeps its photo's native aspect ratio (no crop/stretch). A short
+         * last row just becomes taller (or a single wide photo taller still); no
+         * photo editing is required. Widths are floored then the remainder is given
+         * to the last tile in the row so rounding never leaves a ragged right edge.
+         */
+        function layout() {
+            var style = getComputedStyle(grid);
+            // clientWidth includes horizontal padding; flex items lay out in the content box.
+            var padL = parseFloat(style.paddingLeft) || 0;
+            var padR = parseFloat(style.paddingRight) || 0;
+            var containerWidth = grid.clientWidth - padL - padR;
+            if (!containerWidth) { return; }
+            var gap = parseFloat(style.columnGap || style.gap) || 8;
+            // Target row height only decides *when* to break a row; final height is
+            // always solved so the row fills containerWidth exactly.
+            var targetHeight = Math.max(130, Math.min(320, containerWidth / 5.5));
+            var tiles = Array.prototype.slice.call(grid.children);
+            var row = [];
+            var aspectSum = 0;
+
+            function aspectOf(tile) {
+                var w = parseFloat(tile.getAttribute('data-w'));
+                var h = parseFloat(tile.getAttribute('data-h'));
+                return (w && h) ? (w / h) : 1;
+            }
+
+            function commitRow(items, sum) {
+                var totalGap = gap * Math.max(items.length - 1, 0);
+                var available = containerWidth - totalGap;
+                var rowHeight = available / sum;
+                var used = 0;
+                items.forEach(function (tile, i) {
+                    var w;
+                    if (i === items.length - 1) {
+                        w = Math.max(1, available - used);
+                    } else {
+                        w = Math.floor(aspectOf(tile) * rowHeight);
+                        used += w;
+                    }
+                    tile.style.width = w + 'px';
+                    tile.style.height = Math.round(rowHeight) + 'px';
+                    tile.style.flex = '0 0 auto';
+                });
+            }
+
+            tiles.forEach(function (tile) {
+                var aspect = aspectOf(tile);
+                row.push(tile);
+                aspectSum += aspect;
+                var widthAtTarget = aspectSum * targetHeight + gap * (row.length - 1);
+                if (widthAtTarget >= containerWidth && row.length > 1) {
+                    // Prefer breaking before the photo that overflowed, so a single
+                    // very-wide panoramic doesn't end up alone unless it must.
+                    var overflow = row.pop();
+                    aspectSum -= aspect;
+                    if (row.length) {
+                        commitRow(row, aspectSum);
+                    }
+                    row = [overflow];
+                    aspectSum = aspect;
+                    // If even one photo already exceeds the target row width, commit it alone (full-width).
+                    if (aspect * targetHeight >= containerWidth) {
+                        commitRow(row, aspectSum);
+                        row = [];
+                        aspectSum = 0;
+                    }
+                } else if (widthAtTarget >= containerWidth) {
+                    commitRow(row, aspectSum);
+                    row = [];
+                    aspectSum = 0;
+                }
             });
+            if (row.length) {
+                commitRow(row, aspectSum);
+            }
+            grid.classList.add('is-justified');
         }
 
-        Array.prototype.forEach.call(track.querySelectorAll('.nf-gallery__item'), function (item) {
+        layout();
+
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(layout, 120);
+        });
+
+        Array.prototype.forEach.call(grid.querySelectorAll('.nf-gallery__item'), function (item) {
             item.addEventListener('click', function () {
                 var full = item.getAttribute('data-full');
                 var fullWebp = item.getAttribute('data-full-webp');
@@ -72,6 +163,7 @@
                 lightboxImg.src = full;
                 lightboxImg.alt = alt;
                 if (lightboxSource) { lightboxSource.srcset = fullWebp || ''; }
+                if (lightboxCaption) { lightboxCaption.textContent = alt; }
                 if (typeof lightbox.showModal === 'function') {
                     lightbox.showModal();
                 } else {
@@ -90,6 +182,7 @@
             lightbox.addEventListener('close', function () {
                 if (lightboxImg) { lightboxImg.src = ''; }
                 if (lightboxSource) { lightboxSource.srcset = ''; }
+                if (lightboxCaption) { lightboxCaption.textContent = ''; }
             });
         }
     })();

@@ -2,6 +2,7 @@
 
 ## Completed
 
+- [x] **gallery-tiled-grid** Level 2 (2026-10-30) — marquee replaced with justified tiled grid (no manual crop); lightbox caption added
 - [x] **footer-layout-breadcrumbs** Level 1 (2026-10-30) — breadcrumbs off; LinkedIn SVG icon left / copyright centre
 - [x] VAN: Memory Bank; Level 4
 - [x] PLAN: Phased plan + architecture
