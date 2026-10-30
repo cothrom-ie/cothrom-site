@@ -1,0 +1,2 @@
+# Used only by `make optimize-images` (local tooling venv — not a site runtime dep).
+Pillow>=10.0.0,<12

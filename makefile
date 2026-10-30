@@ -64,7 +64,20 @@ LAN_IP := 0.0.0.0
 endif
 BASEURL ?= http://$(LAN_IP):$(PORT)/
 
-.PHONY: help hugo-install build serve clean check-hugo
+# Local tooling venv for image optimization (gitignored). Not used by Hugo itself.
+OPTIMIZE_VENV := .venv-optimize-images
+OPTIMIZE_PY := $(OPTIMIZE_VENV)/bin/python
+OPTIMIZE_SCRIPT := scripts/optimize-content-images.py
+OPTIMIZE_REQS := scripts/requirements-optimize-images.txt
+# Override on the command line, e.g.:
+#   make optimize-images MAX_WIDTH=1600
+#   make optimize-images DRY_RUN=1
+MAX_WIDTH ?= 1920
+# JFIF density written into each JPEG (screen default). Override e.g. DPI=96.
+DPI ?= 72
+DRY_RUN ?= 0
+
+.PHONY: help hugo-install build serve clean check-hugo optimize-images-deps optimize-images
 
 help: ## Show available targets
 	@echo "Available targets:"
@@ -126,3 +139,20 @@ serve: check-hugo ## Dev server, LAN-reachable (bind 0.0.0.0; see BASEURL/BIND o
 clean: ## Remove publish output and Hugo caches
 	@rm -rf "$(PUBLISH_DIR)" public resources/_gen .hugo_build.lock temp/hugo_cache
 	@echo "Cleaned $(PUBLISH_DIR)/ public/ resources/_gen temp/hugo_cache"
+
+optimize-images-deps: ## Create .venv-optimize-images and install Pillow
+	@test -f "$(OPTIMIZE_REQS)" || { echo "Missing $(OPTIMIZE_REQS)"; exit 1; }
+	@if [ ! -x "$(OPTIMIZE_PY)" ]; then \
+		echo "Creating $(OPTIMIZE_VENV)…"; \
+		python3 -m venv "$(OPTIMIZE_VENV)"; \
+	fi
+	@"$(OPTIMIZE_PY)" -m pip install --upgrade pip
+	@"$(OPTIMIZE_PY)" -m pip install -r "$(OPTIMIZE_REQS)"
+	@echo "Ready: $(OPTIMIZE_PY)"
+
+optimize-images: optimize-images-deps ## Resize/re-encode content/ images → JPG max-width $(MAX_WIDTH) (in place)
+	@test -f "$(OPTIMIZE_SCRIPT)" || { echo "Missing $(OPTIMIZE_SCRIPT)"; exit 1; }
+	@args=(--root content --max-width "$(MAX_WIDTH)" --dpi "$(DPI)"); \
+	if [ "$(DRY_RUN)" = "1" ]; then args+=(--dry-run); fi; \
+	"$(OPTIMIZE_PY)" "$(OPTIMIZE_SCRIPT)" "$${args[@]}"
+	@echo "Tip: run \`make build\` (or \`make clean && make build\`) so Hugo regenerates image derivatives."

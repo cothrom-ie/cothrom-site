@@ -8,6 +8,19 @@ _(none — ready for next `/van`)_
 
 ## Completed Enhancements
 
+- [x] **optimize-content-images** Level 1 (2026-10-30)
+  - Issue: Need a repeatable way to shrink `content/` photography before Hugo
+    processes derivatives — max width 1920, aspect kept, JPG in place.
+  - Solution: `scripts/optimize-content-images.py` (Pillow) +
+    `make optimize-images` / `make optimize-images-deps`. Local gitignored
+    `.venv-optimize-images` only (not a site runtime dep). Supports
+    `DRY_RUN=1` and `MAX_WIDTH=…`. Non-JPG sources become `<stem>.jpg` and the
+    original is removed (script lists renames).
+  - Verified: `make optimize-images DRY_RUN=1` — 27 images scanned, resize/
+    re-encode plan looks correct; no files written in dry run.
+  - Files: `scripts/optimize-content-images.py`,
+    `scripts/requirements-optimize-images.txt`, `makefile`, `README.md`,
+    `.gitignore`
 - [x] **gallery-tiled-grid** Level 2 (2026-10-30)
   - Issue: Owner disliked the autoscrolling marquee; wanted photos to auto-pack to the
     page width without having to crop anything, stay easy to extend, and clicking a photo

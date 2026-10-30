@@ -2,6 +2,7 @@
 
 ## Completed
 
+- [x] **optimize-content-images** Level 1 (2026-10-30) — `make optimize-images` (Pillow venv) resizes/re-encodes `content/` to JPG max-width 1920 in place
 - [x] **gallery-tiled-grid** Level 2 (2026-10-30) — marquee replaced with justified tiled grid (no manual crop); lightbox caption added
 - [x] **footer-layout-breadcrumbs** Level 1 (2026-10-30) — breadcrumbs off; LinkedIn SVG icon left / copyright centre
 - [x] VAN: Memory Bank; Level 4
