@@ -73,8 +73,11 @@ OPTIMIZE_REQS := scripts/requirements-optimize-images.txt
 #   make optimize-images MAX_WIDTH=1600
 #   make optimize-images DRY_RUN=1
 MAX_WIDTH ?= 1920
-# JFIF density written into each JPEG (screen default). Override e.g. DPI=96.
-DPI ?= 72
+# JFIF density written into each JPEG. Override e.g. DPI=96.
+DPI ?= 300
+# Minimal EXIF kept after strip (Artist / Copyright). Override if needed.
+AUTHOR ?= Dominic Capparelli
+COMPANY ?= Cothrom Productions
 DRY_RUN ?= 0
 
 .PHONY: help hugo-install build serve clean check-hugo optimize-images-deps optimize-images
@@ -152,7 +155,7 @@ optimize-images-deps: ## Create .venv-optimize-images and install Pillow
 
 optimize-images: optimize-images-deps ## Resize/re-encode content/ images → JPG max-width $(MAX_WIDTH) (in place)
 	@test -f "$(OPTIMIZE_SCRIPT)" || { echo "Missing $(OPTIMIZE_SCRIPT)"; exit 1; }
-	@args=(--root content --max-width "$(MAX_WIDTH)" --dpi "$(DPI)"); \
+	@args=(--root content --max-width "$(MAX_WIDTH)" --dpi "$(DPI)" --author "$(AUTHOR)" --company "$(COMPANY)"); \
 	if [ "$(DRY_RUN)" = "1" ]; then args+=(--dry-run); fi; \
 	"$(OPTIMIZE_PY)" "$(OPTIMIZE_SCRIPT)" "$${args[@]}"
 	@echo "Tip: run \`make build\` (or \`make clean && make build\`) so Hugo regenerates image derivatives."

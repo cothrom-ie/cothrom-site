@@ -2,9 +2,11 @@
 """Optimize raster images under content/ in place.
 
 For every supported image under content/:
-  - Apply EXIF orientation
+  - Apply EXIF orientation (then drop all original metadata)
   - Cap width at MAX_WIDTH (default 1920), keeping aspect ratio (never upscale)
   - Re-encode as progressive JPEG (quality 85, optimize)
+  - Write minimal EXIF: Artist (name) + Copyright (company) only — no GPS,
+    camera, software, timestamps, or other leftover tags
   - Replace the original file
 
 If the source was not already .jpg/.jpeg, the optimized file is written as
@@ -13,7 +15,8 @@ points at the old extension must be updated by hand — the script prints those
 renames clearly.
 
 Usage:
-  python3 scripts/optimize-content-images.py [--dry-run] [--root content] [--max-width 1920] [--dpi 72]
+  python3 scripts/optimize-content-images.py [--dry-run] [--root content] \\
+      [--max-width 1920] [--dpi 72] [--author NAME] [--company NAME]
 """
 
 from __future__ import annotations
@@ -39,9 +42,16 @@ JPEG_SUFFIXES = {".jpg", ".jpeg"}
 SKIP_NAMES = {".DS_Store", "Thumbs.db"}
 
 # Web/screen JFIF density. Browsers ignore DPI for layout (pixels win), but we
-# still write a real density so the file isn't left at 1dpi / unset — 72 is the
-# long-standing screen default; override with --dpi if you prefer 96/150/300.
+# still write a real density so the file isn't left at 1dpi / unset.
 DEFAULT_DPI = 300
+
+# Credit tags kept after the metadata strip (matches hugo.toml author / site title).
+DEFAULT_AUTHOR = "Dominic Capparelli"
+DEFAULT_COMPANY = "Cothrom Productions"
+
+# EXIF IFD0 tag numbers (Pillow Image.Exif).
+EXIF_ARTIST = 0x013B
+EXIF_COPYRIGHT = 0x8298
 
 
 def parse_args() -> argparse.Namespace:
@@ -71,11 +81,31 @@ def parse_args() -> argparse.Namespace:
         help=f"JPEG JFIF density (DPI) written into the file (default: {DEFAULT_DPI})",
     )
     p.add_argument(
+        "--author",
+        default=DEFAULT_AUTHOR,
+        help=f"EXIF Artist (name) kept after strip (default: {DEFAULT_AUTHOR!r})",
+    )
+    p.add_argument(
+        "--company",
+        default=DEFAULT_COMPANY,
+        help=f"EXIF Copyright (company) kept after strip (default: {DEFAULT_COMPANY!r})",
+    )
+    p.add_argument(
         "--dry-run",
         action="store_true",
         help="Report actions without writing or deleting files",
     )
     return p.parse_args()
+
+
+def build_credit_exif(author: str, company: str) -> bytes:
+    """Minimal EXIF payload: Artist + Copyright only (nothing else forwarded)."""
+    exif = Image.Exif()
+    if author:
+        exif[EXIF_ARTIST] = author
+    if company:
+        exif[EXIF_COPYRIGHT] = company
+    return exif.tobytes()
 
 
 def iter_images(root: Path) -> list[Path]:
@@ -106,10 +136,14 @@ def optimize_one(
     max_width: int,
     quality: int,
     dpi: int,
+    author: str,
+    company: str,
     dry_run: bool,
 ) -> dict:
     before = src.stat().st_size
     with Image.open(src) as im:
+        # Honour orientation, then discard the source's EXIF/XMP/etc. entirely —
+        # we never forward im.info / original exif bytes into the save.
         im = ImageOps.exif_transpose(im)
         w, h = im.size
         new_w, new_h = w, h
@@ -137,6 +171,7 @@ def optimize_one(
             return action
 
         # Convert to RGB for JPEG (drop alpha onto white if present).
+        # Fresh Image / convert path → no camera GPS, software, or timestamps.
         if im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info):
             rgba = im.convert("RGBA")
             background = Image.new("RGB", rgba.size, (255, 255, 255))
@@ -148,6 +183,8 @@ def optimize_one(
         if resized:
             out = out.resize((new_w, new_h), Image.Resampling.LANCZOS)
 
+        credit_exif = build_credit_exif(author, company)
+
         # Write via a sibling temp file, then replace — never leave a half-written original.
         tmp = dest.with_name(dest.name + ".tmp")
         out.save(
@@ -157,6 +194,7 @@ def optimize_one(
             optimize=True,
             progressive=True,
             dpi=(dpi, dpi),
+            exif=credit_exif,
         )
         tmp.replace(dest)
         if renamed and src.exists():
@@ -189,6 +227,10 @@ def main() -> int:
         f"Scanning {root} ({len(images)} image(s)), "
         f"max-width={args.max_width}, jpeg q={args.quality}, dpi={args.dpi}"
     )
+    print(
+        f"  Metadata: strip all → keep Artist={args.author!r}, "
+        f"Copyright={args.company!r}"
+    )
 
     total_before = 0
     total_after = 0
@@ -201,6 +243,8 @@ def main() -> int:
                 max_width=args.max_width,
                 quality=args.quality,
                 dpi=args.dpi,
+                author=args.author,
+                company=args.company,
                 dry_run=args.dry_run,
             )
         except Exception as exc:  # keep going; report failures per file

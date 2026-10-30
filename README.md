@@ -50,13 +50,16 @@ make help           # list all targets
 
 `make optimize-images` scans `content/` recursively, resizes any raster wider
 than **1920px** (aspect ratio preserved, never upscales), re-encodes as
-progressive JPEG (q85) with **72 DPI** JFIF density, and **replaces the
-original file in place**. Non-JPG sources become `<stem>.jpg` and the old file
-is removed — update front matter if you drop a PNG/WebP. Preview with
-`make optimize-images DRY_RUN=1`. Override with `MAX_WIDTH=1600` or `DPI=96`.
-Uses a local gitignored venv (`.venv-optimize-images`, Pillow only — not a site
-runtime dependency). After running it, `make build` (or `make clean && make build`)
-so Hugo regenerates derivatives.
+progressive JPEG (q85) with JFIF density (**300 DPI** by default), **strips all
+other metadata**, and writes only EXIF **Artist** (`Dominic Capparelli`) and
+**Copyright** (`Cothrom Productions`). It **replaces the original file in
+place**. Non-JPG sources become `<stem>.jpg` and the old file is removed —
+update front matter if you drop a PNG/WebP. Preview with
+`make optimize-images DRY_RUN=1`. Override with `MAX_WIDTH=…`, `DPI=…`,
+`AUTHOR=…`, or `COMPANY=…`. Uses a local gitignored venv
+(`.venv-optimize-images`, Pillow only — not a site runtime dependency). After
+running it, `make build` (or `make clean && make build`) so Hugo regenerates
+derivatives.
 
 `publishDir` is `site/`. CI deploys that directory to Cloudflare Pages.
 For a local production-like preview: `make build` then
