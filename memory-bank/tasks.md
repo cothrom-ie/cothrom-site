@@ -8,6 +8,14 @@ _(none — ready for next `/van`)_
 
 ## Completed Enhancements
 
+- [x] **gallery-lightbox-role-event** Level 1 (2026-10-30)
+  - Issue: Lightbox caption should show two YAML-driven lines — bold **Role:** then bold **Event:**.
+  - Solution: `role` / `event` fields on each `photos[]` entry in `content/gallery/_index.md`;
+    item partial passes `data-role`/`data-event`; lightbox figcaption has two lines with
+    bold labels. `alt` kept for accessibility. Role/event left empty for owner to fill
+    (do not invent experience).
+  - Files: `content/gallery/_index.md`, `layouts/_partials/gallery/item.html`,
+    `layouts/section/gallery.html`, `assets/css/extended/gallery.css`, `README.md`
 - [x] **optimize-content-images** Level 1 (2026-10-30)
   - Issue: Need a repeatable way to shrink `content/` photography before Hugo
     processes derivatives — max width 1920, aspect kept, JPG in place.

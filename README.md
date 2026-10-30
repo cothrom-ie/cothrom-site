@@ -165,8 +165,9 @@ Basic Greeting, links
 
 Tiled, justified photo grid (rows auto-pack to the full width, no manual cropping needed —
 see `memory-bank/creative/creative-gallery-tiled.md`). Click a photo for a larger framed
-view with its caption. To add a photo: drop the file into `content/gallery/photos/` and add
-one `image`/`alt` entry to `content/gallery/_index.md`'s `photos` front matter list.
+view with a two-line caption (`Role:` / `Event:` from YAML). To add a photo: drop the file
+into `content/gallery/photos/` and add one `image` / `role` / `event` / `alt` entry to
+`content/gallery/_index.md`'s `photos` front matter list.
 
 ## 1. Production Management
 

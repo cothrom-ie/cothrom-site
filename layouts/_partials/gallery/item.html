@@ -7,12 +7,17 @@
   decodes — without ever stretching or cutting the photo. The CSS-only fallback (no JS)
   uses the same data via an inline `aspect-ratio` style, so the grid still tiles sensibly
   with JS disabled.
+
+  Lightbox caption lines come from front-matter `role` and `event` (data-role / data-event).
+  `alt` stays the accessibility description of the photograph itself.
 */ -}}
 {{- $page := .page -}}
 {{- $p := .photo -}}
 {{- $i := .index -}}
 {{- $src := $p.image -}}
 {{- $alt := $p.alt | default "" -}}
+{{- $role := $p.role | default "" -}}
+{{- $event := $p.event | default "" -}}
 {{- with $page.Resources.GetMatch $src }}
     {{- $img := . -}}
     {{- /* Tile derivative: cap width so the grid never ships a multi-MB original. */ -}}
@@ -28,7 +33,7 @@
     {{- $full := $img.Resize (printf "%dx q85" $fullW) -}}
     {{- $fullWebp := $img.Resize (printf "%dx webp q82" $fullW) -}}
     <li class="nf-gallery__tile" data-w="{{ $tile.Width }}" data-h="{{ $tile.Height }}" style="aspect-ratio:{{ $tile.Width }} / {{ $tile.Height }}">
-        <button type="button" class="nf-gallery__item" data-full="{{ $full.RelPermalink }}" data-full-webp="{{ $fullWebp.RelPermalink }}" data-alt="{{ $alt }}">
+        <button type="button" class="nf-gallery__item" data-full="{{ $full.RelPermalink }}" data-full-webp="{{ $fullWebp.RelPermalink }}" data-alt="{{ $alt }}" data-role="{{ $role }}" data-event="{{ $event }}">
             <picture>
                 <source srcset="{{ $tileWebp.RelPermalink }}" type="image/webp">
                 <img

@@ -18,12 +18,15 @@
   hand-written implementation of a well-known public technique, not copied from any
   library's source).
 
-  I1 click-to-lightbox with a visible caption (page's `alt` text, shown under the enlarged
-  photo, not just in the attribute). A11y: static grid means there is no motion to manage —
-  prefers-reduced-motion now only has to disable the small hover scale.
+  I1 click-to-lightbox with a two-line caption under the enlarged photo:
+    Role:  <front-matter role>
+    Event: <front-matter event>
+  (`alt` stays the accessibility description of the image itself.) A11y: static grid means
+  there is no motion to manage — prefers-reduced-motion now only has to disable the small
+  hover scale.
 
   Updating the gallery: drop a new image into content/gallery/photos/ and add one
-  `- image: "photos/xx.jpg"` / `alt: "..."` pair to this page's front matter. No cropping,
+  `- image` / `role` / `event` / `alt` block to this page's front matter. No cropping,
   no manual layout — the script below re-packs every tile on load and on resize.
 */ -}}
 {{- define "main" }}
@@ -51,7 +54,10 @@
                 <source id="nf-gallery-lightbox-source" srcset="" type="image/webp">
                 <img id="nf-gallery-lightbox-img" src="" alt="">
             </picture>
-            <figcaption id="nf-gallery-lightbox-caption" class="nf-gallery__lightbox-caption"></figcaption>
+            <figcaption id="nf-gallery-lightbox-caption" class="nf-gallery__lightbox-caption">
+                <p class="nf-gallery__lightbox-line"><strong>Role:</strong> <span id="nf-gallery-lightbox-role"></span></p>
+                <p class="nf-gallery__lightbox-line"><strong>Event:</strong> <span id="nf-gallery-lightbox-event"></span></p>
+            </figcaption>
         </figure>
     </dialog>
 
@@ -61,7 +67,8 @@
         var lightbox = document.getElementById('nf-gallery-lightbox');
         var lightboxImg = document.getElementById('nf-gallery-lightbox-img');
         var lightboxSource = document.getElementById('nf-gallery-lightbox-source');
-        var lightboxCaption = document.getElementById('nf-gallery-lightbox-caption');
+        var lightboxRole = document.getElementById('nf-gallery-lightbox-role');
+        var lightboxEvent = document.getElementById('nf-gallery-lightbox-event');
         var lightboxClose = document.getElementById('nf-gallery-lightbox-close');
         if (!grid) { return; }
 
@@ -159,11 +166,14 @@
                 var full = item.getAttribute('data-full');
                 var fullWebp = item.getAttribute('data-full-webp');
                 var alt = item.getAttribute('data-alt') || '';
+                var role = item.getAttribute('data-role') || '';
+                var eventName = item.getAttribute('data-event') || '';
                 if (!full || !lightbox || !lightboxImg) { return; }
                 lightboxImg.src = full;
                 lightboxImg.alt = alt;
                 if (lightboxSource) { lightboxSource.srcset = fullWebp || ''; }
-                if (lightboxCaption) { lightboxCaption.textContent = alt; }
+                if (lightboxRole) { lightboxRole.textContent = role; }
+                if (lightboxEvent) { lightboxEvent.textContent = eventName; }
                 if (typeof lightbox.showModal === 'function') {
                     lightbox.showModal();
                 } else {
@@ -182,7 +192,8 @@
             lightbox.addEventListener('close', function () {
                 if (lightboxImg) { lightboxImg.src = ''; }
                 if (lightboxSource) { lightboxSource.srcset = ''; }
-                if (lightboxCaption) { lightboxCaption.textContent = ''; }
+                if (lightboxRole) { lightboxRole.textContent = ''; }
+                if (lightboxEvent) { lightboxEvent.textContent = ''; }
             });
         }
     })();

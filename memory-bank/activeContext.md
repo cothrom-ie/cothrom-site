@@ -10,6 +10,7 @@ _(none)_
 
 ## Recently completed
 
+- `gallery-lightbox-role-event` — Level 1 (2026-10-30): lightbox caption is YAML `role` / `event` with bold labels
 - `optimize-content-images` — Level 1 (2026-10-30): `make optimize-images` resizes/re-encodes `content/` rasters to JPG max-width 1920 in place
 - `gallery-tiled-grid` — Level 2 (2026-10-30): marquee → justified tiled grid, no manual crop, lightbox caption
 - `footer-layout-breadcrumbs` — Level 1 (2026-10-30): breadcrumbs off; LinkedIn icon left / copyright centre in footer
