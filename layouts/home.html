@@ -38,8 +38,26 @@
             <h2 id="nf-about-heading">About Dominic</h2>
         </div>
         <div class="nf-home-module__items">
-            <div class="post-content md-content nf-prose nf-home-bio">
-                {{ .Content }}
+            {{- $about := .Params.about | default dict -}}
+            {{- $aboutImage := index $about "image" | default "" -}}
+            {{- $aboutAlt := index $about "image_alt" | default "" -}}
+            {{- if and $aboutImage (not $aboutAlt) -}}
+                {{- errorf "Cothrom home about image: about.image_alt is required when about.image is set on %s" .RelPermalink -}}
+            {{- end -}}
+            <div class="post-content md-content nf-prose nf-home-bio{{ if $aboutImage }} nf-home-bio--with-image{{ end }}">
+                {{- if $aboutImage }}
+                <figure class="nf-figure nf-home-secondary">
+                    {{- partial "responsive-image.html" (dict
+                        "page" .
+                        "src" $aboutImage
+                        "alt" $aboutAlt
+                        "loading" "lazy"
+                        "class" "nf-content-image"
+                        "sizes" "(min-width: 40rem) 16rem, 100vw"
+                    ) -}}
+                </figure>
+                {{- end }}
+                <div class="nf-home-bio__text">{{ .Content }}</div>
             </div>
         </div>
     </section>

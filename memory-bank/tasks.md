@@ -8,49 +8,21 @@ _(none — ready for next `/van`)_
 
 ## Completed Enhancements
 
+- [x] **home-contact-portraits** Level 2 (2026-10-31)
+  - Issue: Add home About secondary + Contact self-shot from new exports.
+  - Solution: Optimized to `content/cothrom-home-secondary.jpg` (360×468, no upscale)
+    and `content/contact/me.jpg` (1920×1504); Home floats secondary beside bio via
+    `about.image` / `about.image_alt`; Contact shows portrait beside kraft plate via
+    `portrait.image` / `portrait.image_alt` (C5 H1 photo optional). Register locked.
+  - Files: `content/_index.md`, `content/cothrom-home-secondary.jpg`,
+    `content/contact/_index.md`, `content/contact/me.jpg`, `layouts/home.html`,
+    `layouts/section/contact.html`, `assets/css/extended/kraft.css`,
+    `assets/css/extended/contact.css`, `docs/image-register.md`
 - [x] **gallery-lightbox-role-event** Level 1 (2026-10-30)
-  - Issue: Lightbox caption should show two YAML-driven lines — bold **Role:** then bold **Event:**.
-  - Solution: `role` / `event` fields on each `photos[]` entry in `content/gallery/_index.md`;
-    item partial passes `data-role`/`data-event`; lightbox figcaption has two lines with
-    bold labels. `alt` kept for accessibility. Role/event left empty for owner to fill
-    (do not invent experience).
-  - Files: `content/gallery/_index.md`, `layouts/_partials/gallery/item.html`,
-    `layouts/section/gallery.html`, `assets/css/extended/gallery.css`, `README.md`
 - [x] **optimize-content-images** Level 1 (2026-10-30)
-  - Issue: Need a repeatable way to shrink `content/` photography before Hugo
-    processes derivatives — max width 1920, aspect kept, JPG in place.
-  - Solution: `scripts/optimize-content-images.py` (Pillow) +
-    `make optimize-images` / `make optimize-images-deps`. Local gitignored
-    `.venv-optimize-images` only (not a site runtime dep). Supports
-    `DRY_RUN=1` and `MAX_WIDTH=…`. Non-JPG sources become `<stem>.jpg` and the
-    original is removed (script lists renames).
-  - Verified: `make optimize-images DRY_RUN=1` — 27 images scanned, resize/
-    re-encode plan looks correct; no files written in dry run.
-  - Files: `scripts/optimize-content-images.py`,
-    `scripts/requirements-optimize-images.txt`, `makefile`, `README.md`,
-    `.gitignore`
 - [x] **gallery-tiled-grid** Level 2 (2026-10-30)
-  - Issue: Owner disliked the autoscrolling marquee; wanted photos to auto-pack to the
-    page width without having to crop anything, stay easy to extend, and clicking a photo
-    should show a larger framed version with a caption.
-  - Decision: `memory-bank/creative/creative-gallery-tiled.md` — justified row-packing
-    (Flickr/Google-Photos style), implemented as a small dependency-free vanilla JS
-    algorithm (no npm/node pipeline in this repo; rejected adding a third-party layout
-    library per AppSec "no new dependency without review"). Every tile's box aspect ratio
-    is set to exactly match its photo, so nothing is ever cropped or stretched.
-  - Solution: static grid replaces the marquee; rows auto-pack flush to the container
-    width; CSS-only no-JS fallback also respects native aspect ratio via inline
-    `aspect-ratio`; lightbox now shows a visible `<figcaption>` with the photo's `alt` text.
-  - Verified: `make build` clean; browser-checked desktop row packing, narrow-viewport
-    reflow, and lightbox+caption via a local nginx preview.
-  - Files: `layouts/section/gallery.html`, `layouts/_partials/gallery/item.html`,
-    `assets/css/extended/gallery.css`, `README.md`,
-    `memory-bank/creative/creative-gallery-tiled.md`
 - [x] **footer-layout-breadcrumbs** Level 1 (2026-10-30)
-  - Issue: Breadcrumb links under page headings felt noisy; footer LinkedIn was a plain text link.
-  - Solution: `ShowBreadCrumbs = false`; footer LinkedIn as standard “in” SVG icon flush left (LinkedIn blue), copyright centred in a thin full-width bar.
-  - Files: `hugo.toml`, `layouts/_partials/footer.html`, `assets/css/extended/kraft.css`
-- [x] **service-secondary-images** Level 2 secondary images on service pages (2026-10-27) — `memory-bank/archive/archive-service-secondary-images.md` — reflection: `memory-bank/reflection/reflection-service-secondary-images.md`
-- [x] nav-chrome-light-logo Level 1 light-only + header logo (2026-10-26) — `memory-bank/archive/archive-nav-chrome-light-logo.md`
-- [x] deploy-cf-pages Level 2 Cloudflare Pages GHA (2026-10-26) — `memory-bank/archive/archive-deploy-cf-pages.md` — **operator go-live confirmed 2026-10-26**
-- [x] cothrom-site Level 4 full site (2026-10-26) — `memory-bank/archive/archive-cothrom-site.md`
+- [x] **service-secondary-images** Level 2 (2026-10-27)
+- [x] nav-chrome-light-logo Level 1 (2026-10-26)
+- [x] deploy-cf-pages Level 2 (2026-10-26)
+- [x] cothrom-site Level 4 (2026-10-26)

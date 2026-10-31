@@ -27,7 +27,7 @@ from pathlib import Path
 
 try:
     from PIL import Image, ImageOps
-except ImportError as exc:  # pragma: no cover - makefile installs Pillow first
+except ImportError as exc:
     sys.stderr.write(
         "Pillow is required. Run: make optimize-images-deps\n"
         f"({exc})\n"
@@ -41,11 +41,10 @@ JPEG_SUFFIXES = {".jpg", ".jpeg"}
 # Skip junk / OS noise if it ever appears under content/
 SKIP_NAMES = {".DS_Store", "Thumbs.db"}
 
-# Web/screen JFIF density. Browsers ignore DPI for layout (pixels win), but we
-# still write a real density so the file isn't left at 1dpi / unset.
+# Web/screen JFIF density. Browsers ignore DPI for layout (pixels win)
 DEFAULT_DPI = 300
 
-# Credit tags kept after the metadata strip (matches hugo.toml author / site title).
+# Credit tags kept after the metadata strip
 DEFAULT_AUTHOR = "Dominic Capparelli"
 DEFAULT_COMPANY = "Cothrom Productions"
 

@@ -6,7 +6,8 @@
   theme's default list.html. Content stays a branch bundle (_index.md); no
   mode dispatch is used here (same family as layouts/section/gallery.html).
 
-  H1 kraft plate invite (no photo — Contact is a task page, not a hero page).
+  H1 kraft plate invite (C5 — photo optional). Optional self-shot via
+  front-matter portrait.image / portrait.image_alt sits beside the plate.
   L1 LinkedIn on the page itself (also present sitewide in the footer — see
   layouts/_partials/footer.html).
   T1/F1/S2 classic HTML POST form: name/email/message + honeypot + optional
@@ -23,20 +24,40 @@
 {{- $webhook := site.Params.contact.webhookurl -}}
 {{- $turnstileKey := site.Params.contact.turnstilesitekey -}}
 {{- $linkedin := site.Params.social.linkedin -}}
+{{- $portrait := $page.Params.portrait | default dict -}}
+{{- $portraitImage := index $portrait "image" | default "" -}}
+{{- $portraitAlt := index $portrait "image_alt" | default "" -}}
+{{- if and $portraitImage (not $portraitAlt) -}}
+    {{- errorf "Cothrom contact portrait: portrait.image_alt is required when portrait.image is set on %s" $page.RelPermalink -}}
+{{- end -}}
 <div class="nf-contact" data-page-mode="contact">
     <header class="post-header nf-contact-hero">
-        <div class="nf-contact-hero__plate">
-            <p class="nf-article__kicker">Contact</p>
-            <h1 class="post-title">{{ $page.Title }}</h1>
-            {{- with $page.Content }}
-            <div class="post-content md-content nf-prose nf-contact-hero__invite">
-                {{ . }}
+        <div class="nf-contact-hero__layout{{ if $portraitImage }} nf-contact-hero__layout--with-portrait{{ end }}">
+            <div class="nf-contact-hero__plate">
+                <p class="nf-article__kicker">Contact</p>
+                <h1 class="post-title">{{ $page.Title }}</h1>
+                {{- with $page.Content }}
+                <div class="post-content md-content nf-prose nf-contact-hero__invite">
+                    {{ . }}
+                </div>
+                {{- end }}
+                {{- with $linkedin }}
+                <p class="nf-contact-hero__linkedin">
+                    <a class="nf-cta nf-cta--secondary" href="{{ . }}" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+                </p>
+                {{- end }}
             </div>
-            {{- end }}
-            {{- with $linkedin }}
-            <p class="nf-contact-hero__linkedin">
-                <a class="nf-cta nf-cta--secondary" href="{{ . }}" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
-            </p>
+            {{- if $portraitImage }}
+            <figure class="nf-figure nf-contact-hero__portrait">
+                {{- partial "responsive-image.html" (dict
+                    "page" $page
+                    "src" $portraitImage
+                    "alt" $portraitAlt
+                    "loading" "eager"
+                    "class" "nf-content-image"
+                    "sizes" "(min-width: 40rem) 22rem, 100vw"
+                ) -}}
+            </figure>
             {{- end }}
         </div>
     </header>

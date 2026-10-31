@@ -42,6 +42,8 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/new/techDirSec.png` | technical-direction (secondary) | **locked** — see `content/technical-direction/secondary.jpg` |
 | `images/new/creatTechSecond.png` | creative-technology (secondary) | **locked** — see `content/creative-technology/secondary.jpg` |
 | `images/new/sysDes_second.png` | system-design (secondary) | **locked** — see `content/system-design/secondary.jpg` |
+| `images/homesec_export_20261024_001.png` | home (secondary / About) | **locked** — see `content/cothrom-home-secondary.jpg` |
+| `images/me_export_20261024_001.png` | contact (portrait) | **locked** — see `content/contact/me.jpg` |
 
 **Note:** `images/new/*Hero*.png` and `images/new/homeHero.png` (the five hero-sized images in
 that folder) are intentionally **excluded** from `service-secondary-images` — reserved for a
@@ -202,3 +204,5 @@ different project, per explicit user instruction. Not used, resized, or moved by
 | img-115 | `images/new/techDirHero.png` | `techDirHero` | technical-direction | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
 | img-116 | `images/new/techDirSec.png` | `techDirSec` | technical-direction | locked | service-secondary-images: Technical Direction secondary/evidence image. Native resolution 1452×1512 kept as-is (below the 2400px cap — never upscale), PNG→JPG q85, saved as `content/technical-direction/secondary.jpg` (page resource). |
 | img-117 | `images/gallery/gallery_export_20170223_001.png` | `gallery_export_20170223_001` | gallery | locked | Published gallery (g20). Width capped at 1920, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/gallery/photos/g20.jpg`. |
+| img-118 | `images/homesec_export_20261024_001.png` | `homesec_export_20261024_001` | home | locked | Home About secondary. Native 360×468 kept (no upscale), PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/cothrom-home-secondary.jpg`. |
+| img-119 | `images/me_export_20261024_001.png` | `me_export_20261024_001` | contact | locked | Contact self-shot. Resized 3701×2899→1920×1504, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/contact/me.jpg`. |

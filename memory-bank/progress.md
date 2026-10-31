@@ -2,6 +2,7 @@
 
 ## Completed
 
+- [x] **home-contact-portraits** Level 2 (2026-10-31) — Home About secondary + Contact self-shot wired and register-locked
 - [x] **gallery-lightbox-role-event** Level 1 (2026-10-30) — lightbox caption: bold Role: / Event: from gallery YAML
 - [x] **optimize-content-images** Level 1 (2026-10-30) — `make optimize-images` (Pillow venv) resizes/re-encodes `content/` to JPG max-width 1920 in place
 - [x] **gallery-tiled-grid** Level 2 (2026-10-30) — marquee replaced with justified tiled grid (no manual crop); lightbox caption added

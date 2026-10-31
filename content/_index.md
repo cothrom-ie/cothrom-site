@@ -22,6 +22,12 @@ opening:
   image: "cothrom-home-hero.jpg"
   image_alt: "A cocktail event with super widescreen and custom scenic elements."
 
+# Secondary evidence image floated beside the About Dominic biography
+# (see layouts/home.html + .nf-home-secondary in kraft.css).
+about:
+  image: "cothrom-home-secondary.jpg"
+  image_alt: "Night-time street performers with fire bowls and a large illuminated horse puppet, with spectators lining the street."
+
 visual:
   mode: "editorial"
 ---
