@@ -83,4 +83,12 @@ photos:
     role: ""
     event: ""
     alt: "A yellow-and-blue striped big-top tent in a car park, with glass tower blocks behind."
+  - image: "photos/g19.jpg"
+    role: ""
+    event: ""
+    alt: "A talent-show stage with dancers on a glossy floor, cyan and magenta beams, a screen of overlapping circles, X logos above the names Louis, Michelle, Jason and Denise, and a judges' desk in the foreground."
+  - image: "photos/g20.jpg"
+    role: ""
+    event: ""
+    alt: "A band on a conference stage under green and blue beams, with round ceiling lights and screens showing an ASDEN logo."
 ---

@@ -14,7 +14,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/techDir/IMG_0266.png` | technical-direction (hero) | **locked** — see `content/technical-direction/hero.jpg` |
 | `images/creativeTech/IMG_0980.png` | creative-technology (hero) | **locked** — see `content/creative-technology/hero.jpg` |
 | `images/sysDesign/IMG_0004-1.png` | system-design (hero) | **locked** — see `content/system-design/hero.jpg` |
-| `images/gallery/gallery_export_20261024_001.png` | gallery (g01) | **locked** — see `content/gallery/photos/g01.jpg` |
+| `images/gallery/gallery_export_20261024_001.png` | gallery (g19) | **locked** — see `content/gallery/photos/g19.jpg`. Same filename previously published the dusk square as `g01.jpg`; that published file is unchanged, and this export is the talent-show stage. |
 | `images/gallery/gallery_export_20261024_002.png` | gallery (g02) | **locked** — see `content/gallery/photos/g02.jpg` |
 | `images/gallery/gallery_export_20261024_003.png` | gallery (g03) | **locked** — see `content/gallery/photos/g03.jpg` |
 | `images/gallery/gallery_export_20261024_004.png` | gallery (g04) | **locked** — see `content/gallery/photos/g04.jpg` |
@@ -32,6 +32,7 @@ Hugo publish paths are filled when images are copied/edited into page bundles or
 | `images/gallery/gallery_export_20091213_016.png` | gallery (g16) | **locked** — see `content/gallery/photos/g16.jpg` |
 | `images/gallery/gallery_export_20071108_017.png` | gallery (g17) | **locked** — see `content/gallery/photos/g17.jpg` |
 | `images/gallery/gallery_export_20060625_018.png` | gallery (g18) | **locked** — see `content/gallery/photos/g18.jpg` |
+| `images/gallery/gallery_export_20170223_001.png` | gallery (g20) | **locked** — see `content/gallery/photos/g20.jpg` |
 | `images/logos/cothrom-mark-kraft-1024.png` | chrome (favicons) | **locked** — source for `static/favicon.ico` + `static/images/icons/favicon-{16x16,32x32,48x48}.png` |
 | `images/logos/cothrom-mark-kraft-180.png` | chrome (favicons) | **locked** — see `static/images/icons/apple-touch-icon.png` |
 | `images/logos/cothrom-mark-kraft-192.png` | chrome (favicons) | **locked** — see `static/images/icons/android-chrome-192x192.png` |
@@ -50,7 +51,7 @@ different project, per explicit user instruction. Not used, resized, or moved by
 
 | Folder | Count | Default assigned_page |
 |--------|------:|-----------------------|
-| gallery | 18 | gallery |
+| gallery | 2 | gallery |
 | prodMan | 9 | production-management |
 | techDir | 7 | technical-direction |
 | creativeTech | 9 | creative-technology |
@@ -85,7 +86,7 @@ different project, per explicit user instruction. Not used, resized, or moved by
 | id | source_path | basename | assigned_page | status | notes |
 |----|-------------|----------|---------------|--------|-------|
 | img-001 | `images/gallery/gallery_export_20150831_008.png` | `gallery_export_20150831_008` | gallery | locked | Published gallery (g08). Width capped at 1920, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/gallery/photos/g08.jpg`. |
-| img-002 | `images/gallery/gallery_export_20261024_001.png` | `gallery_export_20261024_001` | gallery | locked | Published gallery (g01). Width capped at 1920, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/gallery/photos/g01.jpg`. |
+| img-002 | `images/gallery/gallery_export_20261024_001.png` | `gallery_export_20261024_001` | gallery | locked | Published gallery (g19). Width capped at 1920, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/gallery/photos/g19.jpg`. An earlier export of this filename remains published as `content/gallery/photos/g01.jpg`. |
 | img-003 | `images/gallery/152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1.png` | `152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1` | omit | omit | Duplicate of images/sysDesign/; service owns basename |
 | img-004 | `images/sysDesign/152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1.png` | `152B3A8A-AB46-4FD4-AC70-59E16EE078B0-1` | system-design | candidate | Former System Design H1 hero (Phase 2); replaced by IMG_0004-1. |
 | img-005 | `images/gallery/gallery_export_20161004_006.png` | `gallery_export_20161004_006` | gallery | locked | Published gallery (g06). Width capped at 1920, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/gallery/photos/g06.jpg`. |
@@ -200,3 +201,4 @@ different project, per explicit user instruction. Not used, resized, or moved by
 | img-114 | `images/new/sysDes_second.png` | `sysDes_second` | system-design | locked | service-secondary-images: System Design secondary/evidence image. Resized 2407×3109→1858×2400 (long edge capped, no upscale), PNG→JPG q85, saved as `content/system-design/secondary.jpg` (page resource). |
 | img-115 | `images/new/techDirHero.png` | `techDirHero` | technical-direction | reserved | Hero-sized image; explicitly excluded from service-secondary-images — reserved for a different project. Not used/resized/moved. |
 | img-116 | `images/new/techDirSec.png` | `techDirSec` | technical-direction | locked | service-secondary-images: Technical Direction secondary/evidence image. Native resolution 1452×1512 kept as-is (below the 2400px cap — never upscale), PNG→JPG q85, saved as `content/technical-direction/secondary.jpg` (page resource). |
+| img-117 | `images/gallery/gallery_export_20170223_001.png` | `gallery_export_20170223_001` | gallery | locked | Published gallery (g20). Width capped at 1920, PNG→JPG q85, EXIF Artist/Copyright only, saved as `content/gallery/photos/g20.jpg`. |
