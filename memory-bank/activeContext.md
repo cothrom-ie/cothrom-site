@@ -2,7 +2,7 @@
 
 ## Mode
 
-**Idle** — last task archived; ready for **`/van`**
+**Idle** — last task complete; ready for **`/van`**
 
 ## Current task
 
@@ -10,6 +10,8 @@ _(none)_
 
 ## Recently completed
 
+- `contact-hero-center` — Level 1 (2026-11-01): Contact plate and portrait centered as a pair
+- `home-bio-above-links` — Level 1 (2026-11-01): Home order is biography, then service links, then writing stub
 - `home-contact-portraits` — Level 2 (2026-10-31): Home About secondary + Contact self-shot
 - `gallery-lightbox-role-event` — Level 1 (2026-10-30)
 - `optimize-content-images` — Level 1 (2026-10-30)

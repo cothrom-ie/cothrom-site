@@ -8,6 +8,14 @@ _(none — ready for next `/van`)_
 
 ## Completed Enhancements
 
+- [x] **contact-hero-center** Level 1 (2026-11-01)
+  - Issue: On Contact, the kraft plate and portrait sat left, with empty space on the right. The form was already centered.
+  - Solution: `justify-content: center` on `.nf-contact-hero__layout--with-portrait` so the pair shares the form's center. Phone layout still stacks full width.
+  - Files: `assets/css/extended/contact.css`
+- [x] **home-bio-above-links** Level 1 (2026-11-01)
+  - Issue: Home below-fold order put the Services links above the About biography.
+  - Solution: Reordered `layouts/home.html` to Biography, then Services links, then Writing stub.
+  - Files: `layouts/home.html`
 - [x] **home-contact-portraits** Level 2 (2026-10-31)
   - Issue: Add home About secondary + Contact self-shot from new exports.
   - Solution: Optimized to `content/cothrom-home-secondary.jpg` (360×468, no upscale)

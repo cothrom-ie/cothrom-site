@@ -2,6 +2,8 @@
 
 ## Completed
 
+- [x] **contact-hero-center** Level 1 (2026-11-01) — Contact kraft plate and portrait centered as a pair; form unchanged
+- [x] **home-bio-above-links** Level 1 (2026-11-01) — Home below-fold order is biography, then service links, then writing stub
 - [x] **home-contact-portraits** Level 2 (2026-10-31) — Home About secondary + Contact self-shot wired and register-locked
 - [x] **gallery-lightbox-role-event** Level 1 (2026-10-30) — lightbox caption: bold Role: / Event: from gallery YAML
 - [x] **optimize-content-images** Level 1 (2026-10-30) — `make optimize-images` (Pillow venv) resizes/re-encodes `content/` to JPG max-width 1920 in place

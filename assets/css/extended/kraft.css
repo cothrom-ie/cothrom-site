@@ -219,7 +219,7 @@
 }
 
 /* Home About: optional secondary evidence image floated beside the biography
-   (same float idea as .nf-service-secondary, narrower — portrait-friendly). */
+   (same float idea as .nf-service-secondary — portrait-friendly). */
 .nf-home-bio--with-image {
   max-width: none;
 }
@@ -230,7 +230,7 @@
 
 .nf-home-secondary {
   float: right;
-  width: clamp(10rem, 28vw, 16rem);
+  width: clamp(15rem, 42vw, 24rem);
   margin: 0 0 var(--nf-space-5, 1.5rem) var(--nf-space-5, 1.5rem);
 }
 
@@ -243,7 +243,7 @@
 @media (max-width: 40rem) {
   .nf-home-secondary {
     float: none;
-    width: min(16rem, 100%);
+    width: min(24rem, 100%);
     margin: 0 0 var(--nf-space-5, 1.5rem);
   }
 }
