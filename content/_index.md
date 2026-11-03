@@ -7,12 +7,6 @@ date: 2026-10-25
 content:
   format: "home"
 
-# Home's hero lives at opening.image (custom param, read by layouts/home.html /
-# _partials/home/opening.html — see systemPatterns.md), not the generic
-# visual.hero key get-page-images.html checks for OG/Twitter images. seo.image
-# is the theme's own supported override for exactly this case (checked before
-# visual.hero) — otherwise og:image/twitter:image would fall through to the
-# sitewide default (params.images in hugo.toml) instead of using this hero.
 seo:
   image: "cothrom-home-hero.jpg"
 
@@ -22,8 +16,6 @@ opening:
   image: "cothrom-home-hero.jpg"
   image_alt: "A cocktail event with super widescreen and custom scenic elements."
 
-# Secondary evidence image floated beside the About Dominic biography
-# (see layouts/home.html + .nf-home-secondary in kraft.css).
 about:
   image: "cothrom-home-secondary.jpg"
   image_alt: "Night-time street performers with fire bowls and a large illuminated horse puppet, with spectators lining the street."
@@ -33,7 +25,7 @@ visual:
 ---
 ## Behind Cothrom
 
-Cothrom is my independent practice, bringing together more than 20 years of experience in live production, technical engineering, and international touring.
+Cothrom is an independent practice, bringing together more than 20 years of experience in live production, technical engineering, and international touring.
 
 I am Dominic Capparelli, originally from Chicago and now based in Northern Ireland. My career has taken me across the United States, Europe, and Australia, working on productions ranging from international entertainment and major corporate events to cultural festivals and specialist technical projects.
 
