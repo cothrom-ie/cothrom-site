@@ -2,22 +2,26 @@
 
 ## Mode
 
-**Idle** — last task complete; ready for **`/van`**
+**Idle** — last task archived; start next with `/van`
 
 ## Current task
 
-_(none)_
+None
 
 ## Recently completed
 
-- `contact-hero-center` — Level 1 (2026-11-01): Contact plate and portrait centered as a pair
-- `home-bio-above-links` — Level 1 (2026-11-01): Home order is biography, then service links, then writing stub
-- `home-contact-portraits` — Level 2 (2026-10-31): Home About secondary + Contact self-shot
-- `gallery-lightbox-role-event` — Level 1 (2026-10-30)
-- `optimize-content-images` — Level 1 (2026-10-30)
-- `gallery-tiled-grid` — Level 2 (2026-10-30)
+- **analytics-cookie-consent** Level 2 (2026-11-05) — CF Web Analytics beacon + CSP + `/privacy/` + footer  
+  Archive: `memory-bank/archive/archive-analytics-cookie-consent.md`  
+  Reflection: `memory-bank/reflection/reflection-analytics-cookie-consent.md`
 
-## Notes for next task
+### Operator leftover (not blocking archive)
 
-- Home About uses `about.image` / `about.image_alt`; Contact uses `portrait.image` / `portrait.image_alt`.
-- `images/new/*Hero*` and `homeHero.png` remain **reserved** in `docs/image-register.md`.
+1. Create CF Web Analytics site for `cothrom.ie` and copy token
+2. Set GitHub secret `CF_WEB_ANALYTICS_TOKEN`
+3. Redeploy; smoke-check beacon in production
+
+## Prior recent
+
+- `contact-hero-center` — Level 1 (2026-11-01)
+- `home-bio-above-links` — Level 1 (2026-11-01)
+- `home-contact-portraits` — Level 2 (2026-10-31)

@@ -71,18 +71,20 @@ Copy `.env.example` to `.env` (gitignored, never commit a filled-in copy)
 and fill in real values as needed. `make build` / `make serve` load `.env`
 automatically and pass the relevant variables through to Hugo as
 `HUGO_PARAMS_*` overrides at build time — see `hugo.toml`'s `[params.contact]`
-block and `systemPatterns.md` for the underscore-nesting gotcha in that
-mechanism.
+/ `[params.analytics]` blocks and `systemPatterns.md` for the
+underscore-nesting gotcha in that mechanism.
 
 | Variable | Used by | Purpose |
 | --- | --- | --- |
 | `N8N_CONTACT_WEBHOOK_URL` | `make build`/`make serve` → Hugo `params.contact.webhookurl`; production: GitHub Actions secret of the same name | Full HTTPS URL of the n8n workflow that receives Contact form POSTs. Left blank, the form still renders but has no action URL and the page notes that submissions aren't wired (see `layouts/section/contact.html`). |
 | `TURNSTILE_SITE_KEY` | `make build`/`make serve` → Hugo `params.contact.turnstilesitekey`; production: GitHub Actions secret of the same name | Cloudflare Turnstile **public** site key, safe to ship in built HTML. The matching Turnstile secret key is verified inside the n8n workflow only and must never appear in this repo. |
+| `CF_WEB_ANALYTICS_TOKEN` | `make build`/`make serve` → Hugo `params.analytics.cftoken`; production: GitHub Actions secret of the same name | Cloudflare Web Analytics **public** site token. When set, production builds emit the cookieless beacon; left blank, the beacon is omitted. |
 | `CLOUDFLARE_TUNNEL_TOKEN` | `compose.yml` (`cloudflare-tunnel` service) only | Optional/legacy local tunnel. Not used by Cloudflare Pages production. |
 
 None of these variables are required for a local `make serve`/`make build` —
 the site builds and renders correctly with them unset. For a live contact
-form on Pages, set the two contact secrets in GitHub Actions.
+form and client analytics on Pages, set the contact secrets and
+`CF_WEB_ANALYTICS_TOKEN` in GitHub Actions.
 
 ## Deploy (Cloudflare Pages)
 
@@ -91,8 +93,8 @@ Production is **Cloudflare Pages** (Direct Upload). On every push to `main`
 
 1. Checks out the repo **with submodules** (No Fate theme).
 2. Installs Hugo Extended **0.158.0**.
-3. Builds with `hugo --gc --minify` into `./site`, injecting contact params
-   from GitHub secrets.
+3. Builds with `hugo --gc --minify` into `./site`, injecting contact and
+   analytics params from GitHub secrets.
 4. Deploys with Wrangler: `pages deploy site --project-name=cothrom-site`.
 
 ### GitHub Actions secrets
@@ -103,8 +105,20 @@ Production is **Cloudflare Pages** (Direct Upload). On every push to `main`
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID. |
 | `N8N_CONTACT_WEBHOOK_URL` | Same as local `.env` — baked into the Contact form `action` at build time. |
 | `TURNSTILE_SITE_KEY` | Turnstile **public** site key baked into the form widget. |
+| `CF_WEB_ANALYTICS_TOKEN` | Cloudflare Web Analytics **public** site token baked into the production beacon. |
 
 Never commit these values. The Turnstile **secret** key stays in n8n only.
+
+### Web Analytics
+
+1. In the Cloudflare dashboard, open **Web Analytics** and add `cothrom.ie`
+   (same apex covers `www` for the beacon hostname check).
+2. Copy the site token from the manual JS snippet.
+3. Set repository secret `CF_WEB_ANALYTICS_TOKEN` to that value and redeploy
+   (or put it in local `.env` and run `make build`).
+4. Metrics appear under Web Analytics. Ad blockers may suppress the client
+   beacon; proxied traffic still contributes to Cloudflare edge analytics.
+5. Privacy disclosure for visitors: [`/privacy/`](https://cothrom.ie/privacy/).
 
 ### Custom domains (apex + www)
 

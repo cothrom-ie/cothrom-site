@@ -9,9 +9,9 @@ SHELL := /bin/bash
 .SHELLFLAGS := -euo pipefail -c
 .DEFAULT_GOAL := help
 
-# Optional local env (gitignored; see .env.example). Mainly used to supply the
-# contact-form secrets (Phase 4 / Creative C5) at build time without
-# committing them: N8N_CONTACT_WEBHOOK_URL, TURNSTILE_SITE_KEY.
+# Optional local env (gitignored; see .env.example). Used to supply build-time
+# secrets without committing them: N8N_CONTACT_WEBHOOK_URL, TURNSTILE_SITE_KEY,
+# CF_WEB_ANALYTICS_TOKEN.
 -include .env
 export
 
@@ -126,17 +126,22 @@ check-hugo: ## Fail if Hugo Extended < $(HUGO_VERSION)
 build: check-hugo ## Production build → ./site
 	@HUGO_PARAMS_CONTACT_WEBHOOKURL="$${N8N_CONTACT_WEBHOOK_URL:-}" \
 	 HUGO_PARAMS_CONTACT_TURNSTILESITEKEY="$${TURNSTILE_SITE_KEY:-}" \
+	 HUGO_PARAMS_ANALYTICS_CFTOKEN="$${CF_WEB_ANALYTICS_TOKEN:-}" \
 	 $(HUGO) --gc --minify
 	@test -f "$(PUBLISH_DIR)/index.html"
 	@echo "Built → $(PUBLISH_DIR)/"
 	@if [ -z "$${N8N_CONTACT_WEBHOOK_URL:-}" ]; then \
 		echo "NOTE: N8N_CONTACT_WEBHOOK_URL not set — contact form will build with no action URL (see .env.example)."; \
 	fi
+	@if [ -z "$${CF_WEB_ANALYTICS_TOKEN:-}" ]; then \
+		echo "NOTE: CF_WEB_ANALYTICS_TOKEN not set — Cloudflare Web Analytics beacon omitted (see .env.example)."; \
+	fi
 
 serve: check-hugo ## Dev server, LAN-reachable (bind 0.0.0.0; see BASEURL/BIND overrides above)
 	@echo "Serving on $(BIND):$(PORT) — open $(BASEURL) from this machine or another device on the LAN"
 	@HUGO_PARAMS_CONTACT_WEBHOOKURL="$${N8N_CONTACT_WEBHOOK_URL:-}" \
 	 HUGO_PARAMS_CONTACT_TURNSTILESITEKEY="$${TURNSTILE_SITE_KEY:-}" \
+	 HUGO_PARAMS_ANALYTICS_CFTOKEN="$${CF_WEB_ANALYTICS_TOKEN:-}" \
 	 $(HUGO) server --bind $(BIND) --port $(PORT) --baseURL $(BASEURL)
 
 clean: ## Remove publish output and Hugo caches

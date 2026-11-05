@@ -101,6 +101,12 @@ enableRobotsTXT = true
     webhookurl = ""
     turnstilesitekey = ""
 
+  # Cloudflare Web Analytics site token (public). Blank by default — supplied at
+  # build time via CF_WEB_ANALYTICS_TOKEN → HUGO_PARAMS_ANALYTICS_CFTOKEN.
+  # Same unbroken-key rule as contact params above. Never commit a real token.
+  [params.analytics]
+    cftoken = ""
+
   # No Fate theme contract (C1: clean + kraft overrides in assets/css/extended/)
   [params.noFate]
     style = "clean"

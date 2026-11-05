@@ -6,5 +6,13 @@
   site.Params.assets — a web app manifest link. Standard favicons, the Apple
   touch icon, and theme-color meta are already wired via
   site.Params.assets.favicon* in hugo.toml; see head.html's "Favicons" block.
+
+  analytics-cookie-consent: Cloudflare Web Analytics beacon when production
+  and params.analytics.cftoken is set (CF_WEB_ANALYTICS_TOKEN at build time).
 */ -}}
 <link rel="manifest" href="{{ "site.webmanifest" | absURL }}">
+{{- with site.Params.analytics.cftoken -}}
+{{- if hugo.IsProduction -}}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{ dict "token" . | jsonify }}'></script>
+{{- end -}}
+{{- end -}}

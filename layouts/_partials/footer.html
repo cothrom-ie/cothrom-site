@@ -39,6 +39,8 @@
             <span>{{ . | markdownify }}</span>
         {{- end }}
 
+        <span><a href="{{ "privacy/" | relURL }}">Privacy</a></span>
+
         {{- if not site.Params.footer.hidePoweredBy }}
         <span>
             {{ i18n "nf_powered_by" | default "Built with" }}

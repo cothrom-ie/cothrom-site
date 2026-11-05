@@ -1,7 +1,8 @@
 # Deploy Hugo → Cloudflare Pages (Direct Upload via Wrangler).
 # Production host: https://cothrom.ie/ (www → apex via Cloudflare Bulk Redirect).
 # Secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID,
-#          N8N_CONTACT_WEBHOOK_URL, TURNSTILE_SITE_KEY
+#          N8N_CONTACT_WEBHOOK_URL, TURNSTILE_SITE_KEY,
+#          CF_WEB_ANALYTICS_TOKEN
 
 name: Deploy to Cloudflare Pages
 
@@ -38,10 +39,12 @@ jobs:
         env:
           HUGO_PARAMS_CONTACT_WEBHOOKURL: ${{ secrets.N8N_CONTACT_WEBHOOK_URL }}
           HUGO_PARAMS_CONTACT_TURNSTILESITEKEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+          HUGO_PARAMS_ANALYTICS_CFTOKEN: ${{ secrets.CF_WEB_ANALYTICS_TOKEN }}
         run: |
           hugo --gc --minify
           test -f site/index.html
           test -f site/_headers
+          test -f site/privacy/index.html
 
       # Fail fast with a clear message if GH secrets are missing/empty.
       # Wrangler often only prints "exit code 1" when the token/account is wrong.
